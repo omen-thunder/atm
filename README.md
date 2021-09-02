@@ -1,6 +1,17 @@
 # Kings ATM
 > Top Secret ATM Project
 
+    Git Repository:
+    https://github.sydney.edu.au/SOFT2412-2021S2/R10_C11_G2_ATM
+
+# Members
+
+- bkim6426 - Brian Kim
+- cmcb5122 - Cameron McBroom
+- cyip9287 - Ricky Yip
+- sare9443 - Shane Areni
+- sdar2231 - Sandeep Darapuneni
+
 
 # Agile Software Development Practices (SOFT2412/COMP9412)
 
