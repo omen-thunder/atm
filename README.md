@@ -24,11 +24,11 @@ Following Agile practices, each team is required to work collaboratively and car
 
 Each group must collaboratively work to setup a set of software tools that will help them to prepare to prepare agile development environment. All these tools have been/will be introduced in the weekly labs including GitHub, Gradle, JUnit (including code coverage) and Jenkins. In your tool setup, you will need to meet the following requirements:
 
-- There must be a single shared GitHub repository in the supplied GitHub organization for the entire group. Every member must contribute to this repository.
-- Gradle must be used for build automation, and JUnit for automated testing. JUnit must be integrated with Gradle and a code coverage tool. For JUnit testing, code coverage must be at least 75%.
-- Continuous integration should be done with Jenkins, which must be hooked with GitHub. Both Gradle and JUnit must be integrated on Jenkins and run automatically for every new commit in a particular GitHub branch after Jenkins has been setup correctly.
-- Jenkins must be integrated with GitHub via webhooks. Also, ngrok can be used for continuous integration with Jenkins. Alternatively, Jenkins may be hosted on public cloud service providers if your team is happy with that solution. Jenkins must show test reports for the application. Only one member is required to setup Jenkins.
-- It is recommended to use an IDE like IntelliJ or Eclipse, whatever your group feels comfortable with, to assist you throughout the software development.
+1. There must be a single shared GitHub repository in the supplied [GitHub organization](https://github.sydney.edu.au/SOFT2412-2020S2) for the entire group. Every member must contribute to this repository.
+2. Gradle must be used for build automation, and JUnit for automated testing. JUnit must be integrated with Gradle and a code coverage tool. For JUnit testing, code coverage must be at least 75%.
+3. Continuous integration should be done with Jenkins, which must be hooked with GitHub. Both Gradle and JUnit must be integrated on Jenkins and run automatically for every new commit in a particular GitHub branch after Jenkins has been setup correctly.
+4. Jenkins must be integrated with GitHub via webhooks. Also, ngrok can be used for continuous integration with Jenkins. Alternatively, Jenkins may be hosted on public cloud service providers if your team is happy with that solution. Jenkins must show test reports for the application. **Only one member is required to setup Jenkins.**
+5. It is recommended to use an IDE like IntelliJ or Eclipse, whatever your group feels comfortable with, to assist you throughout the software development.
 
 The tool setup might become more challenging. So, it is crucial that every group members participate and practice all exercises in the tutorials (week 2 – week 6).
 
@@ -38,9 +38,9 @@ Each group will be required to develop a simple ATM software in JAVA. All team m
 
 1. The XYZ Bank Inc. can have many automated teller machines (ATMs), and the new software system shall provide functionality on all ATMs.
 2. The system shall enable the customers of XYZ Bank, who have valid ATM cards , to perform three types of transactions:
-    Withdrawal of funds
-    Deposit of Funds
-    Balance Check
+    1. Withdrawal of funds
+    2. Deposit of Funds
+    3. Balance Check
 3. The ATM should allow the user to enter the card number (5 digits) which should be validated against a list of valid cards.
 4. An ATM card usage shall be considered valid if it meets the following conditions:
     1. The card number entered by the user is valid
@@ -51,10 +51,10 @@ Each group will be required to develop a simple ATM software in JAVA. All team m
 5. The system shall confiscate the ATM card if it detects that a lost or stolen card has been inserted by a customer. The system shall also display an apology to the customer
 6. The system shall allow the customer to enter the correct PIN in no more three attempts. The failure to provide correct PIN in three attempts shall result in the ATM card being blocked.
 7. The system shall ask for the transaction type after satisfactory validation of the customer PIN only. The customer shall be given the three options: Withdraw money, deposit money or balance check.
-8. If a customer selects Withdraw money, the system shall prompt the customer to enter the amount to be dispensed. The ATM has no restriction on the amount to be dispensed and dispenses both coins and notes.
+8. If a customer selects Withdraw money, the system shall prompt the customer to enter the amount to be dispensed. **The ATM has no restriction on the amount to be dispensed and dispenses both coins and notes.**
 9. If a withdrawal transaction is approved, the requested amount of cash shall be dispensed, a receipt shall be printed containing information about the transaction, and the card shall be ejected. The information printed on the receipt includes transaction number, transaction type, amount withdrawn, and account balance
 10. The system shall also check if there are enough funds available in the account and if there are insufficient funds should display the available account balance
-11. If a customer selects Deposited money, the system shall prompt the customer to enter the amount to be deposited. The ATM can deposit Australian notes and no coins can be deposited.
+11. If a customer selects Deposited money, the system shall prompt the customer to enter the amount to be deposited. **The ATM can deposit Australian notes and no coins can be deposited.**
 12. If a deposit transaction is approved, the requested amount of cash shall be deposited, a receipt shall be printed containing information about the transaction, and the card shall be ejected. The information printed on the receipt includes transaction number, transaction type, amount deposited, and account balance.
 13. If a customer selects Check Balance, the account balance should be displayed on the screen.
 14. The system shall cancel any transaction if it has not been completed if the user selects the Cancel option
@@ -93,7 +93,7 @@ poor/partial contribution  | 1% - 49%
 Partial/poor contribution | 50% - 99%
 Full contribution | 100%
 
-Each team must submit their technical report as PDF (one submission per group) through the provided link this Canvas page. All group members must sign the assignment coversheet Download assignment coversheet and attach it as the first page of the technical report. (reports that does not include the signed assignment cover sheet will not be marked). Turnitin will be used to check similarity with resources. You may need to reference any information you may use from other resources. 
+Each team must submit their technical report as PDF (__one submission per group__) through the provided link this Canvas page. All group members must sign the [assignment coversheet](https://canvas.sydney.edu.au/courses/36380/files/18516331/download?wrap=1) and attach it as the first page of the technical report. (reports that does not include the signed assignment cover sheet will not be marked). Turnitin will be used to check similarity with resources. You may need to reference any information you may use from other resources. 
 
 Each team must submit their latest source code version of the Automated Teller Machine (ATM) application as zip file with all your project files (a separate submission link will be supplied prior to the deadline).  A specialized software might be used to check code similarity.
 
