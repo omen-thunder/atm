@@ -15,3 +15,8 @@ gradle-app.setting
 
 # Ignore compiled binary
 app/bin/**
+
+# IDE generated config
+**/.project
+**/.classpath
+app/.settings/**
