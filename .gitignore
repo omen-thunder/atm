@@ -14,4 +14,4 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 
 # Ignore compiled binary
-app/bin
+app/bin/**
