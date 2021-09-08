@@ -11,6 +11,7 @@ apply plugin: 'org.springframework.boot'
 
 
 sourceCompatibility = 16
+targetCompatibility = 16
 
 repositories {
     // Use Maven Central for resolving dependencies.
