@@ -51,8 +51,9 @@ pipeline {
 
                     if (env.BRANCH_NAME == "master") {
                         echo 'Attempting to deploy to heroku'
-                    }
+                        sh 'git push heroku master'
 
+                    }
 
                 }
 
