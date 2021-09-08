@@ -9,6 +9,7 @@
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 
+
 sourceCompatibility = 16
 
 repositories {
@@ -44,6 +45,10 @@ dependencies {
 //    compileOnly 'org.projectlombok:lombok'
 //    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation'org.springframework.boot:spring-boot-starter-test'
+}
+
+jar {
+    enabled = false
 }
 
 
