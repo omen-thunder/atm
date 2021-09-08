@@ -1,5 +1,10 @@
 pipeline {
     agent any
+
+    tools {
+        jdk 'openjdk-16'
+    }
+
     stages {
 
         stage('Clean') {
