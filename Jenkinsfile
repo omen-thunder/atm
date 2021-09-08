@@ -51,9 +51,7 @@ pipeline {
 
                     if (env.BRANCH_NAME == "master") {
                         echo 'Attempting to deploy to heroku'
-                        withCredentials([usernamePassword(credentialsId: 'heroku-login', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                            sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@git.heroku.com/kings-atm.git'
-                          }
+                        sh 'git push https://git.heroku.com/kings-atm.git master'
 
                     }
 
