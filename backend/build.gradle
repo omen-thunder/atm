@@ -6,15 +6,31 @@
  * User Manual available at https://docs.gradle.org/7.2/userguide/building_java_projects.html
  */
 
-plugins {
-    // Apply the application plugin to add support for building a CLI application in Java.
-    id 'application'
-}
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+sourceCompatibility = 16
 
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
 }
+
+configurations {
+    providedRuntime
+}
+
+// Use the static files built from the frontend vue project
+sourceSets {
+    main {
+        resources {
+            srcDir '../frontend/build/dist'
+        }
+    }
+}
+
+processResources.dependsOn ':frontend:npmBuild'
+
 
 dependencies {
     // Use JUnit test framework.
@@ -22,9 +38,13 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.1.1-jre'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+//    annotationProcessor 'org.projectlombok:lombok'
+//    compileOnly 'org.projectlombok:lombok'
+//    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    testImplementation'org.springframework.boot:spring-boot-starter-test'
 }
 
-application {
-    // Define the main class for the application.
-    mainClass = 'KingsATM.App'
-}
+
+

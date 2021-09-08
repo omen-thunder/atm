@@ -8,4 +8,5 @@
  */
 
 rootProject.name = 'KingsATM'
-include('app')
+include('backend')
+include('frontend')
