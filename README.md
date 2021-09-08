@@ -4,7 +4,22 @@
     Git Repository:
     https://github.sydney.edu.au/SOFT2412-2021S2/R10_C11_G2_ATM
 
-# Members
+
+# How to run the app
+
+## Running the app locally
+You can run `./gradlew bootRun` and this will start the project locally and can
+be accessed at `localhost:7000`. This will build the frontend, backend, run tests
+and then start a localserver.
+
+## How to run the webpack frontend server
+`cd /frontend` , then run `npm run serve`. This will start a local development
+sever on port **3000**
+
+
+# Project Details
+
+## Members
 
 - bkim6426 - Brian Kim
 - cmcb5122 - Cameron McBroom
@@ -13,25 +28,25 @@
 - sdar2231 - Sandeep Darapuneni
 
 
-# Agile Software Development Practices (SOFT2412/COMP9412)
+## Agile Software Development Practices (SOFT2412/COMP9412)
 
 **School of Computer Science**  
 **Group Project Assignment 1 – Tools for Agile Software Development**
 
 
-# Background
+## Background
 
 Agile software development is centered around teams and teamwork. In Agile team environments, a set of practices and principles should be followed to guide teams through the development process to build quality software products efficiently and effectively. Implementing Agile practices and principles in a software development project require developing skills that fall in two main areas namely, technical tooling, and social interactions. In this unit, you are required to work in Agile software development teams to experience and develop both technical and social skills.
 
 The goal of the first group project assignment is to work as a team and to use and apply Agile software development tools in the context of a software development project.
 
-# Main Requirements
+## Main Requirements
 
 In this group project, teams of 5 students (must be enrolled in the same lab) will be required to build an ATM software application in Java. All teams are required to use this software project as the starting point of their work. As a team, you will be required to develop specific features/functionalities of the ATM software application.
 
 Following Agile practices, each team is required to work collaboratively and carry out software development activities to build the ATM software application. During the development, each team is required to use the set of software tools covered in this course following Agile development practices. Below are more details of the project requirements and deliverables for the assignment.
 
-# Part 1 - Agile Tools Setup
+## Part 1 - Agile Tools Setup
 
 Each group must collaboratively work to setup a set of software tools that will help them to prepare to prepare agile development environment. All these tools have been/will be introduced in the weekly labs including GitHub, Gradle, JUnit (including code coverage) and Jenkins. In your tool setup, you will need to meet the following requirements:
 
@@ -43,22 +58,22 @@ Each group must collaboratively work to setup a set of software tools that will 
 
 The tool setup might become more challenging. So, it is crucial that every group members participate and practice all exercises in the tutorials (week 2 – week 6).
 
-# Part 2 - Automated Teller Machine (ATM) software for XYZ Bank
+## Part 2 - Automated Teller Machine (ATM) software for XYZ Bank
 
 Each group will be required to develop a simple ATM software in JAVA. All team members must collaboratively build this application using the agile tools they have setup in the previous part. All teams will have to implement following application requirements:
 
 1. The XYZ Bank Inc. can have many automated teller machines (ATMs), and the new software system shall provide functionality on all ATMs.
 2. The system shall enable the customers of XYZ Bank, who have valid ATM cards , to perform three types of transactions:
-    1. Withdrawal of funds
-    2. Deposit of Funds
-    3. Balance Check
+   1. Withdrawal of funds
+   2. Deposit of Funds
+   3. Balance Check
 3. The ATM should allow the user to enter the card number (5 digits) which should be validated against a list of valid cards.
 4. An ATM card usage shall be considered valid if it meets the following conditions:
-    1. The card number entered by the user is valid
-    2. The card is used after the start date, i.e., the date when the card was issued.
-    3. The card is used before the expiration date, i.e., the date when the card expires.
-    4. The card has not been reported lost or stolen by the customer, who had been issued that card.
-    5. The customer provides correct personal identification number (PIN), which matches the PIN maintained by the system.
+   1. The card number entered by the user is valid
+   2. The card is used after the start date, i.e., the date when the card was issued.
+   3. The card is used before the expiration date, i.e., the date when the card expires.
+   4. The card has not been reported lost or stolen by the customer, who had been issued that card.
+   5. The customer provides correct personal identification number (PIN), which matches the PIN maintained by the system.
 5. The system shall confiscate the ATM card if it detects that a lost or stolen card has been inserted by a customer. The system shall also display an apology to the customer
 6. The system shall allow the customer to enter the correct PIN in no more three attempts. The failure to provide correct PIN in three attempts shall result in the ATM card being blocked.
 7. The system shall ask for the transaction type after satisfactory validation of the customer PIN only. The customer shall be given the three options: Withdraw money, deposit money or balance check.
@@ -74,26 +89,26 @@ Each group will be required to develop a simple ATM software in JAVA. All team m
 
 The application design can be using any UI (text or GUI) for the functionality. You can decide on the application design/architecture; both text file or persistent database are acceptable. The software must always produce correct output and maintain correct and consistent state of all included entities.
 
-# Part 3 - Technical Report  
+## Part 3 - Technical Report
 
 Each group must prepare a technical report that record evidence of the above development activities (besides the actual Github repo. logs and reports which will be checked as part  of the marking). This specifically includes:
 
-1. Explain how the group collaborated to complete the development of the Application. This should include individual and group contributions, group communication (recorded minutes for all meetings). Each individual team member must explain how they contributed towards implementing the features of the application. 
+1. Explain how the group collaborated to complete the development of the Application. This should include individual and group contributions, group communication (recorded minutes for all meetings). Each individual team member must explain how they contributed towards implementing the features of the application.
 2. A README file or a page in the GitHub wiki explaining how to run the program, and how to test it. You may also include other instructions as to how to contribute/collaborate on the codebase.
 3. GitHub collaboration. You must explain how GitHub was used for building the application. This might include Project boards, issues, pull requests etc. and how they were used in favor of completing the implementation of the application.
 4. Explain how Gradle was used. This may include any extra tasks/dependencies used for the application including brief comments on how those extra tasks/dependencies helped you build the application.
 5. Code coverage report for the final commit, including JUnit results for the commits. All Junit test cases that are written must be documented and explained (i.e. why the unit test was chosen and what does it test (regular input, edge cases etc). Document any tests that may have failed. You will also need to explain what the test coverage report is displaying.
 
- 
 
-# Project Demonstration 
+
+## Project Demonstration
 
 Each group must demonstrate their project work. You will have to demo your group work and individual contributions to your tutor.
 More details about the demos will be announced prior to the submission deadline.
 
- 
 
-# Group Member Contribution
+
+## Group Member Contribution
 
 If members of your group do not contribute sufficiently you should alert your tutor as soon as possible. The course instructor has the discretion to scale the group’s mark for each member as follows:
 
@@ -104,11 +119,11 @@ poor/partial contribution  | 1% - 49%
 Partial/poor contribution | 50% - 99%
 Full contribution | 100%
 
-Each team must submit their technical report as PDF (__one submission per group__) through the provided link this Canvas page. All group members must sign the [assignment coversheet](https://canvas.sydney.edu.au/courses/36380/files/18516331/download?wrap=1) and attach it as the first page of the technical report. (reports that does not include the signed assignment cover sheet will not be marked). Turnitin will be used to check similarity with resources. You may need to reference any information you may use from other resources. 
+Each team must submit their technical report as PDF (__one submission per group__) through the provided link this Canvas page. All group members must sign the [assignment coversheet](https://canvas.sydney.edu.au/courses/36380/files/18516331/download?wrap=1) and attach it as the first page of the technical report. (reports that does not include the signed assignment cover sheet will not be marked). Turnitin will be used to check similarity with resources. You may need to reference any information you may use from other resources.
 
 Each team must submit their latest source code version of the Automated Teller Machine (ATM) application as zip file with all your project files (a separate submission link will be supplied prior to the deadline).  A specialized software might be used to check code similarity.
 
- 
-# Marking Guide 
+
+## Marking Guide
 
 The marking criteria will be based on the above requirements. A marking guide will be added once the details of the project demos are finalized.
