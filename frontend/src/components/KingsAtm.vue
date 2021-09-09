@@ -35,10 +35,15 @@
 </template>
 
 <script>
+import SystemTime from '@/components/SystemTime.vue';
+
 export default {
   name: "KingsAtm",
   props: {
     machineNumber: String,
+  },
+  components: {
+    SystemTime,
   },
   data() {
     return {
