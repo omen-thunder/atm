@@ -13,4 +13,9 @@ public class MessageController {
         return "Hello from the message controller";
     }
 
+    @GetMapping("/hi")
+    public String hi() {
+        return "Hi from the message controller";
+    }
+
 }
