@@ -1,5 +1,5 @@
 <template>
-  <div class="kings-atm h-screen w-screen overflow-hidden flex flex-col justify-center p-8">
+  <div class="kings-atm h-screen w-screen overflow-hidden flex flex-col justify-center p-8 bg-gray-800">
 
     <div id="atm-container" class="flex flex-col h-full overflow-auto border-4 border-gray-700 rounded-2xl">
       <div class="flex flex-col justify-center my-4">
@@ -62,3 +62,12 @@ export default {
   }
 };
 </script>
+
+
+<style scoped>
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+</style>
