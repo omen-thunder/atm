@@ -1,11 +1,11 @@
-# Kings ATM
+# :atm: Kings ATM 
 > Top Secret ATM Project
 
-    Git Repository:
-    https://github.sydney.edu.au/SOFT2412-2021S2/R10_C11_G2_ATM
 
 
 # How to run the app
+
+### :rocket: [See The Live App Here!](https://kings-atm.herokuapp.com/) :rocket:
 
 ## Running the app locally
 You can run `./gradlew bootRun` and this will start the project locally and can

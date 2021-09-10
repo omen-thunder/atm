@@ -51,7 +51,7 @@ pipeline {
 
                     if (env.BRANCH_NAME == "master") {
                         echo 'Attempting to deploy to heroku'
-                        sh 'git push heroku master'
+                        sh 'git push https://git.heroku.com/kings-atm.git master'
 
                     }
 
