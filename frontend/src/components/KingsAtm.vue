@@ -19,6 +19,11 @@
             <input type="text" placeholder="_ _ _ _ _" class="block w-64 text-center text-2xl" v-model="loginForm.accountNumber">
           </div>
 
+          <div class="block">
+            <span class="text-gray-400 text-2xl inline">Account Pin</span>
+            <input type="text" placeholder="_ _ _ _ _" class="block w-64 text-center text-2xl" v-model="loginForm.accountPin">
+          </div>
+
           <button class="p-2 m-4 text-2xl rounded-3xl bg-blue-400 active:bg-gray-400 hover:bg-blue-300" @click="login()">Login</button>
         </div>
       </div>
@@ -29,6 +34,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: "KingsAtm",
   props: {
@@ -36,11 +43,12 @@ export default {
   },
   data() {
     return {
-      maintenance: true,
+      maintenance: false,
 
       formError: '',
       loginForm: {
         accountNumber: '',
+        accountPin: ''
       },
     }
   },
@@ -50,7 +58,23 @@ export default {
     login: async function(){
       if (this.maintenance){
         this.formError = 'Sorry, our system is currently in maintenance. Please try again later.';
-        this.clearFormError(3000);
+        await this.clearFormError(3000);
+      }
+
+      const {accountNumber: username, accountPin: password } = this.loginForm
+      const encodedBase64Token = Buffer.from(`${username}:${password}`).toString('base64');
+      const auth = `Basic ${encodedBase64Token}`
+
+      localStorage.setItem("token", "");
+
+      let response = await axios.get("/api/account/details", {
+        headers: {
+          Authorization: auth
+        }
+      })
+
+      if (response.status === 200) {
+        localStorage.setItem("token", auth)
       }
     },
 

@@ -33,19 +33,25 @@ sourceSets {
 
 processResources.dependsOn ':frontend:npmBuild'
 
-
 dependencies {
-    // Use JUnit test framework.
-    testImplementation 'junit:junit:4.13.2'
+
 
     // This dependency is used by the application.
-    implementation 'com.google.guava:guava:30.1.1-jre'
+//    implementation 'com.google.guava:guava:30.1.1-jre'
 
+    // Database
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'org.postgresql:postgresql'
+
+    // Spring core
     implementation 'org.springframework.boot:spring-boot-starter-web'
-//    annotationProcessor 'org.projectlombok:lombok'
-//    compileOnly 'org.projectlombok:lombok'
-//    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // Test Frameworks
     testImplementation'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'junit:junit:4.13.2'
+
 }
 
 jar {
