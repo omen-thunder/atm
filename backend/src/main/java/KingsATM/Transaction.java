@@ -2,36 +2,53 @@ package KingsATM;
 
 import java.time.LocalDateTime;
 
-public interface Transaction {
+public class Transaction {
+	private long transactionNumber;
+	private int clientNumber;
+	private int accountNumber;
+	private int cardNumber;
+	private LocalDateTime datetime;
+	private long amount;
+	private String status;
+	private String comment;
 
-    /**
-     * Get client number.
-     * @return Integer
-     */
-    public int getClientNumber();
+	public Transaction(long transactionNumber, int clientNumber, int accountNumber, int cardNumber,
+			LocalDateTime datetime, long amount, String status, String comment) {
+		this.transactionNumber = transactionNumber;
+		this.clientNumber = clientNumber;
+		this.accountNumber = accountNumber;
+		this.cardNumber = cardNumber;
+		this.datetime = datetime;
+		this.amount = amount;
+		this.status = status;
+		this.comment = comment;
+	}
 
-    /**
-     * Get account number.
-     * @return Integer
-     */
-    public int getAccountNumber();
+	public int getClientNumber() {
+		return clientNumber;
+	}
 
-    /**
-     * Get card number.
-     * @return Integer
-     */
-    public int getCardNumber();
+	public int getAccountNumber() {
+		return accountNumber;
+	}
 
-    /**
-     * Get date and time.
-     * @return LocalDateTime
-     */
-    public LocalDateTime getDateTime();
+	public int getCardNumber() {
+		return cardNumber;
+	}
 
-    /**
-     * Get transaction ammount.
-     * @return Long
-     */
-    public long getAmount();
-    
+	public LocalDateTime getDateTime() {
+		return datetime;
+	}
+
+	public long getAmount() {
+		return amount;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public String getComment() {
+		return comment;
+	}
 }
