@@ -70,7 +70,7 @@ pipeline {
                             curl "https://${GIT_USERNAME}:${GIT_PASSWORD}@api.github.sydney.edu.au/repos/SOFT2412-2021S2/R10_C11_G2_ATM/statuses/$GIT_COMMIT" \\
                             -H "Content-Type: application/json" \\
                             -X POST \\
-                            -d "{\\"state\\": \\"success\\",\\"context\\": \\"continuous-integration/jenkins\\", \\"description\\": \\"Jenkins\\", \\"target_url\\": \\"https://e77d-2001-8003-c4f3-7e00-a2cf-c5f9-42c2-791.ngrok.io/job/gradle_tut3/$BUILD_NUMBER/console\\"}"
+                            -d "{\\"state\\": \\"success\\",\\"context\\": \\"continuous-integration/jenkins\\", \\"description\\": \\"Jenkins\\", \\"target_url\\": \\"https://kingsatm-jenkins.codepass.dev/job/KingsATM/$BUILD_NUMBER/console\\"}"
                         '''
                     }
                 }
@@ -86,7 +86,7 @@ pipeline {
                             curl "https://${GIT_USERNAME}:${GIT_PASSWORD}@api.github.sydney.edu.au/repos/SOFT2412-2021S2/R10_C11_G2_ATM/statuses/$GIT_COMMIT" \\
                             -H "Content-Type: application/json" \\
                             -X POST \\
-                            -d "{\\"state\\": \\"failure\\",\\"context\\": \\"continuous-integration/jenkins\\", \\"description\\": \\"Jenkins\\", \\"target_url\\": \\"https://e77d-2001-8003-c4f3-7e00-a2cf-c5f9-42c2-791.ngrok.io/job/gradle_tut3/$BUILD_NUMBER/console\\"}"
+                            -d "{\\"state\\": \\"failure\\",\\"context\\": \\"continuous-integration/jenkins\\", \\"description\\": \\"Jenkins\\", \\"target_url\\": \\"https://kingsatm-jenkins.codepass.dev/job/KingsATM/$BUILD_NUMBER/console\\"}"
                         '''
                     }
                 }
