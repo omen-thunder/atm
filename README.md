@@ -2,7 +2,6 @@
 > Top Secret ATM Project
 
 
-
 # How to run the app
 
 ### :rocket: [See The Live App Here!](https://kings-atm.herokuapp.com/) :rocket:
