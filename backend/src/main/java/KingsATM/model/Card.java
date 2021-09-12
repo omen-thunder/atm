@@ -4,58 +4,53 @@ package KingsATM.model;
 import KingsATM.CardStatus;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
 @Table(name = "card")
+@SequenceGenerator(name="card_seq", initialValue = 2000)
 public class Card {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "card_seq")
     private Integer id;
 
+    @NotNull
     private Date expiryDate;
 
+    @NotNull
     private CardStatus cardStatus;
 
+    @NotNull
+    @NotBlank
     private String pin;
 
-    @ManyToOne
-    @JoinColumn(name = "account_id")
+    @ManyToOne(optional = false)
+    @NotNull
     private Account account;
 
-    public Card(Date expiryDate, CardStatus cardStatus, String pin, Account account) {
-        this.expiryDate = expiryDate;
+    public Card(String pin, Account account, CardStatus cardStatus) {
         this.cardStatus = cardStatus;
         this.pin = pin;
         this.account = account;
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR, 5);
+        this.expiryDate = cal.getTime();
     }
 
-    public Card(Integer id, Date expiryDate, CardStatus cardStatus, String pin, Account account) {
-        this.id = id;
-        this.expiryDate = expiryDate;
-        this.cardStatus = cardStatus;
-        this.pin = pin;
-        this.account = account;
+    public Card(String pin, Account account) {
+        this(pin, account, CardStatus.ACTIVE);
     }
 
-    public Card() {
-    }
+    protected Card() {}
 
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account card) {
-        this.account = card;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Date getExpiryDate() {
@@ -80,5 +75,13 @@ public class Card {
 
     public void setPin(String pin) {
         this.pin = pin;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }

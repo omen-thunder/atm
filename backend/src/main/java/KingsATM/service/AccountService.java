@@ -16,6 +16,7 @@ import java.util.Optional;
 
 import static java.lang.Integer.parseInt;
 
+
 @Service
 public class AccountService implements UserDetailsService {
 
@@ -24,14 +25,6 @@ public class AccountService implements UserDetailsService {
 
     @Autowired
     private CardRepository cardRepository;
-
-    public AccountService(AccountRepository accountRepository, CardRepository cardRepository) {
-        this.accountRepository = accountRepository;
-        this.cardRepository = cardRepository;
-    }
-
-    public AccountService() {
-    }
 
     @Override
     public UserDetails loadUserByUsername(String cardNumber) throws UsernameNotFoundException {
@@ -42,30 +35,39 @@ public class AccountService implements UserDetailsService {
         if (optionalCard.isEmpty()) {
             throw new UsernameNotFoundException(cardNumber);
         }
+        var card = optionalCard.get();
 
-        Optional<Account> optionalAccount = optionalCard.map(Card::getAccount);
+        var account = card.getAccount();
 
-        if (optionalAccount.isEmpty()) {
+        if (account == null) {
             throw new UsernameNotFoundException(cardNumber);
         }
 
-        var card = optionalCard.get();
-        var account = optionalAccount.get();
-
-        UserDetails user = User.withUsername(String.valueOf(account.getId())).password(card.getPin()).authorities("USER").build();
-        return user;
+        return User.withUsername(String.valueOf(account.getId())).password(card.getPin()).authorities("USER").build();
     }
 
-    public Account getAccountByCardId(Integer id) throws EntityNotFoundException{
+    public Account getAccountByCardId(Integer id) throws EntityNotFoundException {
         var optionalCard = cardRepository.findById(id);
 
         if (optionalCard.isEmpty())
             throw new EntityNotFoundException();
 
-        return optionalCard.get().getAccount();
+        var card = optionalCard.get();
+
+        var account = card.getAccount();
+
+        if (account == null) {
+            throw new EntityNotFoundException();
+        }
+
+        return account;
     }
 
     public Optional<Account> getAccountById(Integer id) {
         return accountRepository.findById(id);
+    }
+
+    public Account saveNewUser(Account account) {
+        return accountRepository.save(account);
     }
 }

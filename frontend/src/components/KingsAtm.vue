@@ -44,12 +44,16 @@ export default {
   data() {
     return {
       maintenance: false,
-
       formError: '',
       loginForm: {
         accountNumber: '',
         accountPin: ''
       },
+    }
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.getters.isLoggedIn
     }
   },
 
@@ -61,28 +65,23 @@ export default {
         await this.clearFormError(3000);
       }
 
-      const {accountNumber: username, accountPin: password } = this.loginForm
-      const encodedBase64Token = Buffer.from(`${username}:${password}`).toString('base64');
-      const auth = `Basic ${encodedBase64Token}`
+      let signInObj = { username: this.loginForm.accountNumber, password: this.loginForm.accountPin}
 
-      localStorage.setItem("token", "");
-
-      let response = await axios.get("/api/account/details", {
-        headers: {
-          Authorization: auth
-        }
-      })
-
-      if (response.status === 200) {
-        localStorage.setItem("token", auth)
-      }
+      await this.$store.dispatch("loginUser", signInObj);
     },
 
     clearFormError: async function(delay){
       await new Promise( r => setTimeout(r, delay));
       this.formError = '';
     }
+  },
 
+  watch: {
+    isLoggedIn(loggedIn) {
+      if (loggedIn){
+        this.$router.push('/home');
+      }
+    }
   }
 };
 </script>

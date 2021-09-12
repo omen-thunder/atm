@@ -1,7 +1,7 @@
 package KingsATM.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -13,10 +13,10 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_seq")
     private Integer id;
 
-    private Long balance;
+    private Long balance = 0L;
 
     @OneToMany(mappedBy = "account")
-    private Set<Card> cards;
+    private Set<Card> cards = new HashSet<>();
 
     protected Account() {}
 

@@ -1,13 +1,17 @@
 import {createRouter, createWebHistory} from "vue-router";
 import Login from "../views/Login.vue";
 import NotFound from "@/views/NotFound";
+import Home from "@/views/Home";
+import Admin from "@/views/Admin";
+import store from '@/store';
+
 import axios from "axios";
 
 const routes = [
     {
         path: "/",
         name: "login",
-        redirect: "/login"
+        redirect: "/login",
     },
     {
         path: "/login",
@@ -23,9 +27,23 @@ const routes = [
         component: () =>
             import(/* webpackChunkName: "about" */ "../views/Register.vue"),
     },
-    // {
-    //   path: "/logout"
-    // },
+
+    {
+        path: "/home",
+        name: "Home",
+        component: Home,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: "/admin",
+        name: "Admin",
+        component: Admin,
+        meta: {
+            requiresAdmin: true
+        }
+    },
     {
         path: "/:pathMatch(.*)*",
         component: NotFound
@@ -38,20 +56,33 @@ const router = createRouter({
     routes,
 });
 
-router.afterEach((to) => {
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
 
-    if (to.path === "/logout") {
-        console.log("clearing token");
-
-        axios.get("/api/logout")
-            .then((res) => {
-                if (res.status === 200) {
-                    localStorage.setItem("token", "")
-                    router.push('/login');
-                }
+        if (!store.getters.isLoggedIn) {
+            next({
+                path: '/login',
+                params: { nextUrl: to.fullPath }
             })
+        }
     }
+    else if (to.matched.some(record => record.meta.requiresAdmin)) {
+        if (!store.getters.isAdmin) {
+            next({
+                path: '/login',
+                params: { nextUrl: to.fullPath }
+            })
+        }
+    }
+    else {
+        next()
+    }
+})
 
+router.afterEach(async (to) => {
+    if (to.path === "/logout") {
+        await store.dispatch('logoutUser');
+    }
 })
 
 

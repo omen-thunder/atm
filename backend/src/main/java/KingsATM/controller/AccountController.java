@@ -5,11 +5,8 @@ import KingsATM.dto.AccountDto;
 import KingsATM.model.Account;
 import KingsATM.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -21,17 +18,32 @@ public class AccountController {
     AccountService accountService;
 
     @GetMapping("/details")
-    public ResponseEntity<AccountDto> account(Authentication authentication) {
-        Optional<Account> optionalAccount = accountService.getAccountById(Integer.parseInt(authentication.getName()));
+    public JsonResponse<AccountDto> account(Authentication authentication) {
+        var optionalAccount = accountService.getAccountById(Integer.parseInt(authentication.getName()));
 
         if (optionalAccount.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            return new JsonResponse<>(false, "No user currently logged in");
         }
         else {
             var accountDto = new AccountDto(optionalAccount.get());
 
-            return ResponseEntity.ok(accountDto);
+            return new JsonResponse<>(accountDto);
         }
+    }
+
+    @PostMapping("/create")
+    public JsonResponse<AccountDto> createAccount(@RequestBody Account newAccount) {
+        Account account = accountService.saveNewUser(newAccount);
+
+        if (account == null) {
+            return new JsonResponse<>(false, "There was an error creating the new account");
+        }
+        else {
+            var accountDto = new AccountDto(account);
+
+            return new JsonResponse<>(accountDto);
+        }
+
     }
 
 }
