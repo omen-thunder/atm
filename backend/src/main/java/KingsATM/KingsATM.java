@@ -2,10 +2,10 @@ package KingsATM;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import sun.awt.geom.AreaOp;
 
 import java.util.HashMap;
 import java.util.SortedMap;
+import java.util.TreeMap;
 
 @SpringBootApplication
 public class KingsATM {
@@ -22,7 +22,7 @@ public class KingsATM {
     public KingsATM() {
         this.accounts = new HashMap<Integer, Account>();
         this.cards = new HashMap<Integer, AtmCard>();
-        this.transactions = new SortedMap<Long, Transaction>();
+        this.transactions = new TreeMap<Long, Transaction>();
     }
 
     /**
