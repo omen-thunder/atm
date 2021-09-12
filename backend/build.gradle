@@ -35,17 +35,25 @@ processResources.dependsOn ':frontend:npmBuild'
 
 
 dependencies {
+
     // Use JUnit test framework.
-    testImplementation 'junit:junit:4.13.2'
+//    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.1.1-jre'
 
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.4'
 //    annotationProcessor 'org.projectlombok:lombok'
 //    compileOnly 'org.projectlombok:lombok'
 //    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-    testImplementation'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.4'
+}
+
+test {
+    useJUnitPlatform()
 }
 
 jar {
