@@ -65,7 +65,7 @@ pipeline {
             script {
                 if (env.BRANCH_NAME.startsWith('PR')) {
 
-                    withCredentials([usernamePassword(credentialsId: '32ecfcb7-5392-4687-acfa-8ae8998b785c', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                    withCredentials([usernamePassword(credentialsId: 'github-userpass', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         sh '''
                             curl "https://${GIT_USERNAME}:${GIT_PASSWORD}@api.github.sydney.edu.au/repos/SOFT2412-2021S2/R10_C11_G2_ATM/statuses/$GIT_COMMIT" \\
                             -H "Content-Type: application/json" \\
@@ -81,7 +81,7 @@ pipeline {
             script {
                 if (env.BRANCH_NAME.startsWith('PR')) {
 
-                    withCredentials([usernamePassword(credentialsId: '32ecfcb7-5392-4687-acfa-8ae8998b785c', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                    withCredentials([usernamePassword(credentialsId: 'github-userpass', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         sh '''
                             curl "https://${GIT_USERNAME}:${GIT_PASSWORD}@api.github.sydney.edu.au/repos/SOFT2412-2021S2/R10_C11_G2_ATM/statuses/$GIT_COMMIT" \\
                             -H "Content-Type: application/json" \\
