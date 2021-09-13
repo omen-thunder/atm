@@ -192,6 +192,7 @@ public class KingsATM {
     }
 
     public static void main(String[] args) {
+
         SpringApplication.run(KingsATM.class, args);
     }
 }

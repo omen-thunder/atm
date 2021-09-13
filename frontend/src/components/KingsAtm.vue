@@ -13,10 +13,19 @@
         <div id="login-form" class="grid grid-cols-1 max-w-md">
           <div class="block">
             <span class="text-gray-400 text-2xl inline">Account Number</span>
-            <input type="text" placeholder="_ _ _ _ _" class="block w-64 text-center text-2xl" v-model="loginForm.accountNumber">
+            <input type="text" placeholder="_ _ _ _ _" class="block w-64 text-center text-2xl"
+                   v-model="loginForm.accountNumber">
           </div>
 
-          <button class="p-2 m-4 text-2xl rounded-3xl bg-blue-400 active:bg-gray-400 hover:bg-blue-300" @click="login()">Login</button>
+          <div class="block">
+            <span class="text-gray-400 text-2xl inline">Account Pin</span>
+            <input type="text" placeholder="_ _ _ _ _" class="block w-64 text-center text-2xl"
+                   v-model="loginForm.accountPin">
+          </div>
+
+          <button class="p-2 m-4 text-2xl rounded-3xl bg-blue-400 active:bg-gray-400 hover:bg-blue-300"
+                  @click="login()">Login
+          </button>
         </div>
       </div>
 
@@ -30,7 +39,7 @@
       </div>
 
     </div>
-    
+
   </div>
 </template>
 
@@ -47,29 +56,34 @@ export default {
   },
   data() {
     return {
-      maintenance: true,
-
+      maintenance: false,
       formError: '',
       loginForm: {
         accountNumber: '',
+        accountPin: ''
       },
     }
   },
 
   methods: {
-
-    login: async function(){
-      if (this.maintenance){
+    login: async function () {
+      if (this.maintenance) {
         this.formError = 'Sorry, our system is currently in maintenance. Please try again later.';
         this.clearFormError(5000);
       }
+
+      let signInObj = {username: this.loginForm.accountNumber, password: this.loginForm.accountPin}
+
+      await this.$store.dispatch("loginUser", signInObj);
     },
 
-    clearFormError: async function(delay){
-      await new Promise( r => setTimeout(r, delay));
+    clearFormError: async function (delay) {
+      await new Promise(r => setTimeout(r, delay));
       this.formError = '';
     }
-
+  },
+  async created() {
+    await this.$store.dispatch('initialise');
   }
 };
 </script>
