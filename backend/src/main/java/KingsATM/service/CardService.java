@@ -6,6 +6,7 @@ import KingsATM.respository.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
@@ -17,8 +18,14 @@ public class CardService {
     @Autowired
     private CardRepository cardRepository;
 
-    public Optional<Card> getCardById(Integer id) {
-       return cardRepository.findById(id);
+    public Card getCardById(Integer id) {
+        var optionalCard = cardRepository.findById(id);
+
+        if (optionalCard.isEmpty()) {
+            throw new EntityNotFoundException("No card by of id: "+ id + ", was found");
+        }
+
+        return optionalCard.get();
     }
 
     public Card saveNewCard(Card card) {
@@ -28,7 +35,6 @@ public class CardService {
     public Card updateCard(Card card) {
         return cardRepository.save(card);
     }
-
 
 
 }

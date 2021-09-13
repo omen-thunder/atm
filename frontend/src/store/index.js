@@ -25,32 +25,19 @@ export default createStore({
     setAdmin(state, payload) {
       state.isAdmin = payload
     },
-      
+
     setMachineNumber(state, machineNumber){
       state.machineNumber = machineNumber;
     }
 
   },
   actions: {
-    async loginUser({state, commit}, userDetailsObj) {
-      let auth;
-
-      if (userDetailsObj) {
-        const {username, password} = userDetailsObj;
-        const encodedBase64Token = Buffer.from(`${username}:${password}`).toString('base64');
-        auth = `Basic ${encodedBase64Token}`
-        localStorage.setItem("authtoken", "");
-      }
-      else {
-        auth = localStorage.getItem("token");
-      }
-
+    async checkAuth({state, commit}) {
       try {
+        const auth = localStorage.getItem("token");
 
         let response = await AXIOS.get("/api/account/details", {
-          headers: {
-            Authorization: auth
-          }
+          headers: {Authorization: auth}
         })
 
         if (response.status === 200 && response.data.success) {
@@ -63,19 +50,51 @@ export default createStore({
 
           commit('setAdmin', account.role === "ROLE_ADMIN");
 
-          console.log("Attempting to push to home", router)
+          state.isAdmin ? await router.replace({name: 'Admin'}) : await router.replace({name: 'Home'})
 
-          if (state.isAdmin) {
-            await router.replace({name: 'Admin'})
-          }
-          else {
-            await router.replace({name: 'Home'})
-          }
+        } else if (response.status === 200 && response.data.error) {
+          localStorage.setItem("authtoken", "")
         }
+
+        return response;
       }
       catch (e) {
-        console.log(e);
         localStorage.setItem("authtoken", "")
+        return e;
+      }
+    },
+
+    async loginUser({state, commit}, userDetailsObj) {
+      let auth;
+
+      try {
+
+        let response = await AXIOS.post("/api/account/login" , {
+          cardNumber: userDetailsObj.username,
+          cardPin: userDetailsObj.password
+        })
+
+        if (response.status === 200 && response.data.success) {
+
+          localStorage.setItem("authtoken", auth)
+
+          commit('setLoggedIn', true)
+
+          let account = response.data.result
+
+          commit('setAdmin', account.role === "ROLE_ADMIN");
+
+          state.isAdmin ? await router.replace({name: 'Admin'}) : await router.replace({name: 'Home'})
+
+        } else if (response.status === 200 && response.data.error) {
+          localStorage.setItem("authtoken", "")
+        }
+
+        return response;
+      }
+      catch (e) {
+          localStorage.setItem("authtoken", "")
+          return e;
       }
     },
 
@@ -98,7 +117,7 @@ export default createStore({
 
     async initialise(context) {
       if (context.state.isInitialised) return
-      await context.dispatch('loginUser')
+      await context.dispatch('checkAuth')
       context.commit('setInitialised', true)
     }
   },

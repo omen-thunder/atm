@@ -3,7 +3,9 @@ package KingsATM.model;
 import KingsATM.Role;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -52,6 +54,7 @@ public class Account {
         return balance;
     }
 
+    // This might be used by JPA to add entries into the database.
     public void setBalance(Long balance) {
         this.balance = balance;
     }
@@ -68,7 +71,67 @@ public class Account {
         return role;
     }
 
-    public void addNewCard(Card card) {
-        this.cards.add(card);
+    public void addCard(Card card) {
+        // Check if cards already contains card
+        if (!cards.isEmpty()) {
+            throw new IllegalArgumentException("Account already has card");
+        }
+
+        // Check if cards already contains card
+        if (cards.contains(card)) {
+            throw new IllegalArgumentException("Account already has card number");
+        }
+
+        cards.add(card);
+    }
+
+    public Card removeCard(Card card) {
+
+        var optionalCard = cards
+                .stream()
+                .filter(c -> c.getId().equals(card.getId()))
+                .findFirst();
+
+        // Check if cards contains cardNum
+        if (optionalCard.isEmpty()) {
+            throw new IllegalArgumentException("Account does not have card number");
+        }
+
+        Card removedCard = optionalCard.get();
+
+        cards.remove(card);
+
+        return removedCard;
+    }
+
+    public Long incrBalance(Long amount) {
+        // Negative amount check
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount negative");
+        }
+
+        // Overflow check
+        BigInteger sum = BigInteger.valueOf(balance).add(BigInteger.valueOf(amount));
+        if (sum.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) == -1) {
+            throw new IllegalStateException("Account balance overflow");
+        }
+
+        balance += amount;
+        return balance;
+    }
+
+    public Long decrBalance(Long amount) {
+        // Negative amount check
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount negative");
+        }
+
+        // Negative balance check
+        if (balance - amount < 0) {
+            throw new IllegalStateException("Insufficient funds");
+        }
+
+        balance -= amount;
+        return balance;
     }
 }
