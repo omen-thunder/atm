@@ -1,6 +1,7 @@
 package KingsATM.config;
 
 import KingsATM.CardStatus;
+import KingsATM.Role;
 import KingsATM.model.Account;
 import KingsATM.model.Card;
 import KingsATM.respository.AccountRepository;
@@ -36,13 +37,19 @@ public class DatabaseRunner implements CommandLineRunner {
         accountRepository.deleteAll();
         cardRepository.deleteAll();
 
+        // Create a regular user
         var account1 = accountRepository.save(new Account(1500L));
-
         var card1 = cardRepository.save(new Card(
                 passwordEncoder().encode("1234"),
                 entityManager.getReference(Account.class, account1.getId()),
                 CardStatus.ACTIVE));
 
+        // Create an admin user
+        var admin1 = accountRepository.save(new Account(Role.ROLE_ADMIN));
+        var adminCard = cardRepository.save( new Card (
+                passwordEncoder().encode("4321"),
+                entityManager.getReference(Account.class, admin1.getId()),
+                CardStatus.ACTIVE));
     }
 
 }

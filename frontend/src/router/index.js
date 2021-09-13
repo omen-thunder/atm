@@ -5,8 +5,6 @@ import Home from "@/views/Home";
 import Admin from "@/views/Admin";
 import store from '@/store';
 
-import axios from "axios";
-
 const routes = [
     {
         path: "/",
@@ -57,6 +55,16 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+
+    console.log("[Router Before] User logged in: "
+        + store.getters.isLoggedIn +
+        ", Is Admin: " + store.getters.isAdmin
+    )
+
+    console.log("[Router Before] TO: ", to)
+    console.log("[Router Before] FROM: ", from)
+
+
     if (to.matched.some(record => record.meta.requiresAuth)) {
 
         if (!store.getters.isLoggedIn) {
@@ -65,6 +73,9 @@ router.beforeEach((to, from, next) => {
                 params: { nextUrl: to.fullPath }
             })
         }
+        else {
+            next();
+        }
     }
     else if (to.matched.some(record => record.meta.requiresAdmin)) {
         if (!store.getters.isAdmin) {
@@ -72,6 +83,9 @@ router.beforeEach((to, from, next) => {
                 path: '/login',
                 params: { nextUrl: to.fullPath }
             })
+        }
+        else {
+            next();
         }
     }
     else {

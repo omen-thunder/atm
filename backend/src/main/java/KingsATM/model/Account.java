@@ -1,5 +1,7 @@
 package KingsATM.model;
 
+import KingsATM.Role;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,22 +20,24 @@ public class Account {
     @OneToMany(mappedBy = "account")
     private Set<Card> cards = new HashSet<>();
 
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.ROLE_USER;
+
     protected Account() {}
+
+    public Account(Role role) {
+        this.role = role;
+    }
+
+    public Account(Long balance, Set<Card> cards, Role role) {
+        this.balance = balance;
+        this.cards = cards;
+        this.role = role;
+    }
 
     public Account(Long balance, Set<Card> cards) {
         this.balance = balance;
         this.cards = cards;
-    }
-
-    public Account(Integer id, Long balance, Set<Card> cards) {
-        this.id = id;
-        this.balance = balance;
-        this.cards = cards;
-    }
-
-    public Account(Integer id, Long balance) {
-        this.id = id;
-        this.balance = balance;
     }
 
     public Account(Long balance) {
@@ -60,5 +64,11 @@ public class Account {
         this.cards = cards;
     }
 
+    public Role getRole() {
+        return role;
+    }
 
+    public void addNewCard(Card card) {
+        this.cards.add(card);
+    }
 }

@@ -8,7 +8,8 @@
         <h2 class="text-lg lg:text-xl text-gray-300 font-semibold">Your Business is Our Business</h2>
       </div>
 
-      <div class="text-gray-50 rounded-2xl p-2 md:w-2/3 xl:w-1/2 mx-auto h-12 transition-all" :class="formError? 'bg-red-600': 'bg-transparent'">
+      <div class="text-gray-50 rounded-2xl p-2 md:w-2/3 xl:w-1/2 mx-auto h-12 transition-all"
+           :class="formError? 'bg-red-600': 'bg-transparent'">
         <span v-text="formError" v-if="formError"></span>
       </div>
 
@@ -16,25 +17,29 @@
         <div id="login-form" class="grid grid-cols-1 max-w-md">
           <div class="block">
             <span class="text-gray-400 text-2xl inline">Account Number</span>
-            <input type="text" placeholder="_ _ _ _ _" class="block w-64 text-center text-2xl" v-model="loginForm.accountNumber">
+            <input type="text" placeholder="_ _ _ _ _" class="block w-64 text-center text-2xl"
+                   v-model="loginForm.accountNumber">
           </div>
 
           <div class="block">
             <span class="text-gray-400 text-2xl inline">Account Pin</span>
-            <input type="text" placeholder="_ _ _ _ _" class="block w-64 text-center text-2xl" v-model="loginForm.accountPin">
+            <input type="text" placeholder="_ _ _ _ _" class="block w-64 text-center text-2xl"
+                   v-model="loginForm.accountPin">
           </div>
 
-          <button class="p-2 m-4 text-2xl rounded-3xl bg-blue-400 active:bg-gray-400 hover:bg-blue-300" @click="login()">Login</button>
+          <button class="p-2 m-4 text-2xl rounded-3xl bg-blue-400 active:bg-gray-400 hover:bg-blue-300"
+                  @click="login()">Login
+          </button>
         </div>
       </div>
 
     </div>
-    
+
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+
 
 export default {
   name: "KingsAtm",
@@ -51,37 +56,26 @@ export default {
       },
     }
   },
-  computed: {
-    loggedIn() {
-      return this.$store.getters.isLoggedIn
-    }
-  },
 
   methods: {
-
-    login: async function(){
-      if (this.maintenance){
+    login: async function () {
+      if (this.maintenance) {
         this.formError = 'Sorry, our system is currently in maintenance. Please try again later.';
         await this.clearFormError(3000);
       }
 
-      let signInObj = { username: this.loginForm.accountNumber, password: this.loginForm.accountPin}
+      let signInObj = {username: this.loginForm.accountNumber, password: this.loginForm.accountPin}
 
       await this.$store.dispatch("loginUser", signInObj);
     },
 
-    clearFormError: async function(delay){
-      await new Promise( r => setTimeout(r, delay));
+    clearFormError: async function (delay) {
+      await new Promise(r => setTimeout(r, delay));
       this.formError = '';
     }
   },
-
-  watch: {
-    isLoggedIn(loggedIn) {
-      if (loggedIn){
-        this.$router.push('/home');
-      }
-    }
+  async created() {
+    await this.$store.dispatch('initialise');
   }
 };
 </script>

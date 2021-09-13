@@ -1,25 +1,37 @@
 package KingsATM.dto;
 
+import KingsATM.Role;
 import KingsATM.model.Account;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class AccountDto {
+public class AccountDtoRes {
 
     private Integer id;
 
     private Long balance;
 
-    private Set<CardDto> cards = new HashSet<>();
+    private Role role;
 
-    public AccountDto(Account account) {
+    private Set<CardDtoRes> cards = new HashSet<>();
+
+    public AccountDtoRes(Account account) {
         this.id = account.getId();
         this.balance = account.getBalance();
+        this.role = account.getRole();
         if (account.getCards() != null) {
-            this.cards = account.getCards().stream().map(CardDto::new).collect(Collectors.toSet());
+            this.cards = account.getCards().stream().map(CardDtoRes::new).collect(Collectors.toSet());
         }
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public java.lang.Integer getId() {
@@ -38,11 +50,11 @@ public class AccountDto {
         this.balance = balance;
     }
 
-    public Set<CardDto> getCards() {
+    public Set<CardDtoRes> getCards() {
         return cards;
     }
 
-    public void setCards(Set<CardDto> cards) {
+    public void setCards(Set<CardDtoRes> cards) {
         this.cards = cards;
     }
 }

@@ -5,7 +5,7 @@ import KingsATM.model.Card;
 
 import java.util.Date;
 
-public class CardDto {
+public class CardDtoRes {
     private Integer id;
 
     private Date expiryDate;
@@ -14,7 +14,7 @@ public class CardDto {
 
     private Integer accountId;
 
-    public CardDto(Card card) {
+    public CardDtoRes(Card card) {
         this.id = card.getId();
         this.cardStatus = card.getCardStatus();
         this.expiryDate = card.getExpiryDate();

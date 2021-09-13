@@ -1,5 +1,6 @@
 package KingsATM.service;
 
+import KingsATM.dto.AccountDtoReq;
 import KingsATM.model.Account;
 import KingsATM.model.Card;
 import KingsATM.respository.AccountRepository;
@@ -29,7 +30,6 @@ public class AccountService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String cardNumber) throws UsernameNotFoundException {
 
-
         Optional<Card> optionalCard = cardRepository.findById(parseInt(cardNumber));
 
         if (optionalCard.isEmpty()) {
@@ -43,7 +43,11 @@ public class AccountService implements UserDetailsService {
             throw new UsernameNotFoundException(cardNumber);
         }
 
-        return User.withUsername(String.valueOf(account.getId())).password(card.getPin()).authorities("USER").build();
+        return User
+                .withUsername(String.valueOf(account.getId()))
+                .password(card.getPin())
+                .authorities(account.getRole().name())
+                .build();
     }
 
     public Account getAccountByCardId(Integer id) throws EntityNotFoundException {
@@ -63,11 +67,23 @@ public class AccountService implements UserDetailsService {
         return account;
     }
 
-    public Optional<Account> getAccountById(Integer id) {
-        return accountRepository.findById(id);
+    public Account getAccountById(Integer id) throws EntityNotFoundException {
+        var account = accountRepository.findById(id);
+        if (account.isEmpty()) {
+            throw new EntityNotFoundException();
+        } else {
+            return account.get();
+        }
     }
 
-    public Account saveNewUser(Account account) {
+    public Account saveNewAccount(Account account) {
         return accountRepository.save(account);
+    }
+
+    public Account createAccountFromDto(AccountDtoReq accountDtoReq) {
+        Account account = new Account (
+                accountDtoReq.getBalance()
+        );
+        return this.saveNewAccount(account);
     }
 }
