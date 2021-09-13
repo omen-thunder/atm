@@ -1,5 +1,7 @@
-<template>
-  <home-options/>
+<template>  
+  <div class="home">
+      <home-options/>  
+  </div>
 </template>
 
 <script>
@@ -11,8 +13,12 @@ export default {
   },
   methods: {
 
+  },
+  beforeMount: async function(){
+    // TODO: get/set machine number per session.
+    this.$store.commit('setMachineNumber',1001);
   }
-}
+};
 </script>
 
 <style scoped>

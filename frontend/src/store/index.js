@@ -8,7 +8,8 @@ export default createStore({
     return {
       isInitialised: false,
       isLoggedIn: false,
-      isAdmin: false
+      isAdmin: false,
+      machineNumber: '0000'
     }
   },
   mutations: {
@@ -23,6 +24,10 @@ export default createStore({
 
     setAdmin(state, payload) {
       state.isAdmin = payload
+    },
+      
+    setMachineNumber(state, machineNumber){
+      state.machineNumber = machineNumber;
     }
 
   },

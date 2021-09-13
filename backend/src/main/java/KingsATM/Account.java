@@ -1,54 +1,95 @@
 package KingsATM;
 
+import java.util.Map;
 import java.util.HashMap;
+import java.lang.Exception;
+import java.math.BigInteger;
 
-public interface Account {
+public class Account {
+	private int accountNumber;
+	private Client accountHolder;
+	private long balance;
+	private Map<Short, AtmCard> cards;
 
-    /**
-     * Get account number.
-     * @return Integer
-     */
-    public int getAccountNumber();
+	public Account (int accountNumber, Client accountHolder) {
+		this.accountNumber = accountNumber;
+		this.accountHolder = accountHolder;
+		balance = 0;
+		cards = new HashMap<Short, AtmCard>();
+	}
 
-    /**
-     * Get account balance.
-     * @return Long
-     */
-    public long getBalance();
+	public Account (int accountNumber, Client accountHolder, long balance) {
+		this.accountNumber = accountNumber;
+		this.accountHolder = accountHolder;
+		this.balance = balance;
+		cards = new HashMap<Short, AtmCard>();
+	}
 
-    /**
-     * Increase balanace by a given amount.
-     * @param amount
-     * @return Updated account balance.
-     */
-    public long incrBalance(long amount);
+	public int getAccountNumber() {
+		return accountNumber;
+	}
 
-    /**
-     * Decrease balance by a given amount. Throws IllegalStateException if there is insufficient fund.
-     * @param amount
-     * @retur Updated account balance.
-     * @throws IllegalStateException
-     */
-    public long decrBalance(long amount) throws IllegalStateException;
+	public long getBalance() {
+		return balance;
+	}
 
-    /**
-     * Get all the associated cards.
-     * @return HashMap of cards
-     */
-    public HashMap<Integer, AtmCard> getCards();
+	public long incrBalance(long amount) {
+		// Negative amount check
+		if (amount < 0) {
+			throw new IllegalArgumentException("Amount negative");
+		}
 
-    /**
-     * Add an AtmCard to the account.
-     * @param card
-     * @return The added AtmCard.
-     */
-    public AtmCard addCard(AtmCard card);
+		// Overflow check
+		BigInteger sum = BigInteger.valueOf(balance).add(BigInteger.valueOf(amount));
+		if (sum.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) == -1) {
+			throw new IllegalStateException("Account balance overflow");
+		}
 
-    /**
-     * Remove an AtmCard from the account.
-     * @param card
-     * @return The removed AtmCard.
-     */
-    public AtmCard removeCard(AtmCard card);
+		balance += amount;
+		return balance;
+	}
 
+	public long decrBalance(long amount) {
+		// Negative amount check
+		if (amount < 0) {
+			throw new IllegalArgumentException("Amount negative");
+		}
+
+		// Negative balance check
+		if (balance - amount < 0) {
+			throw new IllegalStateException("Insufficient funds");
+		}
+
+		balance -= amount;
+		return balance;
+	}
+
+	public Map<Short, AtmCard> getCards() {
+		return cards;
+	}
+
+	public void addCard(short cardNum, AtmCard card) {
+		// Check if cards already contains card
+		if (cards.containsValue(card)) {
+			throw new IllegalArgumentException("Account already has card");
+		}
+
+		// Check if cards already contains card
+		if (cards.containsKey(cardNum)) {
+			throw new IllegalArgumentException("Account already has card number");
+		}
+
+		cards.put(cardNum, card);
+	}
+
+	public AtmCard removeCard(short cardNum) {
+		// Check if cards contains cardNum
+		if (!cards.containsKey(cardNum)) {
+			throw new IllegalArgumentException("Account does not have card number");
+		}
+
+		AtmCard removed = cards.get(cardNum);
+		cards.remove(cardNum);
+		return removed;
+	}
 }

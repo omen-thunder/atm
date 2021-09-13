@@ -2,30 +2,46 @@ package KingsATM;
 
 import java.util.ArrayList;
 
-public interface Client {
+public class Client {
+    private int clientNumber;
+    private String givenName;
+    private String surname;
+    private ArrayList<Account> accounts;
 
+    public Client() {
+        this.accounts = new ArrayList<Account>();
+    }
     /**
      * Get all the accounts owned by the client.
-     * @return ArrayList of arrounts.
+     * @return ArrayList of accounts.
      */
-    public ArrayList<Account> getAccounts();
+
+    public ArrayList<Account> getAccounts() {
+        return this.accounts;
+    }
 
     /**
      * Get the client's given name.
      * @return String
      */
-    public String getGivenName();
+    public String getGivenName() {
+        return this.givenName;
+    }
 
     /**
      * Get the client's surname.
      * @return String
      */
-    public String getSurname();
+    public String getSurname() {
+        return this.surname;
+    }
 
     /**
      * Get the client number.
      * @return Integer
      */
-    public int getClientNumber();
+    public int getClientNumber() {
+        return this.clientNumber;
+    }
     
 }
