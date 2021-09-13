@@ -8,6 +8,15 @@
   </div>
 </template>
 
+<script>
+export default {
+  async created() {
+    await this.$store.dispatch('initialise');
+  }
+}
+
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
