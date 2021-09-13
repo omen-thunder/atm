@@ -16,7 +16,7 @@ public class CardDtoRes {
 
     public CardDtoRes(Card card) {
         this.id = card.getId();
-        this.cardStatus = card.getCardStatus();
+        this.cardStatus = card.getStatus();
         this.expiryDate = card.getExpiryDate();
         this.accountId = card.getAccount().getId();
     }

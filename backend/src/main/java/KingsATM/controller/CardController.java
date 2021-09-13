@@ -40,7 +40,7 @@ public class CardController {
             var cardToSave = new Card (
                     newCard.getPin(),
                     account,
-                    newCard.getCardStatus()
+                    newCard.getStatus()
             );
 
             Card card = cardService.saveNewCard(cardToSave);

@@ -4,7 +4,6 @@ package KingsATM.model;
 import KingsATM.CardStatus;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Calendar;
@@ -12,8 +11,9 @@ import java.util.Date;
 
 @Entity
 @Table(name = "card")
-@SequenceGenerator(name="card_seq", initialValue = 2000)
+@SequenceGenerator(name="card_seq", initialValue = 20000)
 public class Card {
+    public static final int MAX_ATTEMPTS = 5;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "card_seq")
@@ -23,7 +23,10 @@ public class Card {
     private Date expiryDate;
 
     @NotNull
-    private CardStatus cardStatus;
+    private CardStatus status;
+
+    @NotNull
+    private Integer loginAttempt = 0;
 
     @NotNull
     @NotBlank
@@ -34,7 +37,7 @@ public class Card {
     private Account account;
 
     public Card(String pin, Account account, CardStatus cardStatus) {
-        this.cardStatus = cardStatus;
+        this.status = cardStatus;
         this.pin = pin;
         this.account = account;
 
@@ -49,24 +52,41 @@ public class Card {
 
     protected Card() {}
 
+    protected void setExpiryDate(Date expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+
+    protected void setStatus(CardStatus cardStatus) {
+        this.status = cardStatus;
+    }
+
+    /**
+     * Get the 5-digit card number.
+     * @return Integer
+     */
     public Integer getId() {
         return id;
     }
+
 
     public Date getExpiryDate() {
         return expiryDate;
     }
 
-    public void setExpiryDate(Date expiryDate) {
-        this.expiryDate = expiryDate;
+    /**
+     * Check the card expiry against system time.
+     * @return True, if the card is expired.
+     */
+    public boolean isExpired() {
+       return this.expiryDate.before(Calendar.getInstance().getTime());
     }
 
-    public CardStatus getCardStatus() {
-        return cardStatus;
-    }
-
-    public void setCardStatus(CardStatus cardStatus) {
-        this.cardStatus = cardStatus;
+    /**
+     * Get the status of the card. Must be a constant defined in CardStatus.
+     * @return CardStatus
+     */
+    public CardStatus getStatus() {
+        return status;
     }
 
     public String getPin() {
@@ -84,4 +104,64 @@ public class Card {
     public void setAccount(Account account) {
         this.account = account;
     }
+
+    public Integer getLoginAttempt() {
+        return loginAttempt;
+    }
+
+    public Integer getAttemptsRemaining() {
+        return MAX_ATTEMPTS - loginAttempt;
+    }
+
+    public Boolean isLocked() {
+      return this.status == CardStatus.BANNED;
+    }
+
+    public void setLoginAttempt(Integer loginAttempt) {
+        this.loginAttempt = loginAttempt;
+
+        if (this.loginAttempt == MAX_ATTEMPTS) {
+            setBanned();
+        }
+    }
+
+    /**
+     * Set the card as "banned". It can only be "banned" if the card is "active".
+     * @return True, if successful.
+     */
+    public boolean setBanned() throws IllegalStateException {
+        if (this.status.equals(CardStatus.ACTIVE)) {
+            this.status = CardStatus.BANNED;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Set the card as "lost". It cannot be marked as "lost" if it is already "confiscated".
+     * @return True, if successful.
+     */
+    public boolean setLost() throws IllegalStateException {
+        if (!(this.status.equals(CardStatus.CONFISCATED))) {
+            this.status = CardStatus.LOST;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Set the card as "confiscated". It can only be confiscated if it is marked as "lost".
+     * @return True, if successful.
+     */
+    public boolean setConfiscated() throws IllegalStateException{
+        if(this.status.equals(CardStatus.LOST)) {
+            this.status = CardStatus.CONFISCATED;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

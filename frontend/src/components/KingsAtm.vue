@@ -74,7 +74,11 @@ export default {
 
       let signInObj = {username: this.loginForm.accountNumber, password: this.loginForm.accountPin}
 
-      await this.$store.dispatch("loginUser", signInObj);
+      let response = await this.$store.dispatch("loginUser", signInObj);
+
+      if (response?.data.error) {
+        this.formError = response.data.error;
+      }
     },
 
     clearFormError: async function (delay) {
