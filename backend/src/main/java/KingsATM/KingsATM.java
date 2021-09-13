@@ -4,14 +4,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.HashMap;
-import java.util.SortedMap;
 import java.util.TreeMap;
 
 @SpringBootApplication
 public class KingsATM {
     private HashMap<Integer, Account> accounts;
     private HashMap<Integer, AtmCard> cards;
-    private SortedMap<Long, Transaction> transactions;
+    private TreeMap<Long, Transaction> transactions;
     private int machineNumber;
     private int lastCardNumber;
     private int lastAccountNumber;

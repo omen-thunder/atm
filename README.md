@@ -16,6 +16,19 @@ and then start a localserver.
 sever on port **3000**
 
 
+## How to run the app in Docker
+
+Required:
+- [Docker Desktop (Windows/Mac)](https://www.docker.com/get-started) / [Docker Engine (Linux)](https://hub.docker.com/search?offering=community&operating_system=linux&q=&type=edition)
+- [docker-compose](https://docs.docker.com/compose/install/)
+
+1. At the project root folder, where `docker-compose.yml` is located, run `docker-compose up -d` .
+2. Run `docker ps` to see running containers. You should see a container with the image name `*_kingsatm` .
+3. The app is available at `http://localhost:8090` .
+
+To stop the container, run `docker-compose down` .
+
+
 # Project Details
 
 ## Members

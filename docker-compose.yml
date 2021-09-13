@@ -1,0 +1,8 @@
+version: "3.7"
+
+services:
+  kingsatm:
+    build: .
+    ports:
+      - 8090:7000
+    
