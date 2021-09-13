@@ -21,7 +21,7 @@ pipeline {
             steps {
                 script {
                     echo 'Attempting to run build'
-                    sh './gradlew build'
+                    sh './gradlew build -x test'
                 }
             }
         }
