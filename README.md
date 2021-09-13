@@ -26,6 +26,8 @@ Required:
 2. Run `docker ps` to see running containers. You should see a container with the image name `*_kingsatm` .
 3. The app is available at `http://localhost:8090` .
 
+To stop the container, run `docker-compose down` .
+
 
 # Project Details
 
