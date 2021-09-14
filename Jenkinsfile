@@ -5,6 +5,11 @@ pipeline {
         jdk 'openjdk-16'
     }
 
+    environment {
+        BUILD_WEBHOOK_STAGING = credentials('deploy-webhook-staging')
+        BUILD_WEBHOOK_MASTER = credentials('deploy-webhook-master')
+    }
+
     stages {
 
         stage('Clean') {
@@ -38,23 +43,11 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-
-//                    if ("${env.BRANCH_NAME}" == "staging") {
-//                        echo 'All tests passed, pushing staging branch to master branch'
-//
-//                        withCredentials([usernamePassword(credentialsId: '32ecfcb7-5392-4687-acfa-8ae8998b785c', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-//                            sh "git checkout master"
-//                            sh 'git merge staging'
-//                            sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.sydney.edu.au/SOFT2412-2021S2/gradle_tut3.git'
-//                        }
-//                    }
-
-                    if (env.BRANCH_NAME == "master") {
-                        echo 'Attempting to deploy to heroku'
-                        sh 'git push https://git.heroku.com/kings-atm.git master'
-
+                    if (env.BRANCH_NAME.startsWith('master')) {
+                        sh 'curl $BUILD_WEBHOOK_MASTER | grep OK'
+                    } else if (env.BRANCH_NAME.startsWith('staging')) {
+                        sh 'curl $BUILD_WEBHOOK_STAGING | grep OK'
                     }
-
                 }
 
             }
