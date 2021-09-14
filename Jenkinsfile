@@ -27,7 +27,6 @@ pipeline {
           echo 'Attempting to run build'
           sh './gradlew build -x test'
         }
-
       }
     }
 
@@ -37,6 +36,8 @@ pipeline {
           echo 'Attempting to run tests'
           sh './gradlew check'
         }
+      }
+    }
 
     stage('Deploy') {
       steps {
@@ -92,4 +93,5 @@ curl "https://${GIT_USERNAME}:${GIT_PASSWORD}@api.github.sydney.edu.au/repos/SOF
     }
 
   }
+
 }
