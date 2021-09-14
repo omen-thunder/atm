@@ -44,9 +44,9 @@ pipeline {
             steps {
                 script {
                     if (env.BRANCH_NAME.startsWith('master')) {
-                        sh 'curl $BUILD_WEBHOOK_MASTER | grep OK'
+                        sh(script: 'curl $BUILD_WEBHOOK_MASTER | grep -o OK')
                     } else if (env.BRANCH_NAME.startsWith('staging')) {
-                        sh 'curl $BUILD_WEBHOOK_STAGING | grep OK'
+                        sh(script: 'curl $BUILD_WEBHOOK_STAGING | grep -o OK')
                     }
                 }
 
