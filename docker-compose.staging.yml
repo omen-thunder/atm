@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  db:
+    image: postgres:13-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: kingsatm
+      POSTGRES_USER: client
+      POSTGRES_PASSWORD: client
+
+    expose:
+      - 5432
+
+  kingsatm:
+    depends_on:
+      - db
+    build: .
+    ports:
+      - 8091:7000
+    
