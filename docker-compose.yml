@@ -11,11 +11,14 @@ services:
 
     expose:
       - 5432
+    ports:
+      - "5432:5432"
+
 
   kingsatm:
     depends_on:
       - db
     build: .
     ports:
-      - 8090:7000
+      - "8090:7000"
     
