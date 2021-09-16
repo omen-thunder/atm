@@ -93,7 +93,7 @@ public class Account {
                 .findFirst();
 
         // Check if cards contains cardNum
-        if (optionalCard.isEmpty()) {
+        if (optionalCard == null) {
             throw new IllegalArgumentException("Account does not have card number");
         }
 
