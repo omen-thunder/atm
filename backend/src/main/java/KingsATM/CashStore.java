@@ -1,18 +1,18 @@
 package KingsATM;
 
-import java.util.NavigableMap;
+// import java.util.NavigableMap;
 import java.util.TreeMap;
 import java.util.Iterator;
 
 public class CashStore {
-	private NavigableMap<Short, Integer> cash;
+	private TreeMap<Short, Integer> cash;
 
 	public CashStore() {
 		cash = newStore();
 	}
 
-	protected NavigableMap<Short, Integer> newStore() {
-		NavigableMap<Short, Integer> store = new TreeMap<Short, Integer>();
+	protected TreeMap<Short, Integer> newStore() {
+		TreeMap<Short, Integer> store = new TreeMap<Short, Integer>();
 		store.put((short) 5, 0);
 		store.put((short) 10, 0);
 		store.put((short) 20, 0);
@@ -33,8 +33,8 @@ public class CashStore {
 		}
 
 		// Overflow check
-		long sum = cash.get(value) + quantity;
-		if (sum > Integer.MAX_VALUE) {
+		// long sum = cash.get(value) + quantity;
+		if (Integer.MAX_VALUE - cash.get(value) < quantity) {
 			throw new IllegalStateException("Account balance overflow");
 		}
 
@@ -73,20 +73,21 @@ public class CashStore {
 
 	public long getTotalValue() {
 		long total = 0;
-		Iterator keys = cash.keySet().iterator();
+		Iterator<Short> keys = cash.keySet().iterator();
 		while (keys.hasNext()) {
-			Short key = (Short) keys.next();
+			Short key = keys.next();
 			total += key * cash.get(key);
 		}
 		return total;
 	}
 
-	public NavigableMap<Short, Integer> withdraw(long amount) {
-		NavigableMap<Short, Integer> withdrawl = newStore();
-		Iterator<Short> keys = cash.descendingKeySet().descendingIterator();
+	public TreeMap<Short, Integer> withdraw(long amount) {
+		TreeMap<Short, Integer> withdrawl = newStore();
+		Iterator<Short> keys = cash.descendingKeySet().iterator();
+
 		while (keys.hasNext()) {
-			Short key = (Short) keys.next();
-			while (key < amount && cash.get(key) > 0) {
+			Short key = keys.next();
+			while (key <= amount && cash.get(key) > 0) {
 				withdrawl.put(key, withdrawl.get(key) + 1);
 				cash.put(key, cash.get(key) - 1);
 				amount -= key;

@@ -51,9 +51,21 @@ dependencies {
 
     // Test Frameworks
     testImplementation'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     testImplementation 'junit:junit:4.13.2'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine'
 
 }
+
+testResultsDirName = "$buildDir/test-results"
+
+test {
+    useJUnitPlatform()
+    maxHeapSize = '1G'
+    // reports.html.required = false
+}
+
 
 jar {
     enabled = false
