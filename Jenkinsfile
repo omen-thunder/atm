@@ -1,5 +1,9 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'gradle:7-jdk16'
+    }
+  }
 
   environment {
     BUILD_WEBHOOK_STAGING = credentials('deploy-webhook-staging')
@@ -12,15 +16,7 @@ pipeline {
       steps {
         script {
 
-          sh 'docker -v'
-          sh 'pwd'
-          sh 'ls ~'
-
-          def gradle = docker.image('gradle:7-jdk16')
-          gradle.pull()
-          gradle.inside('--entrypoint=""') {
-            sh 'gradle -v'
-          }
+          sh 'gradle -v'
 
         }
       }
