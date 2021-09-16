@@ -34,7 +34,7 @@ pipeline {
       steps {
         script {
           echo 'Starting Postgres container'
-          docker.image('postgres:13-alpine').withRun('-e "POSTGRES_DB=kingsatm" -e "POSTGRES_USER=client" -e "POSTGRES_PASSWORD=client"'){ c -> 
+          docker.image('postgres:13-alpine').withRun('-p 5432:5432 -e "POSTGRES_DB=kingsatm" -e "POSTGRES_USER=client" -e "POSTGRES_PASSWORD=client"'){ c -> 
             echo 'Attempting to run tests'
             sh './gradlew test'
             junit '**/build/test-results/**/*.xml'
