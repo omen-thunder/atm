@@ -34,8 +34,17 @@ pipeline {
       steps {
         script {
           echo 'Attempting to run tests'
+          sh './gradlew test'
+        }
+      }
+    }
+
+    stage('Check') {
+      steps {
+        script {
+          echo 'Attempting to run checks'
           sh './gradlew check'
-          junit '**/build/test-results/test/*.xml'
+          junit '**/build/test-results/**/*.xml'
         }
       }
     }
