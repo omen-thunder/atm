@@ -43,7 +43,6 @@ pipeline {
         }
         script {
           echo 'Attempting to run tests'
-          // sh 'while pg_isready -d kingsatm -h localhost -p 5432 -U client; do sleep 1; done'
           sh './gradlew test'
           sh './gradlew check'
           junit '**/build/test-results/**/*.xml'
