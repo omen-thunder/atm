@@ -17,5 +17,5 @@ services:
       - db
     build: .
     ports:
-      - "8090:7000"
+      - 8090:7000
     

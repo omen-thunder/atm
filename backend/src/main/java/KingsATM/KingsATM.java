@@ -99,10 +99,10 @@ public class KingsATM {
     }
 
     private void loadDB() {
-        // Dont know what to do here
+        // Deprecated
     }
     private void saveDB() {
-        // Dont know what to do here
+        // Deprecated
     }
 
     /**

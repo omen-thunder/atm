@@ -12,13 +12,18 @@ public class AtmCard {
     private byte loginAttempt;
     private String cardPin;
     private CardStatus status;
-    private byte issueMonth;
-    private short issueYear;
-    private byte expireMonth;
-    private short expireYear;
+    private Calendar issueMonthAndYear;
+    private Calendar expireMonthAndYear;
 
-    public AtmCard() {
-
+    public AtmCard(int cardNumber, Account linkedAccount, Client cardOwner, byte loginAttempt, String cardPin, CardStatus status, Calendar issueMonthAndYear, Calendar expireMonthAndYear) {
+        this.cardNumber = cardNumber;
+        this.linkedAccount = linkedAccount;
+        this.cardOwner = cardOwner;
+        this.loginAttempt = loginAttempt;
+        this.cardPin = cardPin;
+        this.status = status;
+        this.issueMonthAndYear = issueMonthAndYear;
+        this.expireMonthAndYear = expireMonthAndYear;
     }
     /**
      * Get the 5-digit card number.
@@ -33,14 +38,8 @@ public class AtmCard {
      * @return True, if the card is expired.
      */
     public boolean isExpired() {
-        Integer currentYear = new Integer(Calendar.getInstance().get(Calendar.YEAR)); //IntelliJ says that the Integer constructor is deprecated, but this was the only way I could find to be able to use shortValue() and byteValue(), which are methods of the Integer class
-        Integer currentMonth = new Integer(Calendar.getInstance().get(Calendar.MONTH));
-        if ((currentYear.shortValue() > this.expireYear) & (currentMonth.byteValue() > this.expireMonth)) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        Calendar currentYearAndMonth = Calendar.getInstance();
+        return currentYearAndMonth.after(this.expireMonthAndYear);
     }
 
     /**

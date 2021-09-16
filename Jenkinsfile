@@ -34,7 +34,12 @@ pipeline {
       steps {
         script {
           echo 'Attempting to run tests'
-          sh './gradlew check'
+          docker.image('postgres:13-alpine').withRun('-e "POSTGRES_DB=kingsatm" -e "POSTGRES_USER=client" -e "POSTGRES_PASSWORD=client"') { c -> 
+            sh 'while pg_isready -d kingsatm -h localhost -p 5432 -U client; do sleep 1; done'
+            sh './gradlew test'
+            sh './gradlew check'
+            junit '**/build/test-results/**/*.xml'
+          }
         }
       }
     }
@@ -88,9 +93,6 @@ curl "https://${GIT_USERNAME}:${GIT_PASSWORD}@api.github.sydney.edu.au/repos/SOF
 
     }
 
-    always {
-      junit '**/build/test-results/test/*.xml'
-    }
 
   }
 

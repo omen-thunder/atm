@@ -1,24 +1,50 @@
 # :atm: Kings ATM 
 > Top Secret ATM Project
 
+### Project Links
+[:clipboard: Trello](https://trello.com/invite/b/GH4QKB36/9b4734b33bfc7c8f13887f5fe98c9b3c/kings-atm) 
+[:man_singer: Jenkins](https://kingsatm-jenkins.codepass.dev)
+[:rocket: Production App](https://kingsatm.codepass.dev)
+[:martial_arts_uniform: Staging App](https://kingsatm-staging.codepass.dev)
 
-# How to run the app
+## How to run the application locally
 
-### :rocket: [See The Live App Here!](https://kings-atm.herokuapp.com/) :rocket:
+<details>
+   <summary> <strong> :elephant: Run with gradle </strong> </summary>
 
-## Running the app locally
+**Requirements**
+
+- Postgres datbase installed locally
+- Postgres database with the name `kingsatm`
+- `kingsatm` database set up with credentials `client:client`
+- Postgres exposed on localhost:5432
+- Gradle installed (or use graddle wrapper)
+
 You can run `./gradlew bootRun` and this will start the project locally and can
 be accessed at `localhost:7000`. This will build the frontend, backend, run tests
 and then start a localserver.
 
-## How to run the webpack frontend server
-`cd /frontend` , then run `npm run serve`. This will start a local development
-sever on port **3000**
+</details>
+
+<details> 
+   <summary> <strong> :sparkles: Run the frontend server (better for development) </strong> </summary>
+   
+   **Requirements**
+
+   - NodeJs installed locally
+   - Npm installed locally
+   
+In the terminal run `cd /frontend` , then run `npm run serve`. This will start a local development
+sever on port **3000**. When you make changes to the frontend, this will automatically recompile on save to update realtime
 
 
-## How to run the app in Docker
+</details>
 
-Required:
+<details> 
+   <summary> <strong>:whale: Run with Docker </strong> </summary> 
+   
+**Requirements** 
+
 - [Docker Desktop (Windows/Mac)](https://www.docker.com/get-started) / [Docker Engine (Linux)](https://hub.docker.com/search?offering=community&operating_system=linux&q=&type=edition)
 - [docker-compose](https://docs.docker.com/compose/install/)
 
@@ -28,10 +54,14 @@ Required:
 
 To stop the container, run `docker-compose down` .
 
+</details>
 
-# Project Details
+## Project Details - Agile Software Development Practices (SOFT2412/COMP9412)
 
-## Members
+**School of Computer Science**  
+**Group Project Assignment 1 – Tools for Agile Software Development**
+
+### :family: Members
 
 - bkim6426 - Brian Kim
 - cmcb5122 - Cameron McBroom
@@ -40,37 +70,45 @@ To stop the container, run `docker-compose down` .
 - sdar2231 - Sandeep Darapuneni
 
 
-## Agile Software Development Practices (SOFT2412/COMP9412)
-
-**School of Computer Science**  
-**Group Project Assignment 1 – Tools for Agile Software Development**
-
-
-## Background
+<details> 
+   <summary><strong>Background</strong></summary>
 
 Agile software development is centered around teams and teamwork. In Agile team environments, a set of practices and principles should be followed to guide teams through the development process to build quality software products efficiently and effectively. Implementing Agile practices and principles in a software development project require developing skills that fall in two main areas namely, technical tooling, and social interactions. In this unit, you are required to work in Agile software development teams to experience and develop both technical and social skills.
 
 The goal of the first group project assignment is to work as a team and to use and apply Agile software development tools in the context of a software development project.
 
-## Main Requirements
+</details>
+
+
+### Main Requirements
+
+<details> 
+   <summary> <strong> Overview </strong> </summary> 
 
 In this group project, teams of 5 students (must be enrolled in the same lab) will be required to build an ATM software application in Java. All teams are required to use this software project as the starting point of their work. As a team, you will be required to develop specific features/functionalities of the ATM software application.
 
 Following Agile practices, each team is required to work collaboratively and carry out software development activities to build the ATM software application. During the development, each team is required to use the set of software tools covered in this course following Agile development practices. Below are more details of the project requirements and deliverables for the assignment.
 
-## Part 1 - Agile Tools Setup
+</details>
+
+<details> 
+   <summary> <strong> :hammer_and_wrench: Part 1 - Agile Tools </strong> </summary> 
 
 Each group must collaboratively work to setup a set of software tools that will help them to prepare to prepare agile development environment. All these tools have been/will be introduced in the weekly labs including GitHub, Gradle, JUnit (including code coverage) and Jenkins. In your tool setup, you will need to meet the following requirements:
 
-1. There must be a single shared GitHub repository in the supplied [GitHub organization](https://github.sydney.edu.au/SOFT2412-2020S2) for the entire group. Every member must contribute to this repository.
-2. Gradle must be used for build automation, and JUnit for automated testing. JUnit must be integrated with Gradle and a code coverage tool. For JUnit testing, code coverage must be at least 75%.
-3. Continuous integration should be done with Jenkins, which must be hooked with GitHub. Both Gradle and JUnit must be integrated on Jenkins and run automatically for every new commit in a particular GitHub branch after Jenkins has been setup correctly.
-4. Jenkins must be integrated with GitHub via webhooks. Also, ngrok can be used for continuous integration with Jenkins. Alternatively, Jenkins may be hosted on public cloud service providers if your team is happy with that solution. Jenkins must show test reports for the application. **Only one member is required to setup Jenkins.**
-5. It is recommended to use an IDE like IntelliJ or Eclipse, whatever your group feels comfortable with, to assist you throughout the software development.
+- [x] There must be a single shared GitHub repository in the supplied [GitHub organization](https://github.sydney.edu.au/SOFT2412-2020S2) for the entire group. Every member must contribute to this repository.
+- [ ] Gradle must be used for build automation, and JUnit for automated testing. JUnit must be integrated with Gradle and a code coverage tool. For JUnit testing, code coverage must be at least 75%.
+- [x] Continuous integration should be done with Jenkins, which must be hooked with GitHub. Both Gradle and JUnit must be integrated on Jenkins and run automatically for every new commit in a particular GitHub branch after Jenkins has been setup correctly.
+- [x] Jenkins must be integrated with GitHub via webhooks. Also, ngrok can be used for continuous integration with Jenkins. Alternatively, Jenkins may be hosted on public cloud service providers if your team is happy with that solution. Jenkins must show test reports for the application. **Only one member is required to setup Jenkins.**
+- [x] It is recommended to use an IDE like IntelliJ or Eclipse, whatever your group feels comfortable with, to assist you throughout the software development.
 
 The tool setup might become more challenging. So, it is crucial that every group members participate and practice all exercises in the tutorials (week 2 – week 6).
 
-## Part 2 - Automated Teller Machine (ATM) software for XYZ Bank
+</details>
+
+
+<details> 
+   <summary> <strong> :atm: Part 2 - Automated Teller Machine (ATM) software for XYZ Banks </strong> </summary> 
 
 Each group will be required to develop a simple ATM software in JAVA. All team members must collaboratively build this application using the agile tools they have setup in the previous part. All teams will have to implement following application requirements:
 
@@ -101,7 +139,12 @@ Each group will be required to develop a simple ATM software in JAVA. All team m
 
 The application design can be using any UI (text or GUI) for the functionality. You can decide on the application design/architecture; both text file or persistent database are acceptable. The software must always produce correct output and maintain correct and consistent state of all included entities.
 
-## Part 3 - Technical Report
+</details>
+
+
+<details> 
+   <summary> <strong> :page_facing_up: Part 3 - Technical Report </strong> </summary> 
+
 
 Each group must prepare a technical report that record evidence of the above development activities (besides the actual Github repo. logs and reports which will be checked as part  of the marking). This specifically includes:
 
@@ -111,14 +154,19 @@ Each group must prepare a technical report that record evidence of the above dev
 4. Explain how Gradle was used. This may include any extra tasks/dependencies used for the application including brief comments on how those extra tasks/dependencies helped you build the application.
 5. Code coverage report for the final commit, including JUnit results for the commits. All Junit test cases that are written must be documented and explained (i.e. why the unit test was chosen and what does it test (regular input, edge cases etc). Document any tests that may have failed. You will also need to explain what the test coverage report is displaying.
 
+</details>
 
-
-## Project Demonstration
+<details> 
+   <summary> <strong> :sparkles: Project Demonstration </strong> </summary> 
 
 Each group must demonstrate their project work. You will have to demo your group work and individual contributions to your tutor.
 More details about the demos will be announced prior to the submission deadline.
 
+</details>
 
+
+<details> 
+   <summary> <strong> :heavy_check_mark: Marking Details </strong> </summary> 
 
 ## Group Member Contribution
 
@@ -139,3 +187,5 @@ Each team must submit their latest source code version of the Automated Teller M
 ## Marking Guide
 
 The marking criteria will be based on the above requirements. A marking guide will be added once the details of the project demos are finalized.
+
+</details>

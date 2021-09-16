@@ -34,7 +34,7 @@ public class AccountService implements UserDetailsService {
 
         Optional<Card> optionalCard = cardRepository.findById(parseInt(cardNumber));
 
-        if (optionalCard.isEmpty()) {
+        if (optionalCard == null) {
             throw new UsernameNotFoundException(cardNumber);
         }
         var card = optionalCard.get();
@@ -56,7 +56,7 @@ public class AccountService implements UserDetailsService {
     public Account getAccountByCardId(Integer id) throws EntityNotFoundException {
         var optionalCard = cardRepository.findById(id);
 
-        if (optionalCard.isEmpty())
+        if (optionalCard == null)
             throw new EntityNotFoundException();
 
         var card = optionalCard.get();
@@ -72,14 +72,14 @@ public class AccountService implements UserDetailsService {
 
     public Account getAccountById(Integer id) throws EntityNotFoundException {
         var account = accountRepository.findById(id);
-        if (account.isEmpty()) {
+        if (account == null) {
             throw new EntityNotFoundException();
         } else {
             return account.get();
         }
     }
 
-    public Account saveNewAccount(Account account) {
+    public Account saveAccount(Account account) {
         return accountRepository.save(account);
     }
 
@@ -87,10 +87,6 @@ public class AccountService implements UserDetailsService {
         Account account = new Account (
                 accountDtoReq.getBalance()
         );
-        return this.saveNewAccount(account);
+        return this.saveAccount(account);
     }
-
-
-
-
 }

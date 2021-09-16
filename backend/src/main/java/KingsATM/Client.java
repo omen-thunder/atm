@@ -8,7 +8,10 @@ public class Client {
     private String surname;
     private ArrayList<Account> accounts;
 
-    public Client() {
+    public Client(int clientNumber, String givenName, String surname) {
+        this.clientNumber = clientNumber;
+        this.givenName = givenName;
+        this.surname = surname;
         this.accounts = new ArrayList<Account>();
     }
     /**
@@ -43,5 +46,5 @@ public class Client {
     public int getClientNumber() {
         return this.clientNumber;
     }
-    
+
 }
