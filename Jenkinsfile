@@ -89,9 +89,6 @@ curl "https://${GIT_USERNAME}:${GIT_PASSWORD}@api.github.sydney.edu.au/repos/SOF
 
     }
 
-    always {
-      // junit '**/build/test-results/test/*.xml'
-    }
 
   }
 
