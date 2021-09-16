@@ -1,9 +1,11 @@
 import {createRouter, createWebHistory} from "vue-router";
+import store from '@/store';
+
 import Login from "../views/Login.vue";
 import NotFound from "@/views/NotFound";
 import Home from "@/views/Home";
 import Admin from "@/views/Admin";
-import store from '@/store';
+import Withdraw from "@/views/Withdraw";
 
 const routes = [
     {
@@ -34,6 +36,16 @@ const routes = [
             requiresAuth: true
         }
     },
+    {
+        path: "/withdraw",
+        name: "Withdraw",
+        component: Withdraw,
+        meta: {
+            requiresAuth: true
+        }
+    },
+
+
     {
         path: "/admin",
         name: "Admin",
