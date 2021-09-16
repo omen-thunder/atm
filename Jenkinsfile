@@ -38,9 +38,11 @@ pipeline {
         }
       }
       steps {
+        dir('~/') {
+          writeFile(file: '.hosts', text: '127.0.0.1 db')
+        }
         script {
           echo 'Attempting to run tests'
-          sh 'echo "127.0.0.1 db" > ~/.hosts'
           sh 'while pg_isready -d kingsatm -h localhost -p 5432 -U client; do sleep 1; done'
           sh './gradlew test'
           sh './gradlew check'
