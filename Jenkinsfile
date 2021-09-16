@@ -5,9 +5,6 @@ pipeline {
     }
   }
 
-  tools {
-    jdk 'openjdk-16'
-  }
   environment {
     BUILD_WEBHOOK_STAGING = credentials('deploy-webhook-staging')
     BUILD_WEBHOOK_MASTER = credentials('deploy-webhook-master')
