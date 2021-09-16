@@ -46,5 +46,5 @@ public class Client {
     public int getClientNumber() {
         return this.clientNumber;
     }
-    
+
 }
