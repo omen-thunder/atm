@@ -2,6 +2,9 @@ pipeline {
   agent {
     docker {
       image 'gradle:7-jdk16'
+      args "-u root"
+      alwaysPull true
+      reuseNode true
     }
   }
 
