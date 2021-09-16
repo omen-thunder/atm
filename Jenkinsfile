@@ -34,17 +34,17 @@ pipeline {
 
     stage('Test') {
       steps {
+        script {
+          echo 'Starting Postgres container'
 
-        echo 'Starting Postgres container'
+          docker.image('postgres:13-alpine').withRun('-p 5432:5432 -e "POSTGRES_DB=kingsatm" -e "POSTGRES_USER=client" -e "POSTGRES_PASSWORD=client"'){ c -> 
 
-        docker.image('postgres:13-alpine').withRun('-p 5432:5432 -e "POSTGRES_DB=kingsatm" -e "POSTGRES_USER=client" -e "POSTGRES_PASSWORD=client"'){ c -> 
-
-          echo 'Attempting to run tests'
-          sh 'gradle test --stacktrace --args="--spring.datasource.url=jdbc:postgresql://db:5432/kingsatm"'
-          junit '**/build/test-results/**/*.xml'
-          
+            echo 'Attempting to run tests'
+            sh 'gradle test --stacktrace --args="--spring.datasource.url=jdbc:postgresql://db:5432/kingsatm"'
+            junit '**/build/test-results/**/*.xml'
+            
+          }
         }
-
       }
     }
 
@@ -57,10 +57,14 @@ pipeline {
 
     stage('Deploy') {
       steps {
-        if (env.BRANCH_NAME.startsWith('master')) {
-          sh 'curl "$BUILD_WEBHOOK_MASTER" | grep -o OK'
-        } else if (env.BRANCH_NAME.startsWith('staging')) {
-          sh 'curl "$BUILD_WEBHOOK_STAGING" | grep -o OK'
+        script {
+          
+          if (env.BRANCH_NAME.startsWith('master')) {
+            sh 'curl "$BUILD_WEBHOOK_MASTER" | grep -o OK'
+          } else if (env.BRANCH_NAME.startsWith('staging')) {
+            sh 'curl "$BUILD_WEBHOOK_STAGING" | grep -o OK'
+          }
+
         }
       }
     }
