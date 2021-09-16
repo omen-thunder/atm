@@ -8,11 +8,12 @@ pipeline {
 
   stages {
 
-    stage('Env check') {
+    stage('System Check') {
       steps {
         script {
           docker.image('gradle:7-jdk16').inside {
-            sh 'gradle -v'
+            sh 'echo "Echo from gradle image'
+            sh 'which gradle'
           }
         }
       }
