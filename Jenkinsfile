@@ -1,5 +1,9 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'gradle:7-jdk16'
+    }
+  }
 
   tools {
     jdk 'openjdk-16'
@@ -14,8 +18,7 @@ pipeline {
       steps {
         script {
           echo 'Attempting to clean the project'
-          sh 'chmod +x gradlew'
-          sh './gradlew clean'
+          sh 'gradle clean'
         }
 
       }
@@ -25,7 +28,7 @@ pipeline {
       steps {
         script {
           echo 'Attempting to run build'
-          sh './gradlew build -x test'
+          sh 'gradle build -x test'
         }
       }
     }
@@ -37,11 +40,9 @@ pipeline {
 
           docker.image('postgres:13-alpine').withRun('-p 5432:5432 -e "POSTGRES_DB=kingsatm" -e "POSTGRES_USER=client" -e "POSTGRES_PASSWORD=client"'){ c -> 
 
-            docker.image('gradle:7-jdk16').inside("--link ${c.id}:db") {
-              echo 'Attempting to run tests'
-              sh './gradlew test --stacktrace --args="--spring.datasource.url=jdbc:postgresql://db:5432/kingsatm"'
-              junit '**/build/test-results/**/*.xml'
-            }
+            echo 'Attempting to run tests'
+            sh 'gradle test --stacktrace --args="--spring.datasource.url=jdbc:postgresql://db:5432/kingsatm"'
+            junit '**/build/test-results/**/*.xml'
             
           }
 
