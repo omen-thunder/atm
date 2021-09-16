@@ -35,8 +35,8 @@ pipeline {
         script {
           echo 'Attempting to run tests'
           sh './gradlew check'
+          junit '**/build/test-results/test/*.xml'
         }
-        junit '**/build/test-results/test/*.xml'
       }
     }
 
