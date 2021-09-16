@@ -40,7 +40,7 @@ pipeline {
       steps {
         script {
           echo 'Attempting to run tests'
-          res = sh(script:'cat ~/.hosts | grep db', stdout = true)
+          res = sh(script: 'cat ~/.hosts | grep db', returnStdout: true)
           if (!res) {
             sh 'echo "127.0.0.1 db" >> ~/.hosts'
           }
