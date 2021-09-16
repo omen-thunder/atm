@@ -36,6 +36,7 @@ pipeline {
           echo 'Attempting to run tests'
           sh './gradlew check'
         }
+        junit '**/build/test-results/test/*.xml'
       }
     }
 
@@ -89,7 +90,7 @@ curl "https://${GIT_USERNAME}:${GIT_PASSWORD}@api.github.sydney.edu.au/repos/SOF
     }
 
     always {
-      junit '**/build/test-results/test/*.xml'
+      // junit '**/build/test-results/test/*.xml'
     }
 
   }
