@@ -9,7 +9,7 @@ import java.util.Date;
 @SequenceGenerator(name="transaction_seq", initialValue = 1000)
 public class Transaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transaction_seq")
     private long id;
 
     private Date date;
@@ -28,6 +28,8 @@ public class Transaction {
         this.accountNumber = accountNumber;
         this.cardNumber = cardNumber;
     }
+
+    protected Transaction() {}
 
     public long getId() { return this.id; }
 

@@ -33,9 +33,11 @@ pipeline {
     stage('Test') {
       steps {
         script {
-          echo 'Attempting to run tests'
-          docker.image('postgres:13-alpine').withRun('-e "POSTGRES_DB=kingsatm" -e "POSTGRES_USER=client" -e "POSTGRES_PASSWORD=client"') { c -> 
-            sh 'while pg_isready -d kingsatm -h localhost -p 5432 -U client; do sleep 1; done'
+          docker.image('postgres:13-alpine').withRun('-e "POSTGRES_DB=kingsatm" -e "POSTGRES_USER=client" -e "POSTGRES_PASSWORD=client"'){ c -> 
+            dir('~/') {
+              writeFile(file: '.hosts', text: '127.0.0.1 db')
+            }
+            echo 'Attempting to run tests'
             sh './gradlew test'
             sh './gradlew check'
             junit '**/build/test-results/**/*.xml'
