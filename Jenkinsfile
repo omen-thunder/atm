@@ -11,10 +11,14 @@ pipeline {
     stage('System Check') {
       steps {
         script {
-          docker.image('gradle:7-jdk16').inside {
+
+          def gradle = docker.image('gradle:7-jdk16')
+          gradle.pull()
+          gradle.inside {
             sh 'echo "Echo from gradle image'
             sh 'which gradle'
           }
+
         }
       }
     }
