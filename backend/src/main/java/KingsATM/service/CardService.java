@@ -21,7 +21,7 @@ public class CardService {
     public Card getCardById(Integer id) {
         var optionalCard = cardRepository.findById(id);
 
-        if (optionalCard.isEmpty()) {
+        if (optionalCard == null) {
             throw new EntityNotFoundException("No card by of id: "+ id + ", was found");
         }
 
@@ -35,6 +35,5 @@ public class CardService {
     public Card updateCard(Card card) {
         return cardRepository.save(card);
     }
-
 
 }
