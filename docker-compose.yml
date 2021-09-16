@@ -18,4 +18,6 @@ services:
     build: .
     ports:
       - 8090:7000
+
+    command: gradle bootRun --stacktrace --args="--spring.datasource.url=jdbc:postgresql://db:5432/kingsatm"
     
