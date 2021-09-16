@@ -13,6 +13,8 @@ pipeline {
         script {
 
           sh 'docker -v'
+          sh 'pwd'
+          sh 'ls ~'
 
           def gradle = docker.image('gradle:7-jdk16')
           gradle.pull()
