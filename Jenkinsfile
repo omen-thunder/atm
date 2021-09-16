@@ -42,15 +42,18 @@ pipeline {
 
     stage('Test') {
       steps {
+        agent any
         script {
           echo 'Starting Postgres container'
 
           docker.image('postgres:13-alpine').withRun('-p 5432:5432 -e "POSTGRES_DB=kingsatm" -e "POSTGRES_USER=client" -e "POSTGRES_PASSWORD=client"'){ c -> 
 
-            echo 'Attempting to run tests'
-            sh 'gradle test --stacktrace --args="--spring.datasource.url=jdbc:postgresql://db:5432/kingsatm"'
-            junit '**/build/test-results/**/*.xml'
-            
+            docker.image('gradle:7-jdk16').inside {
+              echo 'Attempting to run tests'
+              sh 'gradle test --stacktrace --args="--spring.datasource.url=jdbc:postgresql://db:5432/kingsatm"'
+              junit '**/build/test-results/**/*.xml'
+            }
+
           }
         }
       }
