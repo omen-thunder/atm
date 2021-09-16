@@ -11,6 +11,8 @@
 <script>
 export default {
   async created() {
+    // TODO: get/set machine number per session.
+    await this.$store.commit('setMachineNumber',1001);
     await this.$store.dispatch('initialise');
   }
 }
