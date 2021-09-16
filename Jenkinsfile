@@ -40,7 +40,7 @@ pipeline {
       steps {
         script {
           echo 'Attempting to run tests'
-          eval = sh(script: '(cat ~/.hosts | grep db) || (echo "127.0.0.1 db" >> ~/.hosts)', returnStdout: true)
+          sh '/bin/bash -c \'(cat ~/.hosts | grep db) || (echo "127.0.0.1 db" >> ~/.hosts)\''
           sh 'while pg_isready -d kingsatm -h localhost -p 5432 -U client; do sleep 1; done'
           sh './gradlew test'
           sh './gradlew check'
