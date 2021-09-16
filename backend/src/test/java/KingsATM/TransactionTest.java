@@ -4,8 +4,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+
 import java.time.LocalDateTime;
 
+
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TransactionTest {
 	private Transaction transaction1;
 	private Transaction transaction2;
@@ -25,17 +29,17 @@ public class TransactionTest {
 
 	@Test
 	public void testGetClientNumber() {
-		assertEquals(transaction1.getClientNumber(), 111);
+		assertEquals(transaction1.getClientNumber(), 222);
 	}
 
 	@Test
 	public void testGetAccountNumber() {
-		assertEquals(transaction1.getAccountNumber(), 222);
+		assertEquals(transaction1.getAccountNumber(), 333);
 	}
 
 	@Test
 	public void testGetCardNumber() {
-		assertEquals(transaction1.getCardNumber(), 333);
+		assertEquals(transaction1.getCardNumber(), 444);
 	}
 
 	@Test

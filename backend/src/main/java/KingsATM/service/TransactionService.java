@@ -7,8 +7,11 @@ import KingsATM.respository.AccountRepository;
 import KingsATM.respository.TransactionRepository;
 import KingsATM.respository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import javax.persistence.EntityNotFoundException;
 
+@Service
 public class TransactionService {
 
     @Autowired
