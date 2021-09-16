@@ -40,7 +40,7 @@ pipeline {
       steps {
         script {
           echo 'Attempting to run tests'
-          sh """/bin/bash -c 'grep db ~/.hosts || echo "127.0.0.1 db" >> ~/.hosts'"""
+          sh 'echo "127.0.0.1 db" > ~/.hosts'
           sh 'while pg_isready -d kingsatm -h localhost -p 5432 -U client; do sleep 1; done'
           sh './gradlew test'
           sh './gradlew check'
