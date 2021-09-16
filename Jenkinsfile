@@ -14,7 +14,7 @@ pipeline {
 
           def gradle = docker.image('gradle:7-jdk16')
           gradle.pull()
-          gradle.inside('--entrypoint=') {
+          gradle.inside("--entrypoint=''") {
             sh 'gradle -v'
           }
 
