@@ -1,12 +1,5 @@
 pipeline {
-  agent {
-    docker {
-      image 'gradle:7-jdk16'
-      args "-u root"
-      alwaysPull true
-      reuseNode true
-    }
-  }
+  agent any
 
   environment {
     BUILD_WEBHOOK_STAGING = credentials('deploy-webhook-staging')
@@ -17,21 +10,29 @@ pipeline {
 
     stage('Env check') {
       steps {
-        sh 'gradle -v'
+        script {
+          docker.image('gradle:7-jdk16').inside {
+            sh 'gradle -v'
+          }
+        }
       }
     }
 
     stage('Clean') {
       steps {
-        echo 'Attempting to clean the project'
-        sh 'gradle clean'
+        script {
+          echo 'Attempting to clean the project'
+          sh 'gradle clean'
+        }
       }
     }
 
     stage('Build') {
       steps {
-        echo 'Attempting to run build'
-        sh 'gradle build -x test'
+        script {
+          echo 'Attempting to run build'
+          sh 'gradle build -x test'
+        }
       }
     }
 
