@@ -1,26 +1,32 @@
 <template>  
-  <div class="home">
-      <home-options/>  
+  <div class="home-page">
+    <kings-atm>
+      <home-options/>
+    </kings-atm>
   </div>
 </template>
 
 <script>
 import HomeOptions from "@/components/HomeOptions";
+import KingsAtm from "@/components/AtmLayout/KingsAtmContainer";
+
 export default {
   name: "Home",
   components: {
-    HomeOptions
+    HomeOptions,
+    KingsAtm
   },
   methods: {
 
-  },
-  beforeMount: async function(){
-    // TODO: get/set machine number per session.
-    this.$store.commit('setMachineNumber',1001);
   }
 };
 </script>
 
 <style scoped>
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 
 </style>
