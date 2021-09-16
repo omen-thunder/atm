@@ -54,6 +54,8 @@ sever on port **3000**. When you make changes to the frontend, this will automat
 
 To stop the container, run `docker-compose down` .
 
+</details>
+
 ## Project Details - Agile Software Development Practices (SOFT2412/COMP9412)
 
 **School of Computer Science**  
