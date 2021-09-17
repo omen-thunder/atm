@@ -1,13 +1,14 @@
 pipeline {
-  agent {
-    docker {
-      image 'gradle:7-jdk16'
-    }
-  }
-
   environment {
     BUILD_WEBHOOK_STAGING = credentials('deploy-webhook-staging')
     BUILD_WEBHOOK_MASTER = credentials('deploy-webhook-master')
+  }
+
+  agent {
+    docker {
+      image 'gradle:7-jdk16'
+      reuseNode true
+    }
   }
 
   stages {
@@ -40,9 +41,14 @@ pipeline {
       }
     }
 
+  }
+
+  agent any
+
+  stages {
+
     stage('Test') {
       steps {
-        agent any
         script {
           echo 'Starting Postgres container'
 
@@ -50,19 +56,16 @@ pipeline {
 
             docker.image('gradle:7-jdk16').inside {
               echo 'Attempting to run tests'
-              sh 'gradle test --stacktrace --args="--spring.datasource.url=jdbc:postgresql://db:5432/kingsatm"'
+              sh 'gradle test --args="--spring.datasource.url=jdbc:postgresql://db:5432/kingsatm"'
+
+              echo 'Attempting to run checks'
+              sh './gradlew check'
+
               junit '**/build/test-results/**/*.xml'
             }
 
           }
         }
-      }
-    }
-
-    stage('Check') {
-      steps {
-        echo 'Attempting to run checks'
-        sh './gradlew check'
       }
     }
 
