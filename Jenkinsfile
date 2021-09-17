@@ -8,21 +8,11 @@ pipeline {
 
   stages {
 
-    stage('Prepare') {
-      steps {
-        script {
-          echo '[ Prepare Cache Folder ]'
-          sh "mkdir -p ~/.gradle_cache"
-        }
-      }
-    }
-
     stage('Build') {
       agent {
         docker {
           image 'gradle:7-jdk16'
           reuseNode true
-          args "-v ~/.gradle_cache/:/home/gradle/build_cache/ -e GRADLE_USER_HOME=/home/gradle/build_cache"
         }
       }
       steps {
@@ -51,7 +41,7 @@ pipeline {
               sh 'while ! pg_isready -d kingsatm -h db -p 5432 -U client; do sleep 1; done'
             }
 
-            docker.image('gradle:7-jdk16').inside("--link ${c.id}:db -v ~/.gradle_cache/:/home/gradle/build_cache/ -e GRADLE_USER_HOME=/home/gradle/build_cache"){
+            docker.image('gradle:7-jdk16').inside("--link ${c.id}:db"){
               echo '[ Attempting to run checks ]'
               sh 'gradle check -D spring.datasource.url="jdbc:postgresql://db:5432/kingsatm"'
 
