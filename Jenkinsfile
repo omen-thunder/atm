@@ -1,53 +1,36 @@
 pipeline {
+  agent none
+
   environment {
     BUILD_WEBHOOK_STAGING = credentials('deploy-webhook-staging')
     BUILD_WEBHOOK_MASTER = credentials('deploy-webhook-master')
   }
 
-  agent {
-    docker {
-      image 'gradle:7-jdk16'
-      reuseNode true
-    }
-  }
-
   stages {
 
-    stage('System Check') {
+    stage('Build') {
+      agent {
+        docker {
+          image 'gradle:7-jdk16'
+          reuseNode true
+        }
+      }
       steps {
         script {
-
+          echo 'Check Gradle'
           sh 'gradle -v'
 
-        }
-      }
-    }
-
-    stage('Clean') {
-      steps {
-        script {
           echo 'Attempting to clean the project'
           sh 'gradle clean'
-        }
-      }
-    }
 
-    stage('Build') {
-      steps {
-        script {
           echo 'Attempting to run build'
           sh 'gradle build -x test'
         }
       }
     }
 
-  }
-
-  agent any
-
-  stages {
-
     stage('Test') {
+      agent any
       steps {
         script {
           echo 'Starting Postgres container'
@@ -59,7 +42,7 @@ pipeline {
               sh 'gradle test --args="--spring.datasource.url=jdbc:postgresql://db:5432/kingsatm"'
 
               echo 'Attempting to run checks'
-              sh './gradlew check'
+              sh 'gradle check'
 
               junit '**/build/test-results/**/*.xml'
             }
