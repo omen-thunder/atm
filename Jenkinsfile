@@ -34,7 +34,7 @@ pipeline {
         script {
           echo '[ Starting Postgres container ]'
 
-          docker.image('postgres:13-alpine').withRun('-p 5432:5432 -e "POSTGRES_DB=kingsatm" -e "POSTGRES_USER=client" -e "POSTGRES_PASSWORD=client"'){ c -> 
+          docker.image('postgres:13-alpine').withRun('--expose 5432 -e "POSTGRES_DB=kingsatm" -e "POSTGRES_USER=client" -e "POSTGRES_PASSWORD=client"'){ c -> 
           
             docker.image('postgres:13-alpine').inside("--link ${c.id}:db"){
               echo '[ Waiting for Postgres to be ready ]'
