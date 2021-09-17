@@ -64,6 +64,7 @@ test {
     useJUnitPlatform()
     maxHeapSize = '1G'
     // reports.html.required = false
+    systemProperties(System.getProperties())
 }
 
 
