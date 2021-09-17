@@ -45,7 +45,11 @@ pipeline {
               echo '[ Attempting to run checks ]'
               sh 'gradle check -D spring.datasource.url="jdbc:postgresql://db:5432/kingsatm"'
 
+              echo '[ Saving JUnit Test Results ]'
               junit '**/build/test-results/**/*.xml'
+
+              echo '[ Publish Jacoco Test Report ]'
+              publishHTML([allowMissing: true, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'backend/build/reports/jacoco/test/html', reportFiles: 'index.html', reportName: 'Jacoco Code Coverage Report', reportTitles: ''])
             }
 
           }
