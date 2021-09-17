@@ -52,7 +52,7 @@ pipeline {
               sh 'while ! pg_isready -d kingsatm -h db -p 5432 -U client; do sleep 1; done'
             }
 
-            docker.image('gradle:7-jdk16').inside("--link ${c.id}:db args -v ${env.WORKSPACE}/.gradle_cache/:/home/gradle/build_cache/ -e 'GRADLE_USER_HOME=/home/gradle/build_cache'"){
+            docker.image('gradle:7-jdk16').inside("--link ${c.id}:db -v ${env.WORKSPACE}/.gradle_cache/:/home/gradle/build_cache/ -e GRADLE_USER_HOME=/home/gradle/build_cache"){
               echo '[ Attempting to run checks ]'
               sh 'gradle check -D spring.datasource.url="jdbc:postgresql://db:5432/kingsatm"'
 
