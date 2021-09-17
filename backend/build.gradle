@@ -64,6 +64,9 @@ test {
     useJUnitPlatform()
     maxHeapSize = '1G'
     // reports.html.required = false
+    if (System.getProperty('spring.datasource.url')){
+        systemProperties['spring.datasource.url'] = System.getProperty('spring.datasource.url')
+    }
 }
 
 
