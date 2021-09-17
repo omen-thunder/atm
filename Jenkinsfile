@@ -17,13 +17,13 @@ pipeline {
       }
       steps {
         script {
-          echo 'Check Gradle'
+          echo '[ Check Gradle ]'
           sh 'gradle -v'
 
-          echo 'Attempting to clean the project'
+          echo '[ Attempting to clean the project ]'
           sh 'gradle clean'
 
-          echo 'Attempting to run build'
+          echo '[ Attempting to run build ]'
           sh 'gradle build -x test'
         }
       }
@@ -33,15 +33,15 @@ pipeline {
       agent any
       steps {
         script {
-          echo 'Starting Postgres container'
+          echo '[ Starting Postgres container ]'
 
           docker.image('postgres:13-alpine').withRun('-p 5432:5432 -e "POSTGRES_DB=kingsatm" -e "POSTGRES_USER=client" -e "POSTGRES_PASSWORD=client"'){ c -> 
 
             docker.image('gradle:7-jdk16').inside {
-              echo 'Attempting to run tests'
-              sh 'gradle test -Dspring.datasource.url=jdbc:postgresql://db:5432/kingsatm"'
+              echo '[ Attempting to run tests ]'
+              sh 'gradle test -Dspring.datasource.url=jdbc:postgresql://db:5432/kingsatm'
 
-              echo 'Attempting to run checks'
+              echo '[ Attempting to run checks ]'
               sh 'gradle check'
 
               junit '**/build/test-results/**/*.xml'
@@ -55,6 +55,7 @@ pipeline {
     stage('Deploy') {
       steps {
         script {
+          echo '[ Trigger Deployment ]'
           
           if (env.BRANCH_NAME.startsWith('master')) {
             sh 'curl "$BUILD_WEBHOOK_MASTER" | grep -o OK'
