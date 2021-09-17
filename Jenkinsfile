@@ -42,11 +42,8 @@ pipeline {
             }
 
             docker.image('gradle:7-jdk16').inside("--link ${c.id}:db"){
-              echo '[ Attempting to run tests ]'
-              sh 'gradle test -D spring.datasource.url="jdbc:postgresql://db:5432/kingsatm"'
-
               echo '[ Attempting to run checks ]'
-              sh 'gradle check'
+              sh 'gradle check -D spring.datasource.url="jdbc:postgresql://db:5432/kingsatm"'
 
               junit '**/build/test-results/**/*.xml'
             }
