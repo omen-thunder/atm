@@ -56,12 +56,15 @@ pipeline {
     stage('Deploy') {
       steps {
         script {
-          echo '[ Trigger Deployment ]'
           
           if (env.BRANCH_NAME.startsWith('master')) {
+            echo '[ Trigger Production Deployment ]'
             sh 'curl "$BUILD_WEBHOOK_MASTER" | grep -o OK'
           } else if (env.BRANCH_NAME.startsWith('staging')) {
+            echo '[ Trigger Staging Deployment ]'
             sh 'curl "$BUILD_WEBHOOK_STAGING" | grep -o OK'
+          } else {
+            echo '[ Skipped Deployment ]'
           }
 
         }
