@@ -1,21 +1,24 @@
 <template>
-  <div class="login-page">
-    <kings-atm>
-      <login-form/>
-    </kings-atm>
-  </div>
+  <kings-atm-container>
+    <div class="login-page">
+        <logo/>
+        <login-form/>
+    </div>
+  </kings-atm-container>
 </template>
 
 <script>
 // @ is an alias to /src
-import LoginForm from "@/components/LoginForm";
-import KingsAtm from "@/components/AtmLayout/KingsAtmContainer";
+import KingsAtmContainer from '../components/AtmLayout/KingsAtmContainer.vue';
+import LoginForm from "@/components/LoginForm.vue";
+import Logo from "@/components/Logo.vue";
 
 export default {
   name: "Home",
   components: {
-    KingsAtm,
+    KingsAtmContainer,
     LoginForm,
+    Logo
   },
 };
 </script>
