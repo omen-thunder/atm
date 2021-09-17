@@ -36,9 +36,9 @@ pipeline {
 
           docker.image('postgres:13-alpine').withRun('-p 5432:5432 -e "POSTGRES_DB=kingsatm" -e "POSTGRES_USER=client" -e "POSTGRES_PASSWORD=client"'){ c -> 
 
-            docker.image('gradle:7-jdk16').inside("--link ${c.id}:db"){
+            docker.image('gradle:7-jdk16').inside {
               echo '[ Attempting to run tests ]'
-              sh 'gradle test -Dspring.datasource.url=jdbc:postgresql://db:5432/kingsatm'
+              sh 'gradle test'
 
               echo '[ Attempting to run checks ]'
               sh 'gradle check'
