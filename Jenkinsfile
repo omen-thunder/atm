@@ -1,5 +1,5 @@
 pipeline {
-  agent none
+  agent any
 
   environment {
     BUILD_WEBHOOK_STAGING = credentials('deploy-webhook-staging')
@@ -30,14 +30,13 @@ pipeline {
     }
 
     stage('Test') {
-      agent any
       steps {
         script {
           echo '[ Starting Postgres container ]'
 
           docker.image('postgres:13-alpine').withRun('-p 5432:5432 -e "POSTGRES_DB=kingsatm" -e "POSTGRES_USER=client" -e "POSTGRES_PASSWORD=client"'){ c -> 
 
-            docker.image('gradle:7-jdk16').inside {
+            docker.image('gradle:7-jdk16').inside('--link ${c.id}:db'){
               echo '[ Attempting to run tests ]'
               sh 'gradle test -Dspring.datasource.url=jdbc:postgresql://db:5432/kingsatm'
 
