@@ -39,7 +39,7 @@ pipeline {
 
             docker.image('gradle:7-jdk16').inside {
               echo 'Attempting to run tests'
-              sh 'gradle test --args="--spring.datasource.url=jdbc:postgresql://db:5432/kingsatm"'
+              sh 'gradle test -Dspring.datasource.url=jdbc:postgresql://db:5432/kingsatm"'
 
               echo 'Attempting to run checks'
               sh 'gradle check'
