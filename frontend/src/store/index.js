@@ -50,7 +50,7 @@ export default createStore({
 
           commit('setAdmin', account.role === "ROLE_ADMIN");
 
-          state.isAdmin ? await router.replace({name: 'Admin'}) : await router.replace({name: 'Home'})
+          state.isAdmin ? await router.push({name: 'Admin'}) : await router.push({name: 'Home'})
 
         } else if (response.status === 200 && response.data.error) {
           localStorage.setItem("authtoken", "")

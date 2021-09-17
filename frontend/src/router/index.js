@@ -68,15 +68,6 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 
-    console.log("[Router Before] User logged in: "
-        + store.getters.isLoggedIn +
-        ", Is Admin: " + store.getters.isAdmin
-    )
-
-    console.log("[Router Before] TO: ", to)
-    console.log("[Router Before] FROM: ", from)
-
-
     if (to.matched.some(record => record.meta.requiresAuth)) {
 
         if (!store.getters.isLoggedIn) {
