@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import SystemTime from '@/components/AtmLayout/SystemTime.vue';
+import SystemTime from '/src/components/AtmLayout/SystemTime.vue';
 
 export default {
   name: "KingsAtm",
