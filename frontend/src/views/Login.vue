@@ -7,15 +7,14 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import LoginForm from "@/components/LoginForm";
-import KingsAtm from "@/components/AtmLayout/KingsAtmContainer";
+import LoginForm from "../components/LoginForm.vue";
+import KingsAtm from "../components/AtmLayout/KingsAtmContainer.vue";
 
 export default {
   name: "Home",
   components: {
     KingsAtm,
     LoginForm,
-  },
+  }
 };
 </script>

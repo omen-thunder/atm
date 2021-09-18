@@ -1,11 +1,12 @@
 import {createRouter, createWebHistory} from "vue-router";
-import store from '@/store';
+import store from '../store/index.js';
 
 import Login from "../views/Login.vue";
-import NotFound from "@/views/NotFound";
-import Home from "@/views/Home";
-import Admin from "@/views/Admin";
-import Withdraw from "@/views/Withdraw";
+import NotFound from "../views/NotFound.vue";
+import Home from "../views/Home.vue";
+import Admin from "../views/Admin.vue";
+import Withdraw from "../views/Withdraw.vue";
+import Register from "../views/Register.vue";
 
 const routes = [
     {
@@ -21,13 +22,8 @@ const routes = [
     {
         path: "/register",
         name: "Register",
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () =>
-            import(/* webpackChunkName: "about" */ "../views/Register.vue"),
+        component:  Register,
     },
-
     {
         path: "/home",
         name: "Home",
@@ -44,8 +40,6 @@ const routes = [
             requiresAuth: true
         }
     },
-
-
     {
         path: "/admin",
         name: "Admin",
@@ -67,15 +61,6 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-
-    console.log("[Router Before] User logged in: "
-        + store.getters.isLoggedIn +
-        ", Is Admin: " + store.getters.isAdmin
-    )
-
-    console.log("[Router Before] TO: ", to)
-    console.log("[Router Before] FROM: ", from)
-
 
     if (to.matched.some(record => record.meta.requiresAuth)) {
 
@@ -110,6 +95,5 @@ router.afterEach(async (to) => {
         await store.dispatch('logoutUser');
     }
 })
-
 
 export default router;
