@@ -1,28 +1,32 @@
 <template>
-    <div class="flex-grow flex flex-col items-center mt-12">
-      <div id="login-form" class="grid gap-5 grid-cols-1 max-w-lg mx-auto">
 
-        <span class="text-gray-400 text-2xl block">Account Number</span>
-        <input type="text" placeholder="- - - -" class="p-4 block rounded-md text-center text-4xl"
-               v-model="loginForm.accountNumber">
+  <div class="flex flex-col mt-12">
 
+    <div id="login-form" class="grid gap-5 grid-cols-1 max-w-lg mx-auto" @keyup.enter="login()">
 
-        <span class="text-gray-400 text-2xl  block">Account Pin</span>
-        <input type="password" placeholder="- - - -" class="p-4 block rounded-md text-center text-3xl "
-               v-model="loginForm.accountPin">
-
-        <button class="p-4 my-6 text-3xl md:text-xl text-white rounded-md bg-blue-400 active:bg-blue-500 hover:bg-blue-300"
-                @click="login()">Login
-        </button>
+      <div class="block">
+        <span class="my-2 text-gray-400 text-2xl block">Account Number</span>
+        <input type="text" placeholder="- - - -" class="p-4 block rounded-md text-center text-4xl text-gray-700"
+                v-model="loginForm.accountNumber">
       </div>
 
+      <div class="block">
+        <span class="my-2 text-gray-400 text-2xl block">Account Pin</span>
+        <input type="password" placeholder="- - - -" class="p-4 block rounded-md text-center text-4xl text-gray-700"
+                v-model="loginForm.accountPin">
+      </div>
 
+      <button class="p-4 my-6 text-2xl text-white rounded-md bg-blue-400 active:bg-blue-500 hover:bg-blue-300"
+              @click="login()">Login
+      </button>
+      
     </div>
 
-  <div class="text-gray-50  text-uppercase rounded-md my-6 p-4 md:w-2/3 xl:w-1/2 mx-auto transition-all" :class="formError? 'bg-red-500': 'bg-transparent'">
-    <span v-text="formError" v-if="formError"></span>
-  </div>
+    <div class="text-gray-50 rounded-md my-6 p-4 md:w-2/3 xl:w-1/2 mx-auto transition-all" :class="formError? 'bg-red-500': 'bg-transparent'">
+      <span v-text="formError" v-if="formError"></span>
+    </div>
 
+  </div>
 
 </template>
 

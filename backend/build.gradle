@@ -6,8 +6,11 @@
  * User Manual available at https://docs.gradle.org/7.2/userguide/building_java_projects.html
  */
 
-apply plugin: 'java'
-apply plugin: 'org.springframework.boot'
+plugins {
+    id 'java'
+    id 'org.springframework.boot'
+    id 'jacoco'
+}
 
 
 sourceCompatibility = 16
@@ -67,12 +70,14 @@ test {
     if (System.getProperty('spring.datasource.url')){
         systemProperties['spring.datasource.url'] = System.getProperty('spring.datasource.url')
     }
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
 }
 
 
 jar {
     enabled = false
 }
-
-
-

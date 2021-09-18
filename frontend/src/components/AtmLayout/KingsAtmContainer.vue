@@ -3,14 +3,9 @@
 
     <div id="atm-container" class="flex flex-col h-full overflow-auto border-4 border-gray-700 rounded-2xl">
 
-
-      <div class="flex flex-col justify-center my-4">
-        <img class="h-48" src="../../assets/crown.svg">
-        <h1 class="text-4xl lg:text-6xl font-semibold text-yellow-100">XYZ Bank</h1>
-        <h2 class="text-lg lg:text-xl text-gray-300 font-semibold">Your Business is Our Business</h2>
+      <div id="mainContent" class="flex items-center justify-center flex-grow text-gray-50">
+        <slot></slot>
       </div>
-
-      <slot></slot>
 
       <div class="text-gray-500 p-2 flex justify-between">
         <span> {{ machineNumber? 'ATM# ' + machineNumber : 'Powered by KingsATM'}} </span>
@@ -26,7 +21,7 @@
 import SystemTime from '/src/components/AtmLayout/SystemTime.vue';
 
 export default {
-  name: "KingsAtm",
+  name: "KingsAtmContainer",
   props: {
     machineNumber: String,
   },

@@ -1,36 +1,38 @@
 <template>
 
-  <div class="container">
-    <p class="text-xl">Insert more funds into the machine</p>
+  <kings-atm-container>
+    <div class="container">
+      <p class="text-xl">Insert more funds into the machine</p>
 
-    <input
-        class="border rounded"
-        type="number"
-        v-model="depositAmount"/>
+      <input
+          class="border rounded"
+          type="number"
+          v-model="depositAmount"/>
 
-    <button
-        @click="addFundsToMachine"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-      Add funds
-    </button>
+      <button
+          @click="addFundsToMachine"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Add funds
+      </button>
 
-    <div
-        v-if="formSubmitResult.message"
-        role="alert"
-        class="border-1-4 border-blue-500 text-blue-700 p-4">
-      <p> {{ formSubmitResult.message }} </p>
+      <div
+          v-if="formSubmitResult.message"
+          role="alert"
+          class="border-1-4 border-blue-500 text-blue-700 p-4">
+        <p> {{ formSubmitResult.message }} </p>
+      </div>
     </div>
-  </div>
-
+  </kings-atm-container>
 
 </template>
 
 <script>
 
 import AXIOS from "../axios.js";
-
+import KingsAtmContainer from '../components/AtmLayout/KingsAtmContainer.vue';
 
 export default {
+  components: { KingsAtmContainer },
   name: "Admin",
   data() {
     return {
@@ -40,6 +42,9 @@ export default {
         message: null
       }
     }
+  },
+  component: {
+    KingsAtmContainer,
   },
   methods: {
     async addFundsToMachine() {
