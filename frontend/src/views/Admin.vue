@@ -27,7 +27,7 @@
 
 <script>
 
-import AXIOS from "@/axios";
+import AXIOS from "../axios.js";
 
 
 export default {

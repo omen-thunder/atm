@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import HomeOptions from "@/components/HomeOptions";
-import KingsAtm from "@/components/AtmLayout/KingsAtmContainer";
+import HomeOptions from "../components/HomeOptions.vue";
+import KingsAtm from "../components/AtmLayout/KingsAtmContainer.vue";
 
 export default {
   name: "Home",

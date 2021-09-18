@@ -1,7 +1,8 @@
 import { createStore } from "vuex";
-import AXIOS from "@/axios";
-import router from '@/router'
 import {nextTick} from "vue";
+
+import AXIOS from "../axios.js";
+import router from '../router/index.js'
 
 export default createStore({
   state() {
