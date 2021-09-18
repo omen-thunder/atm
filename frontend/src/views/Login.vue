@@ -8,10 +8,10 @@
 </template>
 
 <script>
-// @ is an alias to /src
+
+import LoginForm from "../components/LoginForm.vue";
 import KingsAtmContainer from '../components/AtmLayout/KingsAtmContainer.vue';
-import LoginForm from "@/components/LoginForm.vue";
-import Logo from "@/components/Logo.vue";
+import Logo from "../components/Logo.vue";
 
 export default {
   name: "Home",
