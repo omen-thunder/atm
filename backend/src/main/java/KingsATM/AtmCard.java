@@ -15,11 +15,11 @@ public class AtmCard {
     private Calendar issueMonthAndYear;
     private Calendar expireMonthAndYear;
 
-    public AtmCard(int cardNumber, Account linkedAccount, Client cardOwner, byte loginAttempt, String cardPin, CardStatus status, Calendar issueMonthAndYear, Calendar expireMonthAndYear) {
+    public AtmCard(int cardNumber, Account linkedAccount, Client cardOwner, String cardPin, CardStatus status, Calendar issueMonthAndYear, Calendar expireMonthAndYear) {
         this.cardNumber = cardNumber;
         this.linkedAccount = linkedAccount;
         this.cardOwner = cardOwner;
-        this.loginAttempt = loginAttempt;
+        this.loginAttempt = 0;
         this.cardPin = cardPin;
         this.status = status;
         this.issueMonthAndYear = issueMonthAndYear;

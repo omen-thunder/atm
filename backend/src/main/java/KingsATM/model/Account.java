@@ -3,6 +3,7 @@ package KingsATM.model;
 import KingsATM.Role;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Objects;
@@ -25,21 +26,27 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private Role role = Role.ROLE_USER;
 
+    @ManyToOne(optional = false)
+    @NotNull
+    private Client client;
+
     protected Account() {}
 
     public Account(Role role) {
         this.role = role;
     }
 
-    public Account(Long balance, Set<Card> cards, Role role) {
+    public Account(Long balance, Set<Card> cards, Role role, Client client) {
         this.balance = balance;
         this.cards = cards;
         this.role = role;
+        this.client = client;
     }
 
-    public Account(Long balance, Set<Card> cards) {
+    public Account(Long balance, Set<Card> cards, Client client) {
         this.balance = balance;
         this.cards = cards;
+        this.client = client;
     }
 
     public Account(Long balance) {
@@ -69,6 +76,14 @@ public class Account {
 
     public Role getRole() {
         return role;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public void addCard(Card card) {
