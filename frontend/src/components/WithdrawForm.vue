@@ -7,22 +7,46 @@
       <kings-button button-type="primary" @click="withdraw"> Withdraw </kings-button>
       <kings-button @click="handleCancel"> Cancel </kings-button>
     </div>
+
+    <kings-error v-model:form-error="formError"/>
   </div>
 </template>
 
 <script>
+import AXIOS from "../axios.js";
 import KingsInput from "./Base/KingsInput.vue";
 import KingsButton from "./Base/KingsButton.vue";
+import KingsError from "./Base/KingsError.vue";
 export default {
   name: "WithdrawForm",
-  components: {KingsButton, KingsInput},
+  components: {KingsError, KingsButton, KingsInput},
   data() {
     return {
-      amount: null
+      amount: null,
+      formError: null
     }
   },
   methods: {
-    withdraw() {
+    async withdraw() {
+      if (!this.amount) {
+        this.formError = "Please enter an amount"
+      }
+
+      try {
+        let response = await AXIOS.post(`/api/transaction/withdraw/${this.amount}`)
+
+        if (response.status === 200 && response.data.success) {
+          await this.$router.push({ name: "Receipt", params: { id: response.data.result.id}})
+        }
+        else {
+          this.formError = response.data.error;
+        }
+
+      }
+      catch (e) {
+        this.formError = e;
+      }
+
 
     },
     handleCancel() {
@@ -33,9 +57,5 @@ export default {
 </script>
 
 <style scoped>
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 </style>

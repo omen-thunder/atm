@@ -1,5 +1,6 @@
 package KingsATM.service;
 
+import KingsATM.TransactionType;
 import KingsATM.model.Account;
 import KingsATM.model.Card;
 import KingsATM.model.Transaction;
@@ -31,7 +32,7 @@ public class TransactionService {
         return transactionRepository.save(transaction);
     }
 
-    public Transaction createTransaction(String type, Long amount, Account account, Card card) {
+    public Transaction createTransaction(TransactionType type, Long amount, Account account, Card card) {
         Transaction transaction = new Transaction (
                 type,
                 amount,

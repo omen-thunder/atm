@@ -18,7 +18,7 @@
 export default {
   name: "KingsInput",
   props: {
-    modelValue: String,
+    modelValue: [String , Number],
     label: {
       type: String,
     },
@@ -39,9 +39,5 @@ export default {
 </script>
 
 <style scoped>
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 </style>
