@@ -18,7 +18,7 @@
 export default {
   name: "KingsInput",
   props: {
-    modelValue: String,
+    modelValue: [String , Number],
     label: {
       type: String,
     },

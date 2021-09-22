@@ -106,7 +106,16 @@ public class AccountController {
     }
 
     @PostMapping("/create")
-    public JsonResponse<AccountDtoRes> createAccount(@RequestBody AccountDtoReq accountDtoReq) {
+    public JsonResponse<AccountDtoRes> createAccount(@Valid @RequestBody AccountDtoReq accountDtoReq) {
+        // Ensure the balance is divisible by 5
+        if (accountDtoReq.getBalance() % 5 != 0) {
+            return new JsonResponse<>(false, "You can only deposit Australian notes");
+        }
+        // Ensure a card has been attached
+        if (accountDtoReq.getCards() == null) {
+            return new JsonResponse<>(false, "A card with a pin has not been provided");
+        }
+
         // Create the account
         var account = accountService.createAccountFromDto(accountDtoReq);
 

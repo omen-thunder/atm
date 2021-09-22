@@ -64,7 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(
                         //Api routes
-                        "/api/account/login", "/register" , "/api/account/create", "/login",
+                        "/api/account/login", "/register" , "/api/account/create", "/login", "/new-account"
                         // Frontend
                         "/index.html", "/",  "/assets/**", "/js/**", "/css/**", "/img/**", "/favicon.ico","/*.js").permitAll()
                 .anyRequest().authenticated()

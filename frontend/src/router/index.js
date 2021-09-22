@@ -7,6 +7,7 @@ import Home from "../views/Home.vue";
 import Admin from "../views/Admin.vue";
 import Withdraw from "../views/Withdraw.vue";
 import Register from "../views/Register.vue";
+import NewAccount from "../views/NewAccount.vue";
 
 const routes = [
     {
@@ -23,6 +24,12 @@ const routes = [
         path: "/register",
         name: "Register",
         component:  Register,
+    },
+    {
+        path: "/new-account/:id",
+        name: "NewAccount",
+        props: true,
+        component:  NewAccount,
     },
     {
         path: "/home",
