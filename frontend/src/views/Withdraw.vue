@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import KingsAtm from "../components/AtmLayout/KingsAtmContainer.vue";
+import KingsAtm from "../components/Base/KingsAtmContainer.vue";
 import WithdrawForm from "../components/WithdrawForm.vue";
 
 export default {

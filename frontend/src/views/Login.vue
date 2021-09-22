@@ -10,8 +10,8 @@
 <script>
 
 import LoginForm from "../components/LoginForm.vue";
-import KingsAtmContainer from '../components/AtmLayout/KingsAtmContainer.vue';
-import Logo from "../components/Logo.vue";
+import KingsAtmContainer from '../components/Base/KingsAtmContainer.vue';
+import Logo from "../components/Base/KingsLogo.vue";
 
 export default {
   name: "Home",

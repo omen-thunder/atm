@@ -1,40 +1,21 @@
 <template>
 
-  <div class="flex-grow flex flex-col items-center mt-12">
-
-    <div id="withdraw-form" class="grid gap-5 grid-cols-1 max-w-lg">
-
+  <div class="w-80">
+    <div id="withdraw-form" class="grid gap-3 xl:gap-5 grid-cols-1 max-w-lg">
       <h1 class="text-3xl lg:text-4xl font-semibold text-yellow-100">How much would you like to withdraw?</h1>
-
-      <input
-          v-model="amount"
-          type="number"
-          placeholder="$"
-          class="p-4 block rounded-md text-left text-4xl text-gray-700">
-
-
-      <div class="buttons flex flex-col">
-        <button class="p-4 my-6 text-2xl text-white rounded bg-blue-400 active:bg-blue-500 hover:bg-blue-300"
-                @click="withdraw">Withdraw
-        </button>
-
-        <button
-            class="p-4 text-2xl text-white rounded border-2 border-gray-100 hover:bg-gray-300"
-            @click="handleCancel">
-          Cancel
-        </button>
-      </div>
-
-
+      <kings-input type="number" v-model="amount" placeholder="$"/>
+      <kings-button button-type="primary" @click="withdraw"> Withdraw </kings-button>
+      <kings-button @click="handleCancel"> Cancel </kings-button>
     </div>
-
   </div>
-
 </template>
 
 <script>
+import KingsInput from "./Base/KingsInput.vue";
+import KingsButton from "./Base/KingsButton.vue";
 export default {
   name: "WithdrawForm",
+  components: {KingsButton, KingsInput},
   data() {
     return {
       amount: null
