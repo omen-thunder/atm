@@ -8,6 +8,7 @@ import Admin from "../views/Admin.vue";
 import Withdraw from "../views/Withdraw.vue";
 import Register from "../views/Register.vue";
 import NewAccount from "../views/NewAccount.vue";
+import Receipt from "../views/Receipt.vue";
 
 const routes = [
     {
@@ -48,6 +49,15 @@ const routes = [
         }
     },
     {
+        path: "/receipt/:id",
+        name: "Receipt",
+        props: true,
+        component: Receipt,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
         path: "/admin",
         name: "Admin",
         component: Admin,
@@ -67,10 +77,14 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
 
     // Security policy
     if (to.matched.some(record => record.meta.requiresAuth)) {
+
+        await store.dispatch("initialise");
+
+        console.log("checking auth ", store.getters.isLoggedIn)
 
         if (!store.getters.isLoggedIn) {
             next({
