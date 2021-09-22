@@ -29,7 +29,7 @@
 <script>
 
 import AXIOS from "../axios.js";
-import KingsAtmContainer from '../components/AtmLayout/KingsAtmContainer.vue';
+import KingsAtmContainer from '../components/Base/KingsAtmContainer.vue';
 
 export default {
   components: { KingsAtmContainer },
