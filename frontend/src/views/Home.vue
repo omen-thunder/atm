@@ -1,18 +1,21 @@
-<template>  
-  <div class="home-page">
-    <kings-atm>
+<template>
+  <kings-atm>
+    <div class="home-page">
+      <logo/>
       <home-options/>
-    </kings-atm>
-  </div>
+    </div>
+  </kings-atm>
 </template>
 
 <script>
 import HomeOptions from "../components/HomeOptions.vue";
-import KingsAtm from "../components/AtmLayout/KingsAtmContainer.vue";
+import KingsAtm from "../components/Base/KingsAtmContainer.vue";
+import Logo from "../components/Base/KingsLogo.vue";
 
 export default {
   name: "Home",
   components: {
+    Logo,
     HomeOptions,
     KingsAtm
   },

@@ -2,8 +2,10 @@ package KingsATM.config;
 
 import KingsATM.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -19,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -44,35 +45,35 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
-        //        auth.jdbcAuthentication()
-//                .dataSource(dataSource);
-
-//        auth.inMemoryAuthentication()
-//                .withUser("user1").password(passwordEncoder().encode("user1Pass"))
-//                .authorities("ROLE_USER");
+        auth
+            .userDetailsService(userDetailsService())
+            .passwordEncoder(passwordEncoder());
     }
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-                .logout()
+            .csrf().disable()
+            .logout()
                 .logoutUrl("/api/logout")
                 .logoutSuccessHandler(((request, response, authentication) -> {
                     response.setStatus(HttpServletResponse.SC_OK);
                 }))
                 .and()
-                .authorizeRequests()
+            .authorizeRequests()
                 .antMatchers(
                         //Api routes
-                        "/api/account/login", "/register" , "/api/account/create", "/login",
+                        "/login", "/api/account/login",
+                        "/register" , "/api/account/create", 
+                        "/api/messages/*",
                         // Frontend
-                        "/index.html", "/",  "/assets/**", "/js/**", "/css/**", "/img/**", "/favicon.ico","/*.js").permitAll()
-                .anyRequest().authenticated()
+                        "/index.html", "/",  "/assets/**", "/js/**", "/css/**", "/img/**", "/favicon.ico","/*.js")
+                    .permitAll()
+                .anyRequest()
+                    .authenticated()
                 .and()
-                .httpBasic()
+            .httpBasic()
                 .authenticationEntryPoint(authEntry);
     }
 

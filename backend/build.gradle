@@ -6,8 +6,11 @@
  * User Manual available at https://docs.gradle.org/7.2/userguide/building_java_projects.html
  */
 
-apply plugin: 'java'
-apply plugin: 'org.springframework.boot'
+plugins {
+    id 'java'
+    id 'org.springframework.boot'
+    id 'jacoco'
+}
 
 
 sourceCompatibility = 16
@@ -35,9 +38,8 @@ processResources.dependsOn ':frontend:npmBuild'
 
 dependencies {
 
-
     // This dependency is used by the application.
-//    implementation 'com.google.guava:guava:30.1.1-jre'
+    // implementation 'com.google.guava:guava:30.1.1-jre'
 
     // Database
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -64,15 +66,21 @@ test {
     useJUnitPlatform()
     maxHeapSize = '1G'
     // reports.html.required = false
+
+    // Look for argument passed to `gradle` and override DB source during test
     if (System.getProperty('spring.datasource.url')){
         systemProperties['spring.datasource.url'] = System.getProperty('spring.datasource.url')
     }
+
+    // Generate jacoco coverage report
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
 }
 
 
 jar {
     enabled = false
 }
-
-
-

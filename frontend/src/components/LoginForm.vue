@@ -1,34 +1,41 @@
 <template>
-    <div class="flex-grow flex flex-col items-center mt-12">
-      <div id="login-form" class="grid gap-5 grid-cols-1 max-w-lg mx-auto">
-
-        <span class="text-gray-400 text-2xl block">Account Number</span>
-        <input type="text" placeholder="- - - -" class="p-4 block rounded-md text-center text-4xl"
-               v-model="loginForm.accountNumber">
 
 
-        <span class="text-gray-400 text-2xl  block">Account Pin</span>
-        <input type="password" placeholder="- - - -" class="p-4 block rounded-md text-center text-3xl "
-               v-model="loginForm.accountPin">
+  <div class="w-80">
 
-        <button class="p-4 my-6 text-3xl md:text-xl text-white rounded-md bg-blue-400 active:bg-blue-500 hover:bg-blue-300"
-                @click="login()">Login
-        </button>
+    <div id="login-form" class="grid xl:gap-5 grid-cols-1 max-w-lg mx-auto" @keyup.enter="login()">
+
+      <kings-input label="Account Number" placeholder="- - - -" v-model="loginForm.accountNumber"/>
+
+      <kings-input label="Account Pin" placeholder="- - - -" v-model="loginForm.accountPin" type="password"/>
+
+      <div class="buttons flex flex-col">
+        <kings-button class="my-4" button-type="primary" @click="login">
+          Login
+        </kings-button>
+
+        <kings-button @click="handleRegister">
+          Register
+        </kings-button>
       </div>
-
 
     </div>
 
-  <div class="text-gray-50  text-uppercase rounded-md my-6 p-4 md:w-2/3 xl:w-1/2 mx-auto transition-all" :class="formError? 'bg-red-500': 'bg-transparent'">
-    <span v-text="formError" v-if="formError"></span>
+    <kings-error v-model:form-error="formError"/>
+
   </div>
 
 
 </template>
 
 <script>
+import KingsInput from "./Base/KingsInput.vue";
+import KingsButton from "./Base/KingsButton.vue";
+import KingsError from "./Base/KingsError.vue";
+
 export default {
   name: "LoginForm",
+  components: {KingsError, KingsButton, KingsInput},
   data() {
     return {
       maintenance: false,
@@ -40,10 +47,16 @@ export default {
     }
   },
   methods: {
-    login: async function () {
+    async login() {
+
       if (this.maintenance) {
         this.formError = 'Sorry, our system is currently in maintenance. Please try again later.';
-        this.clearFormError(5000);
+        return
+      }
+
+      if (!this.loginForm.accountNumber || !this.loginForm.accountPin) {
+        this.formError = 'Please enter a account number and pin.';
+        return
       }
 
       let signInObj = {username: this.loginForm.accountNumber, password: this.loginForm.accountPin}
@@ -55,11 +68,13 @@ export default {
       }
     },
 
-    clearFormError: async function (delay) {
-      await new Promise(r => setTimeout(r, delay));
-      this.formError = '';
+
+
+    async handleRegister() {
+      await this.$router.push("/register")
     }
   },
+
   async created() {
     await this.$store.dispatch('initialise');
   }
