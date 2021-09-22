@@ -30,8 +30,8 @@ public class TransactionController {
     @Autowired
     EntityManager entityManager;
 
-    @PostMapping("/withdrawal")
-    public JsonResponse<Transaction> withdraw(Authentication auth, Long amount) {
+    @PostMapping("/withdraw/{amount}")
+    public JsonResponse<Transaction> withdraw(Authentication auth, @PathVariable Long amount) {
         var account = accountService.getAccountByCardId(Integer.parseInt(auth.getName()));
         var card = cardService.getCardById(Integer.parseInt(auth.getName()));
 
@@ -41,19 +41,20 @@ public class TransactionController {
 
             Transaction transaction = transactionService.createTransaction (
                     "withdrawal", amount, account, card);
+
             if (transaction == null) {
                 return new JsonResponse<>(false, "There was an error creating the new transaction");
             }
 
             return new JsonResponse<Transaction>(transaction);
 
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            return new JsonResponse<Transaction>(null);
+        } catch (Exception e) {
+            return new JsonResponse<>(false, e.getMessage());
         }
 
     }
 
-    @PostMapping("/deposit")
+    @PostMapping("/deposit/")
     public JsonResponse<Transaction> deposit(Authentication auth, Long amount) {
 
         var account = accountService.getAccountByCardId(Integer.parseInt(auth.getName()));

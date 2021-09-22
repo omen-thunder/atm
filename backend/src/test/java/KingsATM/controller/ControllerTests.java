@@ -19,18 +19,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.Matchers.*;
 
 import javax.persistence.EntityManager;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -38,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
-public class AccountControllerTest {
+public class ControllerTests {
 
     @Autowired
     private MockMvc mvc;
@@ -55,6 +54,7 @@ public class AccountControllerTest {
     private static Account testAccount;
     private static Card testCard;
     private static LoginDto testLogin;
+    private static String testAuthHeader;
     private static final String CARD_PIN = "1234";
 
     @BeforeAll
@@ -73,6 +73,8 @@ public class AccountControllerTest {
                 )
         );
         testLogin =  new LoginDto(testCard.getId(), CARD_PIN);
+        testAuthHeader = "Basic " + Base64.getEncoder().encodeToString((testCard.getId() + ":" + CARD_PIN).getBytes());
+
     }
 
     @AfterEach
@@ -120,7 +122,8 @@ public class AccountControllerTest {
         mvc.perform(
                 post("/api/account/create")
                         .contentType("application/json")
-                        .content(objectMapper.writeValueAsString(accountReq)))
+                        .content(objectMapper.writeValueAsString(accountReq))
+                )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success", is(true)));
     }
@@ -210,6 +213,40 @@ public class AccountControllerTest {
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(login)))
                 .andExpect(jsonPath("$.error", is("No account found")));
+    }
+
+    @Test
+    public void withdrawReturnsReceipt() throws Exception {
+        mvc.perform(post("/api/transaction/withdraw/200")
+                        .contentType("application/json")
+                        .header("Authorization", testAuthHeader))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void withdrawOfTooMuchNotAccepted() throws Exception {
+        mvc.perform(post("/api/transaction/withdraw/2000")
+                        .contentType("application/json")
+                        .header("Authorization", testAuthHeader))
+                .andExpect(jsonPath("$.error", is("Insufficient funds")));
+    }
+
+    @Test
+    public void withdrawOfNegativeNumberNotAccepted() throws Exception {
+        mvc.perform(post("/api/transaction/withdraw/-1000")
+                        .contentType("application/json")
+                        .header("Authorization", testAuthHeader))
+                .andExpect(jsonPath("$.error", is("Amount negative")));
+    }
+
+    @Test
+    public void depositReturnsReceipt() {
+
+    }
+
+    @Test
+    public void depositOfCoinsNotAccepted() {
+
     }
 
 
