@@ -1,15 +1,15 @@
 <template>
-  <kings-atm>
+  <kings-atm-container>
     <div class="home-page">
       <logo/>
       <home-options/>
     </div>
-  </kings-atm>
+  </kings-atm-container>
 </template>
 
 <script>
+import KingsAtmContainer from '../components/Base/KingsAtmContainer.vue';
 import HomeOptions from "../components/HomeOptions.vue";
-import KingsAtm from "../components/Base/KingsAtmContainer.vue";
 import Logo from "../components/Base/KingsLogo.vue";
 
 export default {
@@ -17,7 +17,7 @@ export default {
   components: {
     Logo,
     HomeOptions,
-    KingsAtm
+    KingsAtmContainer,
   },
   methods: {
 
@@ -26,10 +26,5 @@ export default {
 </script>
 
 <style scoped>
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 
 </style>
