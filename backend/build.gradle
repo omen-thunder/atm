@@ -34,7 +34,18 @@ sourceSets {
     }
 }
 
-processResources.dependsOn ':frontend:npmBuild'
+
+
+var backendOnly = System.getenv("backendOnly")
+
+println("backendOnly value = $backendOnly")
+
+if (backendOnly == null) {
+
+    processResources.dependsOn ':frontend:npmBuild'
+}
+
+
 
 dependencies {
 

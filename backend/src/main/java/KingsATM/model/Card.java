@@ -13,11 +13,14 @@ import java.util.Date;
 @Table(name = "card")
 @SequenceGenerator(name="card_seq", initialValue = 20000)
 public class Card {
-    public static final int MAX_ATTEMPTS = 5;
+    public static final int MAX_ATTEMPTS = 3;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "card_seq")
     private Integer id;
+
+    @NotNull
+    private Date issueDate;
 
     @NotNull
     private Date expiryDate;
@@ -36,6 +39,21 @@ public class Card {
     @NotNull
     private Account account;
 
+    protected Card() {}
+
+    protected Card(Integer id, CardStatus status, Integer loginAttempt, String pin, Account account) {
+        this.id = id;
+        this.status = status;
+        this.loginAttempt = loginAttempt;
+        this.pin = pin;
+        this.account = account;
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR, 5);
+        this.expiryDate = cal.getTime();
+        this.issueDate = new Date();
+    }
+
     public Card(String pin, Account account, CardStatus cardStatus) {
         this.status = cardStatus;
         this.pin = pin;
@@ -44,19 +62,19 @@ public class Card {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.YEAR, 5);
         this.expiryDate = cal.getTime();
+        this.issueDate = new Date();
     }
 
     public Card(String pin, Account account) {
         this(pin, account, CardStatus.ACTIVE);
     }
 
-    protected Card() {}
-
-    protected void setExpiryDate(Date expiryDate) {
+    public void setExpiryDate(Date expiryDate) {
         this.expiryDate = expiryDate;
     }
 
-    protected void setStatus(CardStatus cardStatus) {
+
+    public void setStatus(CardStatus cardStatus) {
         this.status = cardStatus;
     }
 
@@ -79,6 +97,14 @@ public class Card {
      */
     public boolean isExpired() {
        return this.expiryDate.before(Calendar.getInstance().getTime());
+    }
+
+    /**
+     * Check the card issue against system time.
+     * @return True, if the card is expired.
+     */
+    public boolean beforeIssue() {
+        return Calendar.getInstance().getTime().before(this.issueDate);
     }
 
     /**
@@ -114,7 +140,7 @@ public class Card {
     }
 
     public Boolean isLocked() {
-      return this.status == CardStatus.BANNED;
+        return this.status == CardStatus.BANNED || this.status == CardStatus.CONFISCATED || this.status == CardStatus.INACTIVE;
     }
 
     public void setLoginAttempt(Integer loginAttempt) {
@@ -163,5 +189,14 @@ public class Card {
             return false;
         }
     }
+
+    public Date getIssueDate() {
+        return issueDate;
+    }
+
+    public void setIssueDate(Date issueDate) {
+        this.issueDate = issueDate;
+    }
+
 
 }
