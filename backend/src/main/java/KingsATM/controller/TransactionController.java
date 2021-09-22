@@ -1,5 +1,6 @@
 package KingsATM.controller;
 
+import KingsATM.TransactionType;
 import KingsATM.model.Transaction;
 import KingsATM.dto.AccountDtoRes;
 import KingsATM.service.AccountService;
@@ -40,13 +41,13 @@ public class TransactionController {
             accountService.saveAccount(account);
 
             Transaction transaction = transactionService.createTransaction (
-                    "withdrawal", amount, account, card);
+                    TransactionType.WITHDRAW, amount, account, card);
 
             if (transaction == null) {
                 return new JsonResponse<>(false, "There was an error creating the new transaction");
             }
 
-            return new JsonResponse<Transaction>(transaction);
+            return new JsonResponse<>(transaction);
 
         } catch (Exception e) {
             return new JsonResponse<>(false, e.getMessage());
@@ -65,7 +66,7 @@ public class TransactionController {
             accountService.saveAccount(account);
 
             Transaction transaction = transactionService.createTransaction (
-                    "deposit", amount, account, card);
+                    TransactionType.DEPOSIT, amount, account, card);
             if (transaction == null) {
                 return new JsonResponse<>(false, "There was an error creating the new transaction");
             }
@@ -82,8 +83,21 @@ public class TransactionController {
         try {
             var account = accountService.getAccountByCardId(Integer.parseInt(auth.getName()));
             return new JsonResponse<Long>(account.getBalance());
-        } catch (RuntimeException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot retrieve balance", e);
+        }
+        catch (Exception e) {
+            return new JsonResponse<>(false, e.getMessage());
+        }
+    }
+
+    @GetMapping("/{id}")
+    public JsonResponse<Transaction> getTransactionById(Authentication auth, @PathVariable Integer id) {
+        //TODO- Check that the transaction belongs to user
+        try {
+            var transaction = transactionService.getTransactionById(id);
+            return new JsonResponse<>(transaction);
+        }
+        catch (Exception e) {
+            return new JsonResponse<>(false, e.getMessage());
         }
     }
 }
