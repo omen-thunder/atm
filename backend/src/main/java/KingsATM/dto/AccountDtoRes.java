@@ -1,6 +1,6 @@
 package KingsATM.dto;
 
-import KingsATM.Role;
+import KingsATM.model.Role;
 import KingsATM.model.Account;
 
 import java.util.HashSet;

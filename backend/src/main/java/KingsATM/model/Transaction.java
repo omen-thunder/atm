@@ -1,7 +1,5 @@
 package KingsATM.model;
 
-import KingsATM.TransactionType;
-
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,6 +21,16 @@ public class Transaction {
     private Long balance;
     private Integer accountNumber;
     private Integer cardNumber;
+
+    protected Transaction(Integer id, TransactionType type, Date date, Long amount, Long balance, Integer accountNumber, Integer cardNumber) {
+        this.id = id;
+        this.type = type;
+        this.date = date;
+        this.amount = amount;
+        this.balance = balance;
+        this.accountNumber = accountNumber;
+        this.cardNumber = cardNumber;
+    }
 
     public Transaction(TransactionType type, Long amount, Long balance,
                        Integer accountNumber, Integer cardNumber) {

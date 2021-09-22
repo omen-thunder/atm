@@ -1,6 +1,6 @@
 package KingsATM.controller;
 
-import KingsATM.CardStatus;
+import KingsATM.model.CardStatus;
 import KingsATM.dto.AccountDtoReq;
 import KingsATM.dto.CardDtoReq;
 import KingsATM.dto.LoginDto;
@@ -19,14 +19,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.Matchers.*;
 
 import javax.persistence.EntityManager;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;

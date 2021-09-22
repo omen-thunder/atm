@@ -1,11 +1,9 @@
 package KingsATM.service;
 
-import KingsATM.TransactionType;
+import KingsATM.model.TransactionType;
 import KingsATM.model.Account;
 import KingsATM.model.Card;
 import KingsATM.model.Transaction;
-import KingsATM.respository.AccountRepository;
-import KingsATM.respository.TransactionRepository;
 import KingsATM.respository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

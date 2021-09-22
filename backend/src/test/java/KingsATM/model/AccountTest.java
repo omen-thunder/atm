@@ -2,20 +2,12 @@ package KingsATM.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import KingsATM.model.Account;
-import KingsATM.model.Card;
-import KingsATM.CardStatus;
-import KingsATM.Client;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import java.lang.Exception;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.NoSuchElementException;
 
 public class AccountTest {
-    private Client client1;
     private Account account1;
     private Account account2;
 
@@ -27,7 +19,6 @@ public class AccountTest {
 
     @AfterEach
     public void tearDown() {
-        client1 = null;
         account1 = null;
         account2 = null;
     }

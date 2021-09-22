@@ -1,11 +1,6 @@
 package KingsATM.dto;
 
-import KingsATM.Role;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 /*
 This class is used by the frontend to request a new account
