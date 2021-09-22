@@ -88,7 +88,7 @@
       </div>
 
       <div
-        class="border-1-4 border-blue-500 text-blue-700 p-4"
+        class="border-1-4 border-blue-500 text-yellow-400 p-4"
         v-if="formSubmitResult.message"
         role="alert">
         <p> {{ formSubmitResult.message }} </p>
@@ -137,6 +137,15 @@ export default {
   component: {
     KingsAtmContainer,
   },
+
+  /**
+   * Actions to be performed when the component is mounted.
+   */
+  async mounted() {
+    await this.fetchCashStore();
+    await this.refreshCashStore();
+  },
+
   methods: {
     async handleLogout() {
       await this.$store.dispatch('logoutUser');
@@ -157,21 +166,19 @@ export default {
     // },
 
     async handleAddNotes() {
-      let params = this.addNote;
-      let response = await AXIOS.post(`/api/atm/deposit/${params}`);
+      const params = this.addNote;
+      let response = await AXIOS.post(`/api/atm/deposit`, params);
 
       if (response.status === 200 && response.data.success) {
-        this.addNote = {
-          n5: 0,
-          n10: 0,
-          n20: 0,
-          n50: 0,
-          n100: 0,
-        }
+        this.resetAddNote();
+        
+        // Update global state and refresh view
+        const cash = JSON.parse(response.data.result);
+        await this.$store.commit('updateCashStore', cash);
+        this.refreshCashStore();
+
         this.formSubmitResult.success = true
         this.formSubmitResult.message = "Successfully added funds to the machine"
-
-        console.log(response.data);
 
         setTimeout(() => {
           this.resetSubmitMessage()
@@ -182,13 +189,41 @@ export default {
     async resetSubmitMessage() {
       this.formSubmitResult = {
         success: null,
-        message: null
+        message: null,
+      };
+    },
+
+    async resetAddNote() {
+      this.addNote = {
+        n5: 0,
+        n10: 0,
+        n20: 0,
+        n50: 0,
+        n100: 0,
+      };
+    },
+
+    /**
+     * Fetch cash store from backend
+     */
+    async fetchCashStore() {
+      let res = await AXIOS.get('/api/atm/get-cashstore');
+      if (res.status == 2000 && res.data.success){
+        console.log('Fetched backend cash store');
+        const cashStore = JSON.parse(res.data.result);
+        await this.$store.commit('updateCashStore', cashStore);
+      } else {
+        this.formSubmitResult.message = "Failed to fetch backend cash store"
       }
     },
 
-    async getCashStoreBalance() {
-      this.cashBalance = await AXIOS.get('/api/atm/get-cashstore-balance');
+    /**
+     * Refresh cash store view
+     */
+    async refreshCashStore() {
+      this.hasNote = this.$store.state.cashStore;
     },
+
   },
   computed: {
 
