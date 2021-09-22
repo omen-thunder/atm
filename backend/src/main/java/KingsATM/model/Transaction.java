@@ -8,6 +8,7 @@ import java.util.Date;
 @Table(name = "transaction")
 @SequenceGenerator(name="transaction_seq", initialValue = 1000)
 public class Transaction {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transaction_seq")
     private long id;
