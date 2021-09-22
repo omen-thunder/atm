@@ -24,7 +24,11 @@ import Logo from "../components/Base/KingsLogo.vue";
 import KingsButton from "../components/Base/KingsButton.vue";
 export default {
   name: "NewAccount",
-  components: {KingsButton, Logo, KingsAtmContainer},
+  components: {
+    KingsButton,
+    Logo,
+    KingsAtmContainer,
+  },
   props: ['id'],
   methods: {
     handleLogin() {
@@ -36,9 +40,5 @@ export default {
 </script>
 
 <style scoped>
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 </style>
