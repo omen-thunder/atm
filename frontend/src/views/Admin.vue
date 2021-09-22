@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     async addFundsToMachine() {
-      let response = await AXIOS.post(`/api/admin/deposit/${this.depositAmount}`);
+      let response = await AXIOS.post(`/api/atm/deposit/${this.depositAmount}`);
 
       if (response.status === 200 && response.data.success) {
         this.depositAmount = ''
