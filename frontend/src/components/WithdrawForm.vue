@@ -10,7 +10,7 @@
           v-model="amount"
           type="number"
           placeholder="$"
-          class="p-4 block rounded-md text-left text-4xl">
+          class="p-4 block rounded-md text-left text-4xl text-gray-700">
 
 
       <div class="buttons flex flex-col">
