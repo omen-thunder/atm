@@ -69,6 +69,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 
+    // Security policy
     if (to.matched.some(record => record.meta.requiresAuth)) {
 
         if (!store.getters.isLoggedIn) {

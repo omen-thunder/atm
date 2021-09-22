@@ -11,6 +11,8 @@ public class AtmController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping("/deposit/{amount}")
     public JsonResponse<String> deposit(@PathVariable("amount") Long amount) {
+
+        // TODO: Update ATM cash store DB
         return new JsonResponse<>("Depositing -- $" + amount.toString());
     }
 

@@ -1,26 +1,52 @@
 <template>
 
   <kings-atm-container>
-    <div class="container">
-      <p class="text-xl">Insert more funds into the machine</p>
+    <div class="m-2 md:m-8 h-full flex flex-col">
 
-      <input
-          class="border rounded"
-          type="number"
-          v-model="depositAmount"/>
+      <h1 class="text-4xl my-4 md:m-8">Admin Console</h1>
 
-      <button
-          @click="addFundsToMachine"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        Add funds
-      </button>
+      <div class="flex-grow">
+        <div>
 
-      <div
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+            <div>
+              <p class="text-xl text-gray-300 pb-2">ATM Cash Balance:</p>
+              <p class="text-xl">[Balance place holder]</p>
+            </div>
+
+            <div>
+              <p class="text-md md:text-xl pb-2">Insert more funds into the machine</p>
+              <span class="text-2xl">$</span>
+              <input
+                class="border rounded text-gray-700 m-2"
+                type="number"
+                v-model="depositAmount" />
+              
+              <button
+                  @click="addFundsToMachine"
+                  class="bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded">
+                Add funds
+              </button>
+            </div>
+
+          </div>
+
+
+          <div class="grid grid-cols-2 gap-4">
+
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="border-1-4 border-blue-500 text-blue-700 p-4"
           v-if="formSubmitResult.message"
-          role="alert"
-          class="border-1-4 border-blue-500 text-blue-700 p-4">
+          role="alert">
         <p> {{ formSubmitResult.message }} </p>
       </div>
+
     </div>
   </kings-atm-container>
 
@@ -36,6 +62,7 @@ export default {
   name: "Admin",
   data() {
     return {
+      cashBalance: 0,
       depositAmount: '',
       formSubmitResult: {
         success: null,
@@ -48,7 +75,7 @@ export default {
   },
   methods: {
     async addFundsToMachine() {
-      let response = await AXIOS.post(`/api/admin/deposit/${this.depositAmount}`);
+      let response = await AXIOS.post(`/api/atm/deposit/${this.depositAmount}`);
 
       if (response.status === 200 && response.data.success) {
         this.depositAmount = ''
@@ -61,11 +88,15 @@ export default {
       }
     },
 
-    resetSubmitMessage() {
+    async resetSubmitMessage() {
       this.formSubmitResult = {
         success: null,
         message: null
       }
+    },
+
+    async getCashStoreBalance() {
+      this.cashBalance = await AXIOS.get('/api/atm/get-cashstore-balance');
     }
   },
   computed: {
