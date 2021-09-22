@@ -1,7 +1,7 @@
 package KingsATM.config;
 
-import KingsATM.CardStatus;
-import KingsATM.Role;
+import KingsATM.model.CardStatus;
+import KingsATM.model.Role;
 import KingsATM.model.Account;
 import KingsATM.model.Card;
 import KingsATM.model.Cash;
@@ -15,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
-import java.util.Date;
 
 @Component
 public class DatabaseRunner implements CommandLineRunner {

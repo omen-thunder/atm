@@ -31,6 +31,9 @@ public class Cash {
 		return value * amount;
 	}
 
+	protected Cash() {
+	}
+
 	public int incrAmount(int increase) {
 		// Negative amount check
 		if (increase < 0) {

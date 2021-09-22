@@ -1,7 +1,7 @@
 package KingsATM.controller;
 
 
-import KingsATM.CardStatus;
+import KingsATM.model.CardStatus;
 import KingsATM.dto.AccountDtoReq;
 import KingsATM.dto.AccountDtoRes;
 import KingsATM.dto.CardDtoReq;
@@ -18,7 +18,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -27,11 +26,9 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("api/account")

@@ -1,6 +1,6 @@
 package KingsATM.dto;
 
-import KingsATM.CardStatus;
+import KingsATM.model.CardStatus;
 import KingsATM.model.Card;
 
 import java.util.Date;

@@ -1,12 +1,9 @@
 package KingsATM.model;
 
-import KingsATM.Role;
-
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
