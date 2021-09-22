@@ -76,15 +76,17 @@ export default createStore({
         })
 
         if (response.status === 200 && response.data.success) {
-
-          localStorage.setItem("authtoken", auth)
-
-          commit('setLoggedIn', true)
-
+          // Get response data
           let account = response.data.result
 
+          // Store auth token
+          localStorage.setItem("authtoken", auth)
+
+          // Update store
+          commit('setLoggedIn', true)
           commit('setAdmin', account.role === "ROLE_ADMIN");
 
+          // Redirect
           state.isAdmin ? await router.replace({name: 'Admin'}) : await router.replace({name: 'Home'})
 
         } else if (response.status === 200 && response.data.error) {

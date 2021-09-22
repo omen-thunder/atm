@@ -46,30 +46,34 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(userDetailsService())
-                .passwordEncoder(passwordEncoder());
+            .userDetailsService(userDetailsService())
+            .passwordEncoder(passwordEncoder());
     }
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-                .logout()
+            .csrf().disable()
+            .logout()
                 .logoutUrl("/api/logout")
                 .logoutSuccessHandler(((request, response, authentication) -> {
                     response.setStatus(HttpServletResponse.SC_OK);
                 }))
                 .and()
-                .authorizeRequests()
+            .authorizeRequests()
                 .antMatchers(
                         //Api routes
-                        "/api/account/login", "/register" , "/api/account/create", "/login",
+                        "/login", "/api/account/login",
+                        "/register" , "/api/account/create", 
+                        "/api/messages/*",
                         // Frontend
-                        "/index.html", "/",  "/assets/**", "/js/**", "/css/**", "/img/**", "/favicon.ico","/*.js").permitAll()
-                .anyRequest().authenticated()
+                        "/index.html", "/",  "/assets/**", "/js/**", "/css/**", "/img/**", "/favicon.ico","/*.js")
+                    .permitAll()
+                .anyRequest()
+                    .authenticated()
                 .and()
-                .httpBasic()
+            .httpBasic()
                 .authenticationEntryPoint(authEntry);
     }
 
