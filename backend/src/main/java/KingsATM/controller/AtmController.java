@@ -25,6 +25,11 @@ public class AtmController {
         return new JsonResponse<>(cashService.getAmountNotes());
     }
 
+    @GetMapping("/get-cashstore-balance")
+    public JsonResponse<Long> getCashStoreBalance() {
+        return new JsonResponse<>(cashService.getTotal());
+    }
+
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping("/deposit")
     public JsonResponse<CashStoreDto> deposit(@RequestBody CashStoreDto cashStoreDto) {
