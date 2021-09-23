@@ -20,17 +20,17 @@ public class AtmController {
     @Autowired
     CashService cashService;
 
+    @GetMapping("/get-cashstore")
+    public JsonResponse<CashStoreDto> getCashStore() {
+        return new JsonResponse<>(cashService.getAmountNotes());
+    }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping("/deposit")
     public JsonResponse<CashStoreDto> deposit(@RequestBody CashStoreDto cashStoreDto) {
 
-        // TODO: Get notes from request body and make deposit
-
-        // TODO: Get updated cash store and return stringified JSON
-
         try {
-            List cashList = new ArrayList<Cash>();
+            List<Cash> cashList = new ArrayList<Cash>();
             Cash num5c = new Cash(5, cashStoreDto.getNum5c());
             Cash num10c = new Cash(10, cashStoreDto.getNum10c());
             Cash num20c = new Cash(20, cashStoreDto.getNum20c());
