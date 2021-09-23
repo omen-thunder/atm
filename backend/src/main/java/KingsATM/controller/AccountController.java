@@ -1,7 +1,7 @@
 package KingsATM.controller;
 
 
-import KingsATM.CardStatus;
+import KingsATM.model.CardStatus;
 import KingsATM.dto.AccountDtoReq;
 import KingsATM.dto.AccountDtoRes;
 import KingsATM.dto.CardDtoReq;
@@ -18,18 +18,17 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Objects;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("api/account")
@@ -54,21 +53,29 @@ public class AccountController {
 
     @PostMapping("/login")
     public JsonResponse<AccountDtoRes> account(@Valid @RequestBody LoginDto loginDto, HttpServletRequest request) {
-        var card = cardService.getCardById(loginDto.getCardNumber());
-        var account = accountService.getAccountByCardId(loginDto.getCardNumber());
+        Card card;
+        Account account;
 
-        if (card == null || account == null) {
+        try {
+            card = cardService.getCardById(loginDto.getCardNumber());
+            account = accountService.getAccountByCardId(loginDto.getCardNumber());
+        }
+        catch (EntityNotFoundException | NoSuchElementException e) {
             return new JsonResponse<>(false, "No account found");
-        }
-        if (card.isLocked()) {
-            return new JsonResponse<>(false, "Account is currently locked because the card has been "
-                    + card.getStatus().getStatusString());
-        }
-        if (card.isExpired()) {
-            return new JsonResponse<>(false, "Card has expired");
         }
 
         try {
+            if (card.isLocked()) {
+                return new JsonResponse<>(false, "Account is currently locked because the card has been "
+                        + card.getStatus().getStatusString());
+            }
+            if (card.isExpired()) {
+                return new JsonResponse<>(false, "Card has expired");
+            }
+            if (card.beforeIssue()) {
+                return new JsonResponse<>(false, "Card issue date invalid");
+            }
+
             UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(loginDto.getCardNumber(), loginDto.getCardPin());
 
             // Authenticate the user
@@ -83,10 +90,10 @@ public class AccountController {
             return new JsonResponse<>(new AccountDtoRes(account));
         }
         catch (BadCredentialsException e) {
-
             return new JsonResponse<>(false, "Username or password incorrect attempts remaining " + card.getAttemptsRemaining());
-
         }
+
+
 
     }
 
@@ -106,7 +113,16 @@ public class AccountController {
     }
 
     @PostMapping("/create")
-    public JsonResponse<AccountDtoRes> createAccount(@RequestBody AccountDtoReq accountDtoReq) {
+    public JsonResponse<AccountDtoRes> createAccount(@Valid @RequestBody AccountDtoReq accountDtoReq) {
+        // Ensure the balance is divisible by 5
+        if (accountDtoReq.getBalance() % 5 != 0) {
+            return new JsonResponse<>(false, "You can only deposit Australian notes");
+        }
+        // Ensure a card has been attached
+        if (accountDtoReq.getCards() == null) {
+            return new JsonResponse<>(false, "A card with a pin has not been provided");
+        }
+
         // Create the account
         var account = accountService.createAccountFromDto(accountDtoReq);
 

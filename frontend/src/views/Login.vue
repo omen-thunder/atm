@@ -1,20 +1,24 @@
 <template>
-  <div class="login-page">
-    <kings-atm>
-      <login-form/>
-    </kings-atm>
-  </div>
+  <kings-atm-container>
+    <div class="login-page flex-grow m-4">
+        <logo/>
+        <login-form/>
+    </div>
+  </kings-atm-container>
 </template>
 
 <script>
+
 import LoginForm from "../components/LoginForm.vue";
-import KingsAtm from "../components/AtmLayout/KingsAtmContainer.vue";
+import KingsAtmContainer from '../components/Base/KingsAtmContainer.vue';
+import Logo from "../components/Base/KingsLogo.vue";
 
 export default {
   name: "Home",
   components: {
-    KingsAtm,
+    KingsAtmContainer,
     LoginForm,
-  }
+    Logo
+  },
 };
 </script>

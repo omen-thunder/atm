@@ -1,22 +1,22 @@
 <template>
 
-  <kings-atm>
+  <kings-atm-container>
 
     <withdraw-form/>
 
-  </kings-atm>
+  </kings-atm-container>
 
 </template>
 
 <script>
-import KingsAtm from "../components/AtmLayout/KingsAtmContainer.vue";
+import KingsAtmContainer from "../components/Base/KingsAtmContainer.vue";
 import WithdrawForm from "../components/WithdrawForm.vue";
 
 export default {
   name: "Withdraw",
   components: {
     WithdrawForm,
-    KingsAtm
+    KingsAtmContainer,
   }
 }
 </script>

@@ -1,11 +1,9 @@
 package KingsATM.model;
 
-import KingsATM.Role;
-
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.HashSet;
-import java.util.Objects;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 @Entity
@@ -26,6 +24,11 @@ public class Account {
     private Role role = Role.ROLE_USER;
 
     protected Account() {}
+
+    protected Account(Integer id, Long balance) {
+        this.id = id;
+        this.balance = balance;
+    }
 
     public Account(Role role) {
         this.role = role;
@@ -72,14 +75,14 @@ public class Account {
     }
 
     public void addCard(Card card) {
-        // Check if cards already contains card
-        if (!cards.isEmpty()) {
-            throw new IllegalArgumentException("Account already has card");
-        }
+//        // Check if cards already contains card
+//        if (!cards.isEmpty()) {
+//            throw new IllegalArgumentException("Account already has card");
+//        }
 
         // Check if cards already contains card
         if (cards.contains(card)) {
-            throw new IllegalArgumentException("Account already has card number");
+            throw new IllegalArgumentException("Account already has this card attached");
         }
 
         cards.add(card);
@@ -93,8 +96,8 @@ public class Account {
                 .findFirst();
 
         // Check if cards contains cardNum
-        if (optionalCard == null) {
-            throw new IllegalArgumentException("Account does not have card number");
+        if (optionalCard.isEmpty()) {
+            throw new NoSuchElementException("Account does not have card number");
         }
 
         Card removedCard = optionalCard.get();
@@ -112,7 +115,7 @@ public class Account {
 
         // Overflow check
         BigInteger sum = BigInteger.valueOf(balance).add(BigInteger.valueOf(amount));
-        if (sum.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) == -1) {
+        if (sum.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0) {
             throw new IllegalStateException("Account balance overflow");
         }
 

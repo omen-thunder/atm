@@ -1,4 +1,4 @@
-package KingsATM;
+package KingsATM.model;
 
 public enum Role {
     ROLE_ADMIN,

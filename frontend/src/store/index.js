@@ -10,7 +10,14 @@ export default createStore({
       isInitialised: false,
       isLoggedIn: false,
       isAdmin: false,
-      machineNumber: '0000'
+      machineNumber: "0000",
+      cashStore: {
+        n5: 0,
+        n10: 0,
+        n20: 0,
+        n50: 0,
+        n100: 0,
+      },
     }
   },
   mutations: {
@@ -29,7 +36,16 @@ export default createStore({
 
     setMachineNumber(state, machineNumber){
       state.machineNumber = machineNumber;
-    }
+    },
+
+    updateCashStore(state, payload) {
+      if (!payload){ return; }
+      state.cashStore.n5 = payload.n5 || state.cashStore.n5;
+      state.cashStore.n10 = payload.n10 || state.cashStore.n10;
+      state.cashStore.n20 = payload.n20 || state.cashStore.n20;
+      state.cashStore.n50 = payload.n50 || state.cashStore.n50;
+      state.cashStore.n100 = payload.n100 || state.cashStore.n100;
+    },
 
   },
   actions: {
@@ -51,7 +67,7 @@ export default createStore({
 
           commit('setAdmin', account.role === "ROLE_ADMIN");
 
-          state.isAdmin ? await router.push({name: 'Admin'}) : await router.push({name: 'Home'})
+          // state.isAdmin ? await router.push({name: 'Admin'}) : await router.push({name: 'Home'})
 
         } else if (response.status === 200 && response.data.error) {
           localStorage.setItem("authtoken", "")
@@ -76,15 +92,17 @@ export default createStore({
         })
 
         if (response.status === 200 && response.data.success) {
-
-          localStorage.setItem("authtoken", auth)
-
-          commit('setLoggedIn', true)
-
+          // Get response data
           let account = response.data.result
 
+          // Store auth token
+          localStorage.setItem("authtoken", auth)
+
+          // Update store
+          commit('setLoggedIn', true)
           commit('setAdmin', account.role === "ROLE_ADMIN");
 
+          // Redirect
           state.isAdmin ? await router.replace({name: 'Admin'}) : await router.replace({name: 'Home'})
 
         } else if (response.status === 200 && response.data.error) {
@@ -113,6 +131,21 @@ export default createStore({
           router.replace({name: "Login"})
         })
 
+      }
+    },
+
+    async getAccount(context) {
+      const auth = localStorage.getItem("token");
+
+      let res = await AXIOS.get("/api/account/details", {
+        headers: {Authorization: auth}
+      });
+
+      if (res.status === 200 && res.data.success) {
+        let data = res.data.result;
+        return data;
+      } else {
+        console.log('Error getting account details.');
       }
     },
 

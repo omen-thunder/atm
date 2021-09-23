@@ -1,6 +1,5 @@
 package KingsATM.service;
 
-import KingsATM.CardStatus;
 import KingsATM.dto.AccountDtoReq;
 import KingsATM.model.Account;
 import KingsATM.model.Card;
@@ -14,7 +13,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.math.BigInteger;
 import java.util.Optional;
 
 import static java.lang.Integer.parseInt;

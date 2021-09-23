@@ -8,18 +8,31 @@ import java.util.Date;
 @Table(name = "transaction")
 @SequenceGenerator(name="transaction_seq", initialValue = 1000)
 public class Transaction {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transaction_seq")
-    private long id;
+    private Integer id;
+
+    @Enumerated(EnumType.STRING)
+    private TransactionType type;
 
     private Date date;
-    private String type;
     private Long amount;
     private Long balance;
     private Integer accountNumber;
     private Integer cardNumber;
 
-    public Transaction( String type, Long amount, Long balance,
+    protected Transaction(Integer id, TransactionType type, Date date, Long amount, Long balance, Integer accountNumber, Integer cardNumber) {
+        this.id = id;
+        this.type = type;
+        this.date = date;
+        this.amount = amount;
+        this.balance = balance;
+        this.accountNumber = accountNumber;
+        this.cardNumber = cardNumber;
+    }
+
+    public Transaction(TransactionType type, Long amount, Long balance,
                        Integer accountNumber, Integer cardNumber) {
         this.type = type;
         this.amount = amount;
@@ -31,13 +44,13 @@ public class Transaction {
 
     protected Transaction() {}
 
-    public long getId() { return this.id; }
+    public Integer getId() { return this.id; }
 
     public Date getDateTime() {
         return date;
     }
 
-    public String getType() { return type; }
+    public TransactionType getType() { return type; }
 
     public long getAmount() {
         return amount;

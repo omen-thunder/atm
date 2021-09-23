@@ -1,25 +1,25 @@
 <template>
-
-  <form @submit.prevent="handleSubmit">
-    <label> Account Starting Balance </label>
-    <input type="text">
-
-    <label> Pin Code </label>
-    <input type="text">
-
-    <button>Create Account</button>
-  </form>
+  <kings-atm-container>
+    <div class="register-page">
+      <logo/>
+      <register-form/>
+    </div>
+  </kings-atm-container>
 
 </template>
 
 <script>
+import RegisterForm from "../components/RegisterForm.vue";
+import KingsAtmContainer from "../components/Base/KingsAtmContainer.vue";
+import Logo from "../components/Base/KingsLogo.vue";
+
 export default {
   name: "Register",
-  methods: {
-    handleSubmit() {
-
-    }
-  }
+  components: {
+    KingsAtmContainer,
+    RegisterForm,
+    Logo
+  },
 }
 </script>
 

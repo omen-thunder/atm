@@ -1,10 +1,9 @@
 package KingsATM.service;
 
+import KingsATM.model.TransactionType;
 import KingsATM.model.Account;
 import KingsATM.model.Card;
 import KingsATM.model.Transaction;
-import KingsATM.respository.AccountRepository;
-import KingsATM.respository.TransactionRepository;
 import KingsATM.respository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +30,7 @@ public class TransactionService {
         return transactionRepository.save(transaction);
     }
 
-    public Transaction createTransaction(String type, Long amount, Account account, Card card) {
+    public Transaction createTransaction(TransactionType type, Long amount, Account account, Card card) {
         Transaction transaction = new Transaction (
                 type,
                 amount,

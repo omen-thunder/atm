@@ -7,6 +7,9 @@ import Home from "../views/Home.vue";
 import Admin from "../views/Admin.vue";
 import Withdraw from "../views/Withdraw.vue";
 import Register from "../views/Register.vue";
+import NewAccount from "../views/NewAccount.vue";
+import Receipt from "../views/Receipt.vue";
+import CheckBalance from "../views/CheckBalance.vue";
 
 const routes = [
     {
@@ -25,6 +28,12 @@ const routes = [
         component:  Register,
     },
     {
+        path: "/new-account/:id",
+        name: "NewAccount",
+        props: true,
+        component:  NewAccount,
+    },
+    {
         path: "/home",
         name: "Home",
         component: Home,
@@ -36,6 +45,24 @@ const routes = [
         path: "/withdraw",
         name: "Withdraw",
         component: Withdraw,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: "/receipt/:id",
+        name: "Receipt",
+        props: true,
+        component: Receipt,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: "/check-balance",
+        name: "CheckBalance",
+        props: true,
+        component: CheckBalance,
         meta: {
             requiresAuth: true
         }
@@ -60,9 +87,24 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeResolve((to, from, next) => {
+    // If this isn't an initial page load.
+    if (to.name) {
+        // Start the route progress bar.
+        NProgress.start()
+    }
+    next()
+})
 
+
+router.beforeEach(async (to, from, next) => {
+
+    // Security policy
     if (to.matched.some(record => record.meta.requiresAuth)) {
+
+        await store.dispatch("initialise");
+
+        console.log("checking auth ", store.getters.isLoggedIn)
 
         if (!store.getters.isLoggedIn) {
             next({
@@ -94,6 +136,7 @@ router.afterEach(async (to) => {
     if (to.path === "/logout") {
         await store.dispatch('logoutUser');
     }
+    NProgress.done();
 })
 
 export default router;
