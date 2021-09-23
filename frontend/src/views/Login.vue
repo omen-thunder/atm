@@ -1,6 +1,6 @@
 <template>
   <kings-atm-container>
-    <div class="login-page">
+    <div class="login-page flex-grow m-4">
         <logo/>
         <login-form/>
     </div>

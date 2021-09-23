@@ -22,7 +22,7 @@ export default {
   components: {KingsError, KingsButton, KingsInput},
   data() {
     return {
-      amount: null,
+      amount: '',
       formError: null
     }
   },
@@ -30,6 +30,7 @@ export default {
     async withdraw() {
       if (!this.amount) {
         this.formError = "Please enter an amount"
+        return;
       }
 
       try {

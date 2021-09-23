@@ -1,18 +1,16 @@
 <template>
 
-  <div class="w-80">
 
-    <div id="home-options" class="grid gap-3 xl:gap-5 grid-cols-1">
+    <div id="home-options" class="grid gap-3 xl:gap-5 grid-cols-1 max-w-md mx-auto">
 
       <p class="text-xl lg:text-2xl xl:text-2xl font-semibold text-yellow-100">What would you like to do today?</p>
       <kings-button button-type="primary" @click="handleWithdraw"> Make Withdrawal </kings-button>
       <kings-button button-type="primary" @click="handleCheckBalance"> Check Balance </kings-button>
       <kings-button button-type="primary" @click="handleMakeDeposit"> Make Deposit </kings-button>
-      <kings-button button-type="secondary" @click="handleCancel"> Logout </kings-button>
+      <kings-button button-type="secondary" @click="handleCancel"> Eject Card </kings-button>
 
     </div>
 
-  </div>
 
 </template>
 
