@@ -6,8 +6,6 @@
 
       <kings-input label="Name" placeholder="Enter your name" v-model="firstName"/>
 
-      <!--        <kings-input label="Last Name" placeholder="Enter your last name" v-model="lastName"/>-->
-
       <kings-input type="password" label="Card Pin" placeholder="Create a card pin" v-model="pin"/>
 
       <kings-input type="number" label="Initial Amount Balance" placeholder="$" v-model.number="depositAmount"/>
@@ -44,11 +42,6 @@ export default {
       createdUser: null,
     }
   },
-  computed: {
-    totalAmount() {
-      return `$${this.depositAmount * 10}`
-    }
-  },
   methods: {
     async handleCancel() {
       await this.$router.back();
@@ -61,7 +54,7 @@ export default {
 
       try {
         const postObj = {
-          balance: this.depositAmount,
+          balance: this.depositAmount * 100,
           cards: [{
               pin: this.pin
             }
@@ -82,9 +75,6 @@ export default {
       } catch (e) {
         this.formError = e;
       }
-
-
-
 
     }
   }
