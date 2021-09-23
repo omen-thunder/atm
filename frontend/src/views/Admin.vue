@@ -282,7 +282,7 @@ export default {
 
     async fetchCashStoreBalance() {
       const balance = await this.$store.dispatch('getCashStoreBalance');
-      if (!balance){
+      if (balance === null){
         this.formSubmitResult.message = "Failed to fetch balance"
       } else {
         this.cashBalance = balance / 100;
