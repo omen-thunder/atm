@@ -1,29 +1,19 @@
 <template>
 
 
-  <div class="w-80">
-
-    <div id="login-form" class="grid xl:gap-5 grid-cols-1 max-w-lg mx-auto" @keyup.enter="login()">
+    <div id="login-form" class="grid xl:gap-5 grid-cols-1 max-w-md mx-auto" @keyup.enter="login()">
 
       <kings-input label="Account Number" placeholder="- - - -" v-model="loginForm.accountNumber"/>
 
       <kings-input label="Account Pin" placeholder="- - - -" v-model="loginForm.accountPin" type="password"/>
 
       <div class="buttons flex flex-col">
-        <kings-button class="my-4" button-type="primary" @click="login">
-          Login
-        </kings-button>
-
-        <kings-button @click="handleRegister">
-          Register
-        </kings-button>
+        <kings-button class="my-4" button-type="primary" @click="login"> Login </kings-button>
+        <kings-button @click="handleRegister"> Register</kings-button>
       </div>
 
+      <kings-error v-model:form-error="formError"/>
     </div>
-
-    <kings-error v-model:form-error="formError"/>
-
-  </div>
 
 
 </template>

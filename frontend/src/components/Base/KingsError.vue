@@ -1,5 +1,5 @@
 <template>
-  <div class="text-gray-50 rounded-md p-4 mx-auto transition-all"
+  <div class="w-full text-gray-50 rounded-md p-4 mx-auto transition-all"
        :class="formError? 'bg-red-500 p-4 my-6': 'bg-transparent my-0'">
     <span v-text="formError" v-if="formError"></span>
   </div>

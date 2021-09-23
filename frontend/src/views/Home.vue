@@ -1,6 +1,6 @@
 <template>
   <kings-atm-container>
-    <div class="home-page">
+    <div class="home-page flex-grow mx-4">
       <logo/>
       <home-options/>
     </div>
