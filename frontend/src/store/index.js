@@ -10,7 +10,7 @@ export default createStore({
       isInitialised: false,
       isLoggedIn: false,
       isAdmin: false,
-      machineNumber: '0000',
+      machineNumber: "0000",
       cashStore: {
         n5: 0,
         n10: 0,
@@ -131,6 +131,21 @@ export default createStore({
           router.replace({name: "Login"})
         })
 
+      }
+    },
+
+    async getAccount(context) {
+      const auth = localStorage.getItem("token");
+
+      let res = await AXIOS.get("/api/account/details", {
+        headers: {Authorization: auth}
+      });
+
+      if (res.status === 200 && res.data.success) {
+        let data = res.data.result;
+        return data;
+      } else {
+        console.log('Error getting account details.');
       }
     },
 

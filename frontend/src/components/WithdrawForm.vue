@@ -8,7 +8,7 @@
       <kings-button @click="handleCancel"> Cancel </kings-button>
     </div>
 
-    <kings-error v-model:form-error="formError"/>
+    <kings-error :form-error="formError" />
   </div>
 </template>
 
