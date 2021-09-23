@@ -35,7 +35,7 @@ export default {
   methods: {
     async getBalance() {
       let ac = await this.$store.dispatch('getAccount');
-      this.accountBalance = ac.balance;
+      this.accountBalance = ac.balance/100;
       this.accountNumber = ac.id;
     },
 
