@@ -15,11 +15,11 @@
       </div>
       <div class="flex space-x-5">
         <p  class="text-left"> Transaction Amount </p>
-        <p class="text-right"> ${{ receiptObj.amount }} </p>
+        <p class="text-right"> ${{ receiptObj.amount/100 }} </p>
       </div>
       <div class="flex space-x-5">
         <p> Account Balance </p>
-        <p> ${{ receiptObj.balance }} </p>
+        <p> ${{ receiptObj.balance/100 }} </p>
       </div>
       <kings-button button-type="primary" @click="handleHome"> Account Menu </kings-button>
       <kings-button @click="handleEndSession"> End Session </kings-button>
@@ -39,7 +39,7 @@ export default {
   components: {KingsButton},
   data() {
     return {
-      receiptObj: null
+      receiptObj: null,
     }
   },
   computed: {

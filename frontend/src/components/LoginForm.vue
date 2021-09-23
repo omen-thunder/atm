@@ -12,7 +12,7 @@
         <kings-button @click="handleRegister"> Register</kings-button>
       </div>
 
-      <kings-error v-model:form-error="formError"/>
+      <kings-error :form-error="formError"/>
     </div>
 
 
