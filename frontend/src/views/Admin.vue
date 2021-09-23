@@ -24,58 +24,117 @@
               <div class="grid grid-cols-1 md:grid-cols-7 gap-4">
 
                 <div class="flex md:flex-col items-end justify-around md:justify-center">
-                  <span>~</span>
+                  <span>[ Coins ]</span>
+                  <span>Available</span>
+                  <span class="text-left">Add</span>
+                </div>
+
+                <div class="flex md:flex-col items-center justify-around md:justify-center">
+                  <span class="w-full text-lg text-yellow-100">$.5</span>
+                  <span class="w-full">{{ hasCash.num5c }}</span>
+                  <div class="w-full">
+                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num5c">
+                  </div>
+                </div>
+
+                <div class="flex md:flex-col items-center justify-around md:justify-center">
+                  <span class="w-full text-lg text-yellow-100">$.10</span>
+                  <span class="w-full">{{ hasCash.num10c }}</span>
+                  <div class="w-full">
+                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num10c">
+                  </div>
+                </div>
+
+                <div class="flex md:flex-col items-center justify-around md:justify-center">
+                  <span class="w-full text-lg text-yellow-100">$.20</span>
+                  <span class="w-full">{{ hasCash.num20c }}</span>
+                  <div class="w-full">
+                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num20c">
+                  </div>
+                </div>
+
+                <div class="flex md:flex-col items-center justify-around md:justify-center">
+                  <span class="w-full text-lg text-yellow-100">$.50</span>
+                  <span class="w-full">{{ hasCash.num50c }}</span>
+                  <div class="w-full">
+                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num50c">
+                  </div>
+                </div>
+
+                <div class="flex md:flex-col items-center justify-around md:justify-center">
+                  <span class="w-full text-lg text-yellow-100">$1</span>
+                  <span class="w-full">{{ hasCash.num1 }}</span>
+                  <div class="w-full">
+                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num1">
+                  </div>
+                </div>
+
+                <div class="flex md:flex-col items-center justify-around md:justify-center">
+                  <span class="w-full text-lg text-yellow-100">$2</span>
+                  <span class="w-full">{{ hasCash.num2 }}</span>
+                  <div class="w-full">
+                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num2">
+                  </div>
+                </div>
+
+              </div>  <!-- end of grid -->
+            </div>  <!-- end of coin grid col -->
+
+            <div class="col-span-2 p-2 border-2 border-gray-700">
+              <div class="grid grid-cols-1 md:grid-cols-6 gap-4">
+
+                <div class="flex md:flex-col items-end justify-around md:justify-center">
+                  <span>[ Notes ]</span>
                   <span>Available</span>
                   <span class="text-left">Add</span>
                 </div>
 
                 <div class="flex md:flex-col items-center justify-around md:justify-center">
                   <span class="w-full text-lg text-yellow-200">$5</span>
-                  <span class="w-full">{{ hasNote.n5 }}</span>
+                  <span class="w-full">{{ hasCash.num5 }}</span>
                   <div class="w-full">
-                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addNote.n5">
+                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num5">
                   </div>
                 </div>
 
                 <div class="flex md:flex-col items-center justify-around md:justify-center">
                   <span class="w-full text-lg text-yellow-200">$10</span>
-                  <span class="w-full">{{ hasNote.n10 }}</span>
+                  <span class="w-full">{{ hasCash.num10 }}</span>
                   <div class="w-full">
-                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addNote.n10">
+                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num10">
                   </div>
                 </div>
 
                 <div class="flex md:flex-col items-center justify-around md:justify-center">
                   <span class="w-full text-lg text-yellow-200">$20</span>
-                  <span class="w-full">{{ hasNote.n20 }}</span>
+                  <span class="w-full">{{ hasCash.num20 }}</span>
                   <div class="w-full">
-                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addNote.n20">
+                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num20">
                   </div>
                 </div>
 
                 <div class="flex md:flex-col items-center justify-around md:justify-center">
                   <span class="w-full text-lg text-yellow-200">$50</span>
-                  <span class="w-full">{{ hasNote.n50 }}</span>
+                  <span class="w-full">{{ hasCash.num50 }}</span>
                   <div class="w-full">
-                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addNote.n50">
+                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num50">
                   </div>
                 </div>
 
                 <div class="flex md:flex-col items-center justify-around md:justify-center">
                   <span class="w-full text-lg text-yellow-200">$100</span>
-                  <span class="w-full">{{ hasNote.n100 }}</span>
+                  <span class="w-full">{{ hasCash.num100 }}</span>
                   <div class="w-full">
-                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addNote.n100">
+                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num100">
                   </div>
                 </div>
 
-                <div class="mt-4 self-end">
-                  <button class="px-4 py-1 bg-blue-500 rounded-lg" @click="handleAddNotes">ADD</button>
-                </div>
-
               </div>  <!-- end of grid -->
+            </div>  <!-- end of notes grid col -->
 
-            </div>  <!-- end of col -->
+            <div class="col-span-2">
+              <button class="px-4 py-1 bg-blue-500 rounded-lg" @click="handleAddNotes">Confirm Deposit Cash</button>
+            </div>
 
           </div>
 
@@ -114,19 +173,31 @@ export default {
   data() {
     return {
       cashBalance: 0,
-      addNote: {
-        n5: 0,
-        n10: 0,
-        n20: 0,
-        n50: 0,
-        n100: 0,
+      addCash: {
+        num5c: 0,
+        num10c: 0,
+        num20c: 0,
+        num50c: 0,
+        num1: 0,
+        num2: 0,
+        num5: 0,
+        num10: 0,
+        num20: 0,
+        num50: 0,
+        num100: 0,
       },
-      hasNote: {
-        n5: 0,
-        n10: 0,
-        n20: 0,
-        n50: 0,
-        n100: 0,
+      hasCash: {
+        num5c: 0,
+        num10c: 0,
+        num20c: 0,
+        num50c: 0,
+        num1: 0,
+        num2: 0,
+        num5: 0,
+        num10: 0,
+        num20: 0,
+        num50: 0,
+        num100: 0,
       },
       formSubmitResult: {
         success: null,
@@ -151,29 +222,15 @@ export default {
       await this.$store.dispatch('logoutUser');
     },
 
-    // async addFundsToMachine() {
-    //   let response = await AXIOS.post(`/api/atm/deposit/${this.depositAmount}`);
-
-    //   if (response.status === 200 && response.data.success) {
-    //     this.depositAmount = ''
-    //     this.formSubmitResult.success = true
-    //     this.formSubmitResult.message = "Successfully added funds to the machine"
-
-    //     setTimeout(() => {
-    //       this.resetSubmitMessage()
-    //     }, 4000);
-    //   }
-    // },
-
     async handleAddNotes() {
-      const params = this.addNote;
-      let response = await AXIOS.post(`/api/atm/deposit`, params);
+      const params = this.addCash;
+      let res = await AXIOS.post(`/api/atm/deposit`, params);
 
-      if (response.status === 200 && response.data.success) {
+      if (res.status === 200 && res.data.success) {
         this.resetAddNote();
         
         // Update global state and refresh view
-        const cash = JSON.parse(response.data.result);
+        const cash = res.data.result;
         await this.$store.commit('updateCashStore', cash);
         this.refreshCashStore();
 
@@ -194,12 +251,18 @@ export default {
     },
 
     async resetAddNote() {
-      this.addNote = {
-        n5: 0,
-        n10: 0,
-        n20: 0,
-        n50: 0,
-        n100: 0,
+      this.addCash = {
+        num5c: 0,
+        num10c: 0,
+        num20c: 0,
+        num50c: 0,
+        num1: 0,
+        num2: 0,
+        num5: 0,
+        num10: 0,
+        num20: 0,
+        num50: 0,
+        num100: 0,
       };
     },
 
@@ -208,7 +271,7 @@ export default {
      */
     async fetchCashStore() {
       let res = await AXIOS.get('/api/atm/get-cashstore');
-      if (res.status == 2000 && res.data.success){
+      if (res.status == 200 && res.data.success){
         console.log('Fetched backend cash store');
         const cashStore = JSON.parse(res.data.result);
         await this.$store.commit('updateCashStore', cashStore);
@@ -221,7 +284,7 @@ export default {
      * Refresh cash store view
      */
     async refreshCashStore() {
-      this.hasNote = this.$store.state.cashStore;
+      this.hasCash = this.$store.state.cashStore;
     },
 
   },
