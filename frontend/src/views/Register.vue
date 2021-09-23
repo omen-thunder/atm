@@ -1,6 +1,6 @@
 <template>
   <kings-atm-container>
-    <div class="register-page">
+    <div class="register-page flex-grow mx-4 max-w-lg">
       <logo/>
       <register-form/>
     </div>
