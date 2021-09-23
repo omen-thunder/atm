@@ -24,6 +24,7 @@ public class Card {
     private Date expiryDate;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private CardStatus status;
 
     @NotNull

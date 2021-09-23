@@ -1,6 +1,8 @@
 package KingsATM.service;
 
+import KingsATM.dto.CashStoreDto;
 import KingsATM.model.Cash;
+import KingsATM.model.CashAmount;
 import KingsATM.respository.CashRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,7 @@ public class CashService {
 	@Autowired
 	private CashRepository cashRepository;
 
-	private int incrNote(float value, int amount) {
+	private int incrNote(long value, int amount) {
 		var stack = cashRepository.findById(value).get();
 		
 		if (stack == null) {
@@ -28,7 +30,7 @@ public class CashService {
 		return stack.getAmount();
 	}
 
-	private int decrNote(float value, int amount) {
+	private int decrNote(long value, int amount) {
 		var stack = cashRepository.findById(value).get();
 		
 		if (stack == null) {
@@ -40,7 +42,7 @@ public class CashService {
 		return stack.getAmount();
 	}
 
-	public List<Cash> withdraw(float amount) {
+	public List<Cash> withdraw(long amount) {
 		if (amount > this.getTotal()) {
 			throw new IllegalArgumentException("Insufficient cash in ATM");
 		}
@@ -49,7 +51,7 @@ public class CashService {
 		List<Cash> withdrawn = new ArrayList<Cash>();
 		while (amount > 0 && iter.hasNext()) {
 			Cash stack = iter.next();
-			float value = stack.getValue();
+			long value = stack.getValue();
 			int num = Math.round(amount / value);
 			if (num > stack.getAmount()) {
 				num = stack.getAmount();
@@ -63,9 +65,9 @@ public class CashService {
 		return withdrawn;
 	}
 
-	public float deposit(List<Cash> deposited) {
+	public long deposit(List<Cash> deposited) {
 		Iterator<Cash> iter = deposited.iterator();
-		float total = 0;
+		long total = 0;
 		while (iter.hasNext()) {
 			Cash stack = iter.next();
 			this.incrNote(stack.getValue(), stack.getAmount());
@@ -75,8 +77,8 @@ public class CashService {
 		return total;
 	}
 
-	public float getTotal() {
-		float total = 0;
+	public long getTotal() {
+		long total = 0;
 		Iterator<Cash> iter = cashRepository.findAll().iterator();
 		while (iter.hasNext()) {
 			Cash stack = iter.next();
@@ -84,5 +86,24 @@ public class CashService {
 		}
 
 		return total;
+	}
+
+	public long getTotal(List<Cash> list_cash) {
+		long total = 0;
+		for (Cash cash : list_cash) {
+			total += cash.getAmount() * cash.getValue();
+		}
+
+		return total;
+	}
+
+	public CashStoreDto getAmountNotes() {
+		var cash_list = cashRepository.findAll();
+		CashStoreDto cash_store = new CashStoreDto(0,0,0,0,0,0,0,0,0,0,0);
+
+		for (Cash cash : cash_list) {
+			cash_store.setNum(CashAmount.getEnum(cash.getValue()), cash.getAmount());
+		}
+		return cash_store;
 	}
 }

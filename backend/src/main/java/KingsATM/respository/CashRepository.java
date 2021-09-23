@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CashRepository extends JpaRepository<Cash, Float> {
+public interface CashRepository extends JpaRepository<Cash, Long> {
 	List<Cash> findByOrderByValueDesc();
 }

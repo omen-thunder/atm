@@ -6,20 +6,20 @@ import javax.persistence.*;
 @Table(name = "cash")
 public class Cash {
 	@Id
-	private float value;
+	private long value;
 	private int amount; // number of notes, not the total value of the notes
 
-	public Cash(float value) {
+	public Cash(long value) {
 		this.value = value;
 		amount = 0;
 	}
 
-	public Cash(float value, int amount) {
+	public Cash(long value, int amount) {
 		this.value = value;
 		this.amount = amount;
 	}
 
-	public float getValue() {
+	public long getValue() {
 		return value;
 	}
 	
@@ -27,7 +27,7 @@ public class Cash {
 		return amount;
 	}
 
-	public float getTotal() {
+	public long getTotal() {
 		return value * amount;
 	}
 

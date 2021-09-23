@@ -43,20 +43,20 @@ public class DatabaseRunner implements CommandLineRunner {
 	cashRepository.deleteAll();
 
 	// Populate cash database with coin/note values
-	cashRepository.save(new Cash(0.05f));
-	cashRepository.save(new Cash(0.1f));
-	cashRepository.save(new Cash(0.2f));
-	cashRepository.save(new Cash(0.5f));
-	cashRepository.save(new Cash(1.0f));
-	cashRepository.save(new Cash(2.0f));
-	cashRepository.save(new Cash(5.0f));
-	cashRepository.save(new Cash(10.0f));
-	cashRepository.save(new Cash(20.0f));
-	cashRepository.save(new Cash(50.0f));
-	cashRepository.save(new Cash(100.0f));
+	cashRepository.save(new Cash(5));
+	cashRepository.save(new Cash(10));
+	cashRepository.save(new Cash(20));
+	cashRepository.save(new Cash(50));
+	cashRepository.save(new Cash(100));
+	cashRepository.save(new Cash(200));
+	cashRepository.save(new Cash(500));
+	cashRepository.save(new Cash(1000));
+	cashRepository.save(new Cash(2000));
+	cashRepository.save(new Cash(5000));
+	cashRepository.save(new Cash(10000));
 
         // Create a regular user
-        var account1 = accountRepository.save(new Account(1500L));
+        var account1 = accountRepository.save(new Account(150000L));
         var card1 = cardRepository.save(new Card(
                 passwordEncoder().encode("1234"),
                 entityManager.getReference(Account.class, account1.getId()),
