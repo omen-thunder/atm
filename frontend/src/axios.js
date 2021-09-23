@@ -2,14 +2,15 @@ import axios from 'axios';
 
 const AXIOS = axios.create()
 
-AXIOS.interceptors.request.use(function (config) {
+AXIOS.interceptors.request.use( config => {
     const token = localStorage.getItem("authtoken");
-
-    console.log("Current token before request ", token);
 
     if (token) {
         config.headers.Authorization = token;
     }
+
+    config.url
+
     return config;
 });
 

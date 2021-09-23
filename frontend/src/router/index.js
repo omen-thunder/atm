@@ -87,6 +87,16 @@ const router = createRouter({
     routes,
 });
 
+router.beforeResolve((to, from, next) => {
+    // If this isn't an initial page load.
+    if (to.name) {
+        // Start the route progress bar.
+        NProgress.start()
+    }
+    next()
+})
+
+
 router.beforeEach(async (to, from, next) => {
 
     // Security policy
@@ -126,6 +136,7 @@ router.afterEach(async (to) => {
     if (to.path === "/logout") {
         await store.dispatch('logoutUser');
     }
+    NProgress.done();
 })
 
 export default router;
