@@ -86,12 +86,14 @@ public class TransactionController {
             Cash num50 = new Cash(5000, cashStoreDto.getNum50());
             Cash num100 = new Cash(10000, cashStoreDto.getNum100());
 
-            cashList.add(num5c);
-            cashList.add(num10c);
-            cashList.add(num20c);
-            cashList.add(num50c);
-            cashList.add(num1);
-            cashList.add(num2);
+            // Ensure amount can be deposited by notes only
+            if (num5c.getAmount() != 0 || num10c.getAmount() != 0 ||
+                    num20c.getAmount() != 0 || num50c.getAmount() != 0 ||
+                    num1.getAmount() != 0 || num2.getAmount() != 0) {
+
+                return new JsonResponse<Transaction>(false, "Regular user can not deposit coins");
+            }
+
             cashList.add(num5);
             cashList.add(num10);
             cashList.add(num20);
@@ -99,6 +101,7 @@ public class TransactionController {
             cashList.add(num100);
 
             var addedTotal = cashService.getTotal(cashList);
+
             account.incrBalance(addedTotal);
 
             cashService.deposit(cashList);
@@ -114,7 +117,7 @@ public class TransactionController {
             return new JsonResponse<Transaction>(transaction);
 
         } catch (IllegalArgumentException | IllegalStateException e) {
-            return new JsonResponse<Transaction>(null);
+            return new JsonResponse<Transaction>(false, e.getMessage());
         }
     }
 

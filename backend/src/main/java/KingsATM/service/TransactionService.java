@@ -20,7 +20,7 @@ public class TransactionService {
         var optionalTransaction = transactionRepository.findById(id);
 
         if (optionalTransaction == null) {
-            throw new EntityNotFoundException("No transaction by of id: "+ id + ", was found");
+            throw new EntityNotFoundException("Transaction by user with id "+ id + " not found");
         }
 
         return optionalTransaction.get();

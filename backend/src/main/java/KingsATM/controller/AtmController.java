@@ -68,7 +68,6 @@ public class AtmController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/balance")
     public JsonResponse<CashStoreDto> details() {
-
         return new JsonResponse<>(cashService.getAmountNotes());
     }
 
