@@ -27,10 +27,10 @@ export default {
       await this.$store.dispatch('logoutUser');
     },
     handleWithdraw() {
-      this.$router.push('/withdraw')
+      this.$router.push('/withdraw');
     },
     handleCheckBalance() {
-
+      this.$router.push('/check-balance');
     },
     handleMakeDeposit() {
 

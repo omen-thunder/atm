@@ -9,6 +9,7 @@ import Withdraw from "../views/Withdraw.vue";
 import Register from "../views/Register.vue";
 import NewAccount from "../views/NewAccount.vue";
 import Receipt from "../views/Receipt.vue";
+import CheckBalance from "../views/CheckBalance.vue";
 
 const routes = [
     {
@@ -53,6 +54,15 @@ const routes = [
         name: "Receipt",
         props: true,
         component: Receipt,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: "/check-balance",
+        name: "CheckBalance",
+        props: true,
+        component: CheckBalance,
         meta: {
             requiresAuth: true
         }
