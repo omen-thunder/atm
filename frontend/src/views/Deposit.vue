@@ -4,7 +4,7 @@
 
     <div class="flex flex-col justify-center">
       <div>
-        [Deposit Form Placeholder]
+        <deposit-form/>
       </div>
       <kings-button :buttonType="'primary'" @click="handleCancel">Cancel</kings-button>
     </div>
@@ -16,10 +16,12 @@
 <script>
 import KingsAtmContainer from "../components/Base/KingsAtmContainer.vue";
 import KingsButton from '../components/Base/KingsButton.vue';
+import DepositForm from "../components/DepositForm.vue";
 
 export default {
   name: "Deposit",
   components: {
+    DepositForm,
     KingsAtmContainer,
     KingsButton,
   },

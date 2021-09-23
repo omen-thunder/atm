@@ -2,7 +2,7 @@
     <div class="flex-grow flex flex-col items-center mt-12">
       <div id="deposit-form" class="grid gap-5 grid-cols-1 max-w-lg mx-auto">
 
-        <kings-input type="number" label="Number of 5 c Coints" placeholder="$" v-model.number="amount5c"/>
+        <kings-input type="number" label="Number of 5 c Coins" placeholder="$" v-model.number="amount5c"/>
 
         <kings-input type="number" label="Number of 10 c Coins" placeholder="$" v-model.number="amount10c"/>
 
@@ -26,13 +26,8 @@
 
         ${{totalAmount}}
 
-        <div class="buttons flex flex-col">
-                <kings-button
-                    class="my-4"
-                    @click="createAccount" button-type="primary"> Create Account
-                </kings-button>
-                <kings-button @click="handleCancel"> Cancel</kings-button>
-        </div>
+        <kings-button button-type="primary" @click="deposit"> Deposit </kings-button>
+
       </div>
       <kings-error :form-error="formError"/>
     </div>
@@ -82,11 +77,6 @@ export default {
         await this.$router.back();
       },
       async deposit () {
-        if (!this.firstName || !this.depositAmount || !this.pin) {
-            this.formError = 'Please fill out all the fields';
-            return;
-        }
-
         try {
             const postObj = {
             numCoinsAndNotes: [{num5c: this.amount5c, num10c: this.amount10c, num20c: this.amount20c, num50c: this.amount50c, num1: this.amount1, num2: this.amount2,
