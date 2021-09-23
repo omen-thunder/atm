@@ -34,7 +34,7 @@ export default {
       }
 
       try {
-        let response = await AXIOS.post(`/api/transaction/withdraw/${this.amount}`)
+        let response = await AXIOS.post(`/api/transaction/withdraw/${this.amount * 100}`)
 
         if (response.status === 200 && response.data.success) {
           await this.$router.push({ name: "Receipt", params: { id: response.data.result.id}})
