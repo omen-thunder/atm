@@ -22,6 +22,7 @@ import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.lang.String;
 
 @RestController
 @RequestMapping("api/transaction")
@@ -47,6 +48,10 @@ public class TransactionController {
         var card = cardService.getCardById(Integer.parseInt(auth.getName()));
 
         try {
+            if (((amount) % 5) != 0) {
+                throw new IllegalArgumentException("The amount entered should be divisible by 0.05");
+            }
+
             Long newBalance = account.decrBalance(amount);
             accountService.saveAccount(account);
 

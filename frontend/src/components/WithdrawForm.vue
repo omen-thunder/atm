@@ -30,6 +30,10 @@ export default {
         this.formError = "Please enter an amount"
         return;
       }
+      //if (!Number.isInteger((this.amount))) {
+      //  this.formError = "Please enter an amount with only 2 decimal places"
+      //}
+      // the above code doesn't prevent a conversion error when user inputs 3dp or more
 
       try {
         let response = await AXIOS.post(`/api/transaction/withdraw/${this.amount * 100}`)
