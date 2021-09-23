@@ -71,6 +71,7 @@ export default {
         await this.$router.back();
       },
       async deposit () {
+
         try {
             let response = await AXIOS.post('/api/transaction/deposit', this.depositObj);
 
@@ -84,7 +85,12 @@ export default {
 
             }
         } catch (e) {
-            this.formError = e;
+            if (this.depositObj.num5 < 0 | this.depositObj.num10 < 0 | this.depositObj.num20 < 0 | this.depositObj.num50 < 0 | this.depositObj.num100 < 0) {
+                this.formError = "Please enter an amount greater than 0 for each of the fields";
+            }
+            else {
+                this.formError = e;
+            }
         }
 
         if (response?.data.error) {
