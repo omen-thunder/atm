@@ -142,7 +142,7 @@ export default createStore({
         context.commit("setAdmin", false)
 
         await nextTick(() => {
-          router.replace({name: "Login"})
+          router.push({name: "LogoutSuccess"})
         })
 
       }
