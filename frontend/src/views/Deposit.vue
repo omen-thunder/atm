@@ -2,11 +2,8 @@
 
   <kings-atm-container>
 
-    <div class="flex flex-col justify-center">
-      <div>
+    <div class="flex-grow mx-4">
         <deposit-form/>
-      </div>
-      <kings-button :buttonType="'primary'" @click="handleCancel">Cancel</kings-button>
     </div>
 
   </kings-atm-container>

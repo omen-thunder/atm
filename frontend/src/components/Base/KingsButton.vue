@@ -2,7 +2,7 @@
 
   <button
       :class="buttonClass"
-      class="flex align-center justify-center"
+      class="flex items-center align-center justify-center"
       v-bind="$attrs">
     <slot></slot>
 

@@ -1,36 +1,40 @@
 <template>
-    <div class="flex-grow flex flex-col items-center mt-12">
-      <div id="deposit-form" class="grid gap-5 grid-cols-1 max-w-lg mx-auto">
+      <div id="deposit-form" class="grid-cols-1 grid-gap-5 max-w-lg mx-auto">
+        <h1 class="text-3xl lg:text-4xl font-semibold text-yellow-100">How much would you like to deposit?</h1>
 
-        <kings-input type="number" label="Number of 5 c Coins" placeholder="$" v-model.number="amount5c"/>
+        <div class="grid gap-3 grid-cols-1 md:grid-cols-5">
+<!--        <kings-input type="number" label="5c Coins" placeholder="$" v-model.number="amount5c"/>-->
 
-        <kings-input type="number" label="Number of 10 c Coins" placeholder="$" v-model.number="amount10c"/>
+<!--        <kings-input type="number" label="10c Coins" placeholder="$" v-model.number="amount10c"/>-->
 
-        <kings-input type="number" label="Number of 20 c Coins" placeholder="$" v-model.number="amount20c"/>
+<!--        <kings-input type="number" label="20c Coins" placeholder="$" v-model.number="amount20c"/>-->
 
-        <kings-input type="number" label="Number of 50 c Coins" placeholder="$" v-model.number="amount50c"/>
+<!--        <kings-input type="number" label="50c Coins" placeholder="$" v-model.number="amount50c"/>-->
 
-        <kings-input type="number" label="Number of $1 Coins" placeholder="$" v-model.number="amount1"/>
+<!--        <kings-input type="number" label="$1 Coins" placeholder="$" v-model.number="amount1"/>-->
 
-        <kings-input type="number" label="Number of $2 Coins" placeholder="$" v-model.number="amount2"/>
+<!--        <kings-input type="number" label="$2 Coins" placeholder="$" v-model.number="amount2"/>-->
 
-        <kings-input type="number" label="Number of $5 Notes" placeholder="$" v-model.number="amount5"/>
+        <kings-input type="number" label="$5" placeholder="$" v-model.number="amount5"/>
 
-        <kings-input type="number" label="Number of $10 Notes" placeholder="$" v-model.number="amount10"/>
+        <kings-input type="number" label="$10" placeholder="$" v-model.number="amount10"/>
 
-        <kings-input type="number" label="Number of $20 Notes" placeholder="$" v-model.number="amount20"/>
+        <kings-input type="number" label="$20" placeholder="$" v-model.number="amount20"/>
 
-        <kings-input type="number" label="Number of $50 Notes" placeholder="$" v-model.number="amount50"/>
+        <kings-input type="number" label="$50" placeholder="$" v-model.number="amount50"/>
 
-        <kings-input type="number" label="Number of $100 Notes" placeholder="$" v-model.number="amount100"/>
+        <kings-input type="number" label="$100" placeholder="$" v-model.number="amount100"/>
 
-        ${{totalAmount}}
-
-        <kings-button button-type="primary" @click="deposit"> Deposit </kings-button>
+        </div>
+        <div class="flex mt-4">
+          <kings-button @click="handleCancel" class="flex-1 mr-4">Cancel</kings-button>
+          <kings-button button-type="primary" @click="deposit" class="flex-1"> Deposit {{totalAmount}} </kings-button>
+        </div>
 
       </div>
-      <kings-error :form-error="formError"/>
-    </div>
+
+  <kings-error :form-error="formError"/>
+
 </template>
 
 
@@ -69,7 +73,7 @@ export default {
       totalAmount() {
         this.total = (this.amount5c * 0.05 + this.amount10c * 0.1 + this.amount20c * 0.2 + this.amount50c * 0.5 + this.amount1 +
                               this.amount2 * 2 + this.amount5 * 5 + this.amount10 * 10 + this.amount20 * 20 + this.amount50 * 50 + this.amount100 * 100).toFixed(2)
-        return `Total to be deposited: $${this.total}`
+        return `$${this.total}`
       }
   },
   methods: {
