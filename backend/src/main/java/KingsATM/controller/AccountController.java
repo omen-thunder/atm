@@ -51,6 +51,41 @@ public class AccountController {
         return new BCryptPasswordEncoder();
     }
 
+    @PostMapping("/create")
+    public JsonResponse<AccountDtoRes> createAccount(@Valid @RequestBody AccountDtoReq accountDtoReq) {
+        // Ensure a card has been linked
+        if (accountDtoReq.getCards() == null) {
+            return new JsonResponse<>(false, "A card with a pin has not been provided");
+        }
+
+        // Create the account
+        var account = accountService.createAccountFromDto(accountDtoReq);
+
+        if (account == null) {
+            return new JsonResponse<>(false, "There was an error creating the new account");
+        }
+
+        // Save any cards from the dto
+        for (CardDtoReq cardDtoReq : accountDtoReq.getCards()) {
+            var card = new Card (
+                    passwordEncoder().encode("1234"),
+                    entityManager.getReference(Account.class, account.getId()),
+                    CardStatus.ACTIVE
+            );
+            var savedCard = cardService.saveNewCard(card);
+
+            if (savedCard == null) {
+                return new JsonResponse<>(false, "There was an error attaching the card to the account");
+            }
+
+            account.addCard(savedCard);
+        }
+
+        var accountDto = new AccountDtoRes(account);
+
+        return new JsonResponse<>(accountDto);
+    }
+
     @PostMapping("/login")
     public JsonResponse<AccountDtoRes> account(@Valid @RequestBody LoginDto loginDto, HttpServletRequest request) {
         Card card;
@@ -111,46 +146,4 @@ public class AccountController {
         }
 
     }
-
-    @PostMapping("/create")
-    public JsonResponse<AccountDtoRes> createAccount(@Valid @RequestBody AccountDtoReq accountDtoReq) {
-        // Ensure the balance is divisible by 5
-        if (accountDtoReq.getBalance() % 5 != 0) {
-            return new JsonResponse<>(false, "You can only deposit Australian notes");
-        }
-        // Ensure a card has been attached
-        if (accountDtoReq.getCards() == null) {
-            return new JsonResponse<>(false, "A card with a pin has not been provided");
-        }
-
-        // Create the account
-        var account = accountService.createAccountFromDto(accountDtoReq);
-
-        if (account == null) {
-            return new JsonResponse<>(false, "There was an error creating the new account");
-        }
-
-        // Save any cards from the dto
-        for (CardDtoReq cardDtoReq : accountDtoReq.getCards()) {
-            var card = new Card (
-                    passwordEncoder().encode("1234"),
-                    entityManager.getReference(Account.class, account.getId()),
-                    CardStatus.ACTIVE
-            );
-            var savedCard = cardService.saveNewCard(card);
-
-            if (savedCard == null) {
-                return new JsonResponse<>(false, "There was an error attaching the card to the account");
-            }
-
-            account.addCard(savedCard);
-        }
-
-        var accountDto = new AccountDtoRes(account);
-
-        return new JsonResponse<>(accountDto);
-
-
-    }
-
 }
