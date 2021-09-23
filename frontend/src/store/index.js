@@ -148,6 +148,27 @@ export default createStore({
       }
     },
 
+    async getCashStore(context) {
+      let res = await AXIOS.get('/api/atm/get-cashstore');
+      if (res.status == 200 && res.data.success){
+        const cashStore = res.data.result;
+        context.commit('updateCashStore', cashStore);
+        return context.state.cashStore;
+      } else {
+        return null;
+      }
+    },
+
+    async getCashStoreBalance(contect) {
+      let res = await AXIOS.get('/api/atm/get-cashstore-balance');
+      if (res.status == 200 && res.data.success){
+        const balance = res.data.result;
+        return balance;
+      } else {
+        return null;
+      }
+    },
+
     async getAccount(context) {
       const auth = localStorage.getItem("token");
 

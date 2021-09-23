@@ -13,7 +13,7 @@
 
             <div class="col-span-2">
               <p class="text-xl text-gray-300 pb-2">ATM Cash Balance:</p>
-              <p class="text-xl">$ <span>[Balance place holder]</span></p>
+              <p class="text-xl">$ <span>{{ cashBalance }}</span></p>
             </div>
 
             <div class="col-span-2">
@@ -214,7 +214,6 @@ export default {
    */
   async mounted() {
     await this.fetchCashStore();
-    await this.refreshCashStore();
   },
 
   methods: {
@@ -232,7 +231,8 @@ export default {
         // Update global state and refresh view
         const cash = res.data.result;
         await this.$store.commit('updateCashStore', cash);
-        this.refreshCashStore();
+        this.hasCash = this.$store.state.cashStore;
+        await this.fetchCashStoreBalance();
 
         this.formSubmitResult.success = true
         this.formSubmitResult.message = "Successfully added funds to the machine"
@@ -270,22 +270,26 @@ export default {
      * Fetch cash store from backend
      */
     async fetchCashStore() {
-      let res = await AXIOS.get('/api/atm/get-cashstore');
-      if (res.status == 200 && res.data.success){
-        console.log('Fetched backend cash store');
-        const cashStore = JSON.parse(res.data.result);
-        await this.$store.commit('updateCashStore', cashStore);
-      } else {
+      const cashStore = await this.$store.dispatch('getCashStore');
+      if (!cashStore){
         this.formSubmitResult.message = "Failed to fetch backend cash store"
+      } else {
+        this.hasCash = cashStore;
+        console.log('Fetched backend cash store');
+        await this.fetchCashStoreBalance();
       }
     },
 
-    /**
-     * Refresh cash store view
-     */
-    async refreshCashStore() {
-      this.hasCash = this.$store.state.cashStore;
+    async fetchCashStoreBalance() {
+      const balance = await this.$store.dispatch('getCashStoreBalance');
+      if (!balance){
+        this.formSubmitResult.message = "Failed to fetch balance"
+      } else {
+        this.cashBalance = balance / 100;
+        console.log('Fetched balance');
+      }
     },
+
 
   },
   computed: {
