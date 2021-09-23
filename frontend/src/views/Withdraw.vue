@@ -2,7 +2,10 @@
 
   <kings-atm-container>
 
-    <withdraw-form/>
+    <div class="flex-grow mx-4">
+
+      <withdraw-form/>
+    </div>
 
   </kings-atm-container>
 

@@ -8,7 +8,7 @@
       <kings-input label="Account Pin" placeholder="- - - -" v-model="loginForm.accountPin" type="password"/>
 
       <div class="buttons flex flex-col">
-        <kings-button class="my-4" button-type="primary" @click="login"> Login </kings-button>
+        <kings-button class="my-4" button-type="primary" @click="login" :loading="isLoading"> Login </kings-button>
         <kings-button @click="handleRegister"> Register</kings-button>
       </div>
 
@@ -30,6 +30,7 @@ export default {
     return {
       maintenance: false,
       formError: '',
+      isLoading: false,
       loginForm: {
         accountNumber: '',
         accountPin: ''
@@ -39,13 +40,17 @@ export default {
   methods: {
     async login() {
 
+      this.isLoading = true;
+
       if (this.maintenance) {
         this.formError = 'Sorry, our system is currently in maintenance. Please try again later.';
+        this.isLoading = false
         return
       }
 
       if (!this.loginForm.accountNumber || !this.loginForm.accountPin) {
         this.formError = 'Please enter a account number and pin.';
+        this.isLoading = false
         return
       }
 
@@ -53,11 +58,15 @@ export default {
 
       let response = await this.$store.dispatch("loginUser", signInObj);
 
-      if (response?.data.error) {
+      if (response.data) {
         this.formError = response.data.error;
       }
-    },
+      else {
+        this.formError = response.message;
+      }
 
+      this.isLoading = false
+    },
 
 
     async handleRegister() {

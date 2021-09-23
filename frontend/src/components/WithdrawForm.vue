@@ -1,15 +1,13 @@
 <template>
 
-  <div class="w-80">
-    <div id="withdraw-form" class="grid gap-3 xl:gap-5 grid-cols-1 max-w-lg">
+    <div id="withdraw-form" class="grid gap-3 xl:gap-5 grid-cols-1 max-w-md mx-auto">
       <h1 class="text-3xl lg:text-4xl font-semibold text-yellow-100">How much would you like to withdraw?</h1>
       <kings-input type="number" v-model="amount" placeholder="$"/>
       <kings-button button-type="primary" @click="withdraw"> Withdraw </kings-button>
       <kings-button @click="handleCancel"> Cancel </kings-button>
+      <kings-error v-model:form-error="formError" />
     </div>
 
-    <kings-error :form-error="formError" />
-  </div>
 </template>
 
 <script>
@@ -23,7 +21,7 @@ export default {
   data() {
     return {
       amount: '',
-      formError: null
+      formError: ""
     }
   },
   methods: {
