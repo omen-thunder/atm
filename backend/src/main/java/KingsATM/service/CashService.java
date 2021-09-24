@@ -43,6 +43,10 @@ public class CashService {
 	}
 
 	public List<Cash> withdraw(long amount) {
+		if (amount < 0) {
+			throw new IllegalArgumentException("Amount Negative");
+		}
+
 		if (amount > this.getTotal()) {
 			throw new IllegalArgumentException("Insufficient cash in ATM");
 		}
