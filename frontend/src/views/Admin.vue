@@ -222,22 +222,33 @@ export default {
       const params = this.addCash;
       let res = await AXIOS.post(`/api/atm/deposit`, params);
 
-      if (res.status === 200 && res.data.success) {
-        this.resetAddNote();
+      if (res.status === 200) {
+        if (res.data.success) {
+          this.resetAddNote();
 
-        // Update global state and refresh view
-        const cash = res.data.result;
-        await this.$store.commit('updateCashStore', cash);
-        this.hasCash = this.$store.state.cashStore;
-        await this.fetchCashStoreBalance();
+          // Update global state and refresh view
+          const cash = res.data.result;
+          await this.$store.commit('updateCashStore', cash);
+          this.hasCash = this.$store.state.cashStore;
+          await this.fetchCashStoreBalance();
 
-        this.formSubmitResult.success = true
-        this.formSubmitResult.message = "Successfully added funds to the machine"
+          this.formSubmitResult.success = true
+          this.formSubmitResult.message = "Successfully added funds to the machine"
 
-        setTimeout(() => {
-          this.resetSubmitMessage()
-        }, 4000);
+          setTimeout(() => {
+            this.resetSubmitMessage()
+          }, 4000);
+        }
+        else {
+          this.formSubmitResult.success = false
+          this.formSubmitResult.message = res.data.error;
+          setTimeout(() => {
+            this.resetSubmitMessage()
+          }, 4000);
+        }
+
       }
+
     },
 
     async resetSubmitMessage() {
@@ -247,7 +258,7 @@ export default {
       };
     },
 
-    async resetAddNote() {
+    resetAddNote() {
       this.addCash = {
         num5c: 0,
         num10c: 0,
