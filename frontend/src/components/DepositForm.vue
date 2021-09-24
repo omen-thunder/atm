@@ -2,7 +2,7 @@
       <div id="deposit-form" class="grid-cols-2 grid-gap-5 max-w-lg mx-auto">
         <h1 class="text-3xl lg:text-4xl font-semibold text-yellow-100">How much would you like to deposit?</h1>
 
-        <div class="grid gap-3 grid-cols-1 md:grid-cols-5">
+        <div class="grid gap-3 grid-cols-2 md:grid-cols-5">
 
         <kings-input type="number" label="$5" placeholder="$" v-model.number="this.depositObj.num5"/>
 
@@ -22,7 +22,7 @@
 
       </div>
 
-  <kings-error :form-error="formError"/>
+  <kings-error v-model:form-error="formError"/>
 
 </template>
 
