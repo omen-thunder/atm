@@ -1,22 +1,25 @@
 <template>
 
-  <kings-atm>
+  <kings-atm-container>
 
-    <withdraw-form/>
+    <div class="flex-grow mx-4">
 
-  </kings-atm>
+      <withdraw-form/>
+    </div>
+
+  </kings-atm-container>
 
 </template>
 
 <script>
-import KingsAtm from "../components/AtmLayout/KingsAtmContainer.vue";
+import KingsAtmContainer from "../components/Base/KingsAtmContainer.vue";
 import WithdrawForm from "../components/WithdrawForm.vue";
 
 export default {
   name: "Withdraw",
   components: {
     WithdrawForm,
-    KingsAtm
+    KingsAtmContainer,
   }
 }
 </script>

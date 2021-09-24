@@ -1,20 +1,23 @@
-<template>  
-  <div class="home-page">
-    <kings-atm>
+<template>
+  <kings-atm-container>
+    <div class="home-page flex-grow mx-4">
+      <logo/>
       <home-options/>
-    </kings-atm>
-  </div>
+    </div>
+  </kings-atm-container>
 </template>
 
 <script>
+import KingsAtmContainer from '../components/Base/KingsAtmContainer.vue';
 import HomeOptions from "../components/HomeOptions.vue";
-import KingsAtm from "../components/AtmLayout/KingsAtmContainer.vue";
+import Logo from "../components/Base/KingsLogo.vue";
 
 export default {
   name: "Home",
   components: {
+    Logo,
     HomeOptions,
-    KingsAtm
+    KingsAtmContainer,
   },
   methods: {
 
@@ -23,10 +26,5 @@ export default {
 </script>
 
 <style scoped>
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="kings-atm h-screen w-screen overflow-hidden flex flex-col justify-center p-8 bg-gray-800">
+  <div class="kings-atm h-screen w-screen overflow-hidden flex flex-col justify-center p-2 md:p-4 xl:p-8 bg-gray-800">
 
     <div id="atm-container" class="flex flex-col h-full overflow-auto border-4 border-gray-700 rounded-2xl">
 
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import SystemTime from '/src/components/AtmLayout/SystemTime.vue';
+import SystemTime from '/src/components/Base/SystemTime.vue';
 
 export default {
   name: "KingsAtmContainer",
@@ -33,9 +33,5 @@ export default {
 
 
 <style scoped>
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 </style>

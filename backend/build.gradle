@@ -34,13 +34,23 @@ sourceSets {
     }
 }
 
-processResources.dependsOn ':frontend:npmBuild'
+
+
+var backendOnly = System.getenv("backendOnly")
+
+println("backendOnly value = $backendOnly")
+
+if (backendOnly == null) {
+
+    processResources.dependsOn ':frontend:npmBuild'
+}
+
+
 
 dependencies {
 
-
     // This dependency is used by the application.
-//    implementation 'com.google.guava:guava:30.1.1-jre'
+    // implementation 'com.google.guava:guava:30.1.1-jre'
 
     // Database
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -65,11 +75,20 @@ testResultsDirName = "$buildDir/test-results"
 
 test {
     useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+
     maxHeapSize = '1G'
     // reports.html.required = false
+
+    // Look for argument passed to `gradle` and override DB source during test
     if (System.getProperty('spring.datasource.url')){
         systemProperties['spring.datasource.url'] = System.getProperty('spring.datasource.url')
     }
+
+    // Generate jacoco coverage report
     finalizedBy jacocoTestReport
 }
 
