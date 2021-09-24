@@ -73,6 +73,15 @@ export default {
       async deposit () {
 
         try {
+            if (!(Number.isInteger(this.depositObj.num5) & Number.isInteger(this.depositObj.num10) & Number.isInteger(this.depositObj.num20) &
+             Number.isInteger(this.depositObj.num50) & Number.isInteger(this.depositObj.num100))) {
+                throw "Please enter only whole numbers";
+             }
+
+            if (this.depositObj.num5 == 0 & this.depositObj.num10 == 0 & this.depositObj.num20 == 0 & this.depositObj.num50 == 0 & this.depositObj.num100 == 0) {
+                throw "You must deposit more than $0";
+            }
+
             let response = await AXIOS.post('/api/transaction/deposit', this.depositObj);
 
             if (response.status === 200) {
