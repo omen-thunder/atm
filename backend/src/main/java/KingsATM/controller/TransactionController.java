@@ -46,22 +46,17 @@ public class TransactionController {
         var account = accountService.getAccountByCardId(Integer.parseInt(auth.getName()));
         var card = cardService.getCardById(Integer.parseInt(auth.getName()));
 
-        try {
-            Long newBalance = account.decrBalance(amount);
-            accountService.saveAccount(account);
+        List<Cash> cashList = cashService.withdraw(amount);
+        Long withdrawnAmount = cashService.getTotal(cashList);
 
-            Transaction transaction = transactionService.createTransaction (
-                    TransactionType.WITHDRAW, amount, account, card);
+        Long newBalance = account.decrBalance(withdrawnAmount);
+        accountService.saveAccount(account);
 
-            if (transaction == null) {
-                return new JsonResponse<>(false, "There was an error creating the new transaction");
-            }
+        Transaction transaction = transactionService.createTransaction (
+                TransactionType.WITHDRAW, withdrawnAmount, account, card);
 
-            return new JsonResponse<>(transaction);
-
-        } catch (Exception e) {
-            return new JsonResponse<>(false, e.getMessage());
-        }
+        return new JsonResponse<>(transaction);
+            
 
     }
 
@@ -70,55 +65,15 @@ public class TransactionController {
 
         var account = accountService.getAccountByCardId(Integer.parseInt(auth.getName()));
         var card = cardService.getCardById(Integer.parseInt(auth.getName()));
+        var cashList = cashStoreDto.getListOfCash();
+        var addedTotal = cashService.getTotal(cashList);
 
+        account.incrBalance(addedTotal);
+        cashService.deposit(cashList);
+        accountService.saveAccount(account);
+        Transaction transaction = transactionService.createTransaction (TransactionType.DEPOSIT, addedTotal, account, card);
 
-        try {
-            List cashList = new ArrayList<Cash>();
-            Cash num5c = new Cash(5, cashStoreDto.getNum5c());
-            Cash num10c = new Cash(10, cashStoreDto.getNum10c());
-            Cash num20c = new Cash(20, cashStoreDto.getNum20c());
-            Cash num50c = new Cash(50, cashStoreDto.getNum50c());
-            Cash num1 = new Cash(100, cashStoreDto.getNum1());
-            Cash num2 = new Cash(200, cashStoreDto.getNum2());
-            Cash num5 = new Cash(500, cashStoreDto.getNum5());
-            Cash num10 = new Cash(1000, cashStoreDto.getNum10());
-            Cash num20 = new Cash(2000, cashStoreDto.getNum20());
-            Cash num50 = new Cash(5000, cashStoreDto.getNum50());
-            Cash num100 = new Cash(10000, cashStoreDto.getNum100());
-
-            // Ensure amount can be deposited by notes only
-            if (num5c.getAmount() != 0 || num10c.getAmount() != 0 ||
-                    num20c.getAmount() != 0 || num50c.getAmount() != 0 ||
-                    num1.getAmount() != 0 || num2.getAmount() != 0) {
-
-                return new JsonResponse<Transaction>(false, "Regular user can not deposit coins");
-            }
-
-            cashList.add(num5);
-            cashList.add(num10);
-            cashList.add(num20);
-            cashList.add(num50);
-            cashList.add(num100);
-
-            var addedTotal = cashService.getTotal(cashList);
-
-            account.incrBalance(addedTotal);
-
-            cashService.deposit(cashList);
-            accountService.saveAccount(account);
-
-            
-            Transaction transaction = transactionService.createTransaction (
-                    TransactionType.DEPOSIT, addedTotal, account, card);
-            if (transaction == null) {
-                return new JsonResponse<>(false, "There was an error creating the new transaction");
-            }
-
-            return new JsonResponse<Transaction>(transaction);
-
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            return new JsonResponse<Transaction>(false, e.getMessage());
-        }
+        return new JsonResponse<Transaction>(transaction);
     }
 
     @GetMapping("/{id}")

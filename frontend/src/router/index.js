@@ -10,6 +10,8 @@ import Register from "../views/Register.vue";
 import NewAccount from "../views/NewAccount.vue";
 import Receipt from "../views/Receipt.vue";
 import CheckBalance from "../views/CheckBalance.vue";
+import Deposit from "../views/Deposit.vue";
+import LogoutSuccess from "../views/LogoutSuccess.vue";
 
 const routes = [
     {
@@ -50,6 +52,14 @@ const routes = [
         }
     },
     {
+        path: "/deposit",
+        name: "Deposit",
+        component: Deposit,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
         path: "/receipt/:id",
         name: "Receipt",
         props: true,
@@ -74,6 +84,11 @@ const routes = [
         meta: {
             requiresAdmin: true
         }
+    },
+    {
+        path: "/logout-success",
+        name: "LogoutSuccess",
+        component: LogoutSuccess,
     },
     {
         path: "/:pathMatch(.*)*",

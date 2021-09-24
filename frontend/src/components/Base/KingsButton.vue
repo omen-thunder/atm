@@ -1,20 +1,30 @@
 <template>
+
   <button
       :class="buttonClass"
+      class="flex items-center align-center justify-center"
       v-bind="$attrs">
     <slot></slot>
+
+    <progress-spinner v-if="loading" class="w-5 h-5 ml-1 my-auto" />
   </button>
 
 
 </template>
 
 <script>
+import ProgressSpinner from "./ProgressSpinner.vue";
 export default {
   name: "KingsButton",
+  components: {ProgressSpinner},
   props: {
     buttonType: {
       type: String,
       default: ""
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {

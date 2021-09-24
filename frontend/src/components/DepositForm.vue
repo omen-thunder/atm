@@ -1,41 +1,29 @@
 <template>
-    <div class="flex-grow flex flex-col items-center mt-12">
-      <div id="deposit-form" class="grid gap-5 grid-cols-1 max-w-lg mx-auto">
+      <div id="deposit-form" class="grid-cols-2 grid-gap-5 max-w-lg mx-auto">
+        <h1 class="text-3xl lg:text-4xl font-semibold text-yellow-100">How much would you like to deposit?</h1>
 
-        <kings-input type="number" label="Number of 5 c Coints" placeholder="$" v-model.number="amount5c"/>
+        <div class="grid gap-3 grid-cols-1 md:grid-cols-5">
 
-        <kings-input type="number" label="Number of 10 c Coins" placeholder="$" v-model.number="amount10c"/>
+        <kings-input type="number" label="$5" placeholder="$" v-model.number="this.depositObj.num5"/>
 
-        <kings-input type="number" label="Number of 20 c Coins" placeholder="$" v-model.number="amount20c"/>
+        <kings-input type="number" label="$10" placeholder="$" v-model.number="this.depositObj.num10"/>
 
-        <kings-input type="number" label="Number of 50 c Coins" placeholder="$" v-model.number="amount50c"/>
+        <kings-input type="number" label="$20" placeholder="$" v-model.number="this.depositObj.num20"/>
 
-        <kings-input type="number" label="Number of $1 Coins" placeholder="$" v-model.number="amount1"/>
+        <kings-input type="number" label="$50" placeholder="$" v-model.number="this.depositObj.num50"/>
 
-        <kings-input type="number" label="Number of $2 Coins" placeholder="$" v-model.number="amount2"/>
+        <kings-input type="number" label="$100" placeholder="$" v-model.number="this.depositObj.num100"/>
 
-        <kings-input type="number" label="Number of $5 Notes" placeholder="$" v-model.number="amount5"/>
-
-        <kings-input type="number" label="Number of $10 Notes" placeholder="$" v-model.number="amount10"/>
-
-        <kings-input type="number" label="Number of $20 Notes" placeholder="$" v-model.number="amount20"/>
-
-        <kings-input type="number" label="Number of $50 Notes" placeholder="$" v-model.number="amount50"/>
-
-        <kings-input type="number" label="Number of $100 Notes" placeholder="$" v-model.number="amount100"/>
-
-        ${{totalAmount}}
-
-        <div class="buttons flex flex-col">
-                <kings-button
-                    class="my-4"
-                    @click="createAccount" button-type="primary"> Create Account
-                </kings-button>
-                <kings-button @click="handleCancel"> Cancel</kings-button>
         </div>
+        <div class="flex mt-4">
+          <kings-button @click="handleCancel" class="flex-1 mr-4">Cancel</kings-button>
+          <kings-button button-type="primary" @click="deposit" class="flex-1"> Deposit {{totalAmount}} </kings-button>
+        </div>
+
       </div>
-      <kings-error v-model:form-error="formError"/>
-    </div>
+
+  <kings-error :form-error="formError"/>
+
 </template>
 
 
@@ -56,25 +44,26 @@ export default {
   data() {
     return {
       formError: '',
-      amount5c: 0,
-      amount10c: 0,
-      amount20c: 0,
-      amount50c: 0,
-      amount1: 0,
-      amount2: 0,
-      amount5: 0,
-      amount10: 0,
-      amount20: 0,
-      amount50: 0,
-      amount100: 0,
+      depositObj: {
+        num5c: 0,
+        num10c: 0,
+        num20c: 0,
+        num50c: 0,
+        num1: 0,
+        num2: 0,
+        num5: 0,
+        num10: 0,
+        num20: 0,
+        num50: 0,
+        num100: 0
+      },
       total: 0
     }
   },
   computed: {
       totalAmount() {
-        this.total = (this.amount5c * 0.05 + this.amount10c * 0.1 + this.amount20c * 0.2 + this.amount50c * 0.5 + this.amount1 +
-                              this.amount2 * 2 + this.amount5 * 5 + this.amount10 * 10 + this.amount20 * 20 + this.amount50 * 50 + this.amount100 * 100).toFixed(2)
-        return `Total to be deposited: $${this.total}`
+        this.total = this.depositObj.num5 * 5 + this.depositObj.num10 * 10 + this.depositObj.num20 * 20 + this.depositObj.num50 * 50 + this.depositObj.num100 * 100;
+        return `$${this.total}`;
       }
   },
   methods: {
@@ -82,18 +71,18 @@ export default {
         await this.$router.back();
       },
       async deposit () {
-        if (!this.firstName || !this.depositAmount || !this.pin) {
-            this.formError = 'Please fill out all the fields';
-            return;
-        }
 
         try {
-            const postObj = {
-            numCoinsAndNotes: [{num5c: this.amount5c, num10c: this.amount10c, num20c: this.amount20c, num50c: this.amount50c, num1: this.amount1, num2: this.amount2,
-                     num5: this.amount5, num10: this.amount10, num20: this.amount20, num50: this.amount50, num100: this.amount100}]
+            if (!(Number.isInteger(this.depositObj.num5) & Number.isInteger(this.depositObj.num10) & Number.isInteger(this.depositObj.num20) &
+             Number.isInteger(this.depositObj.num50) & Number.isInteger(this.depositObj.num100))) {
+                throw "Please enter only whole numbers";
+             }
+
+            if (this.depositObj.num5 == 0 & this.depositObj.num10 == 0 & this.depositObj.num20 == 0 & this.depositObj.num50 == 0 & this.depositObj.num100 == 0) {
+                throw "You must deposit more than $0";
             }
 
-            let response = await AXIOS.post('/api/transaction/deposit', postObj);
+            let response = await AXIOS.post('/api/transaction/deposit', this.depositObj);
 
             if (response.status === 200) {
 
@@ -105,12 +94,13 @@ export default {
 
             }
         } catch (e) {
-            this.formError = e;
+            if (this.depositObj.num5 < 0 | this.depositObj.num10 < 0 | this.depositObj.num20 < 0 | this.depositObj.num50 < 0 | this.depositObj.num100 < 0) {
+                this.formError = "Please enter an amount greater than 0 for each of the fields";
+            }
+            else {
+                this.formError = e;
+            }
         }
-
-
-
-        let response = await this.$store.dispatch("loginUser", numNotes);
 
         if (response?.data.error) {
           this.formError = response.data.error;

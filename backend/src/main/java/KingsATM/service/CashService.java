@@ -43,8 +43,16 @@ public class CashService {
 	}
 
 	public List<Cash> withdraw(long amount) {
+		if (amount < 0) {
+			throw new IllegalArgumentException("Amount Negative");
+		}
+
 		if (amount > this.getTotal()) {
 			throw new IllegalArgumentException("Insufficient cash in ATM");
+		}
+
+		if (((amount) % 5) != 0) {
+			throw new IllegalArgumentException("The amount entered should be divisible by 0.05");
 		}
 		
 		Iterator<Cash> iter = cashRepository.findByOrderByValueDesc().iterator();
@@ -106,4 +114,5 @@ public class CashService {
 		}
 		return cash_store;
 	}
+
 }

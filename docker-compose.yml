@@ -3,7 +3,7 @@ version: "3.7"
 services:
   db:
     image: postgres:13-alpine
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_DB: kingsatm
       POSTGRES_USER: client
@@ -15,6 +15,7 @@ services:
   kingsatm:
     depends_on:
       - db
+    restart: unless-stopped
     build: .
     ports:
       - 8090:7000

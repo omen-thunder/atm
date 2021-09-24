@@ -271,7 +271,7 @@ public class ControllerTests {
         mvc.perform(post("/api/transaction/withdraw/2000")
                         .contentType("application/json")
                         .header("Authorization", testAuthHeader))
-                .andExpect(jsonPath("$.error", is("Insufficient funds")));
+                .andExpect(jsonPath("$.success", is(false)));
     }
 
     @Test
@@ -279,7 +279,7 @@ public class ControllerTests {
         mvc.perform(post("/api/transaction/withdraw/-1000")
                         .contentType("application/json")
                         .header("Authorization", testAuthHeader))
-                .andExpect(jsonPath("$.error", is("Amount negative")));
+                .andExpect(jsonPath("$.success", is(false)));
     }
 
     @Test

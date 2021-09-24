@@ -3,8 +3,7 @@
   <kings-atm-container>
 
     <div class="flex-grow mx-4">
-
-      <withdraw-form/>
+        <deposit-form/>
     </div>
 
   </kings-atm-container>
@@ -13,14 +12,22 @@
 
 <script>
 import KingsAtmContainer from "../components/Base/KingsAtmContainer.vue";
-import WithdrawForm from "../components/WithdrawForm.vue";
+import KingsButton from '../components/Base/KingsButton.vue';
+import DepositForm from "../components/DepositForm.vue";
 
 export default {
-  name: "Withdraw",
+  name: "Deposit",
   components: {
-    WithdrawForm,
+    DepositForm,
     KingsAtmContainer,
-  }
+    KingsButton,
+  },
+
+  methods: {
+    async handleCancel() {
+      this.$router.push('/home');
+    },
+  },
 }
 </script>
 

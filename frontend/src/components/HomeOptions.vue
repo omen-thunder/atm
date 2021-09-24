@@ -31,8 +31,8 @@ export default {
       this.$router.push('/check-balance');
     },
     handleMakeDeposit() {
-
-    }
+      this.$router.push('/deposit');
+    },
   }
 }
 </script>
