@@ -37,9 +37,10 @@ public class AccountTest {
 
     @Test
     public void testIncrBalance() {
-        assertEquals(account1.getBalance(), 0);
         assertEquals(account1.incrBalance(200L), 200L);
+        assertEquals(account1.getBalance(), 200L);
         assertEquals(account2.incrBalance(50L), 1050L);
+        assertEquals(account2.getBalance(), 1050L);
         assertThrows(IllegalArgumentException.class, () -> account1.incrBalance(-1L));
         assertThrows(IllegalStateException.class, () -> account1.incrBalance(Long.MAX_VALUE));
     }
@@ -47,6 +48,7 @@ public class AccountTest {
     @Test
     public void testDecrBalance() {
         assertEquals(account2.decrBalance(20L), 980L);
+        assertEquals(account2.getBalance(), 980L);
         assertThrows(IllegalArgumentException.class, () -> account1.decrBalance(-1L));
         assertThrows(IllegalStateException.class, () -> account2.decrBalance(2000L));
     }

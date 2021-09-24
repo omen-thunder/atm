@@ -74,11 +74,6 @@ public class CardTest {
 	}
 
 	@Test
-	public void testGetId() {
-		assertEquals(String.valueOf(card1.getId()).length(), 5);
-	}
-
-	@Test
 	public void testGetIssueDate() {
 		assertEquals(card1.getIssueDate(), now);
 	}
@@ -93,7 +88,7 @@ public class CardTest {
 	@Test
 	public void testBeforeIssue() {
 		assertFalse(card1.beforeIssue());
-		cal.add(Calendar.YEAR, -1);
+		cal.add(Calendar.YEAR, 1);
 		card1.setIssueDate(cal.getTime());
 		assertTrue(card1.beforeIssue());
 	}
@@ -131,7 +126,7 @@ public class CardTest {
 		card1.setLoginAttempt(2);
 		assertEquals(card1.getLoginAttempt(), 2);
 		card1.setLoginAttempt(3);
-		assertEquals(card2.getStatus(), CardStatus.BANNED);
+		assertEquals(card1.getStatus(), CardStatus.BANNED);
 	}
 
 	@Test
