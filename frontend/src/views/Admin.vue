@@ -3,137 +3,137 @@
   <kings-atm-container>
     <div class="m-2 md:m-8 h-full flex flex-col w-full">
 
-      <h1 class="text-4xl my-4 md:mt-8">Admin Console</h1>
-      <h2 class="mb-8">Authorised Personnel Only</h2>
+      <p class="text-2xl lg:text-3xl xl:text-4xl font-semibold text-yellow-100">Admin Console</p>
+      <h2 class="mb-6">Authorised Personnel Only</h2>
 
       <div class="flex-grow">
         <div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
 
             <div class="col-span-2">
-              <p class="text-xl text-gray-300 pb-2">ATM Cash Balance:</p>
-              <p class="text-xl">$ <span>{{ cashBalance }}</span></p>
+              <p class="text-xl text-gray-300 pb-2">ATM Total Balance: <strong class="ml-2 text-2xl text-green-400">${{ cashBalance }}</strong></p>
             </div>
 
             <div class="col-span-2">
-              <p class="text-md md:text-xl">Insert more funds into the machine</p>
+              <p class="col-span-2 text-md md:text-xl">Insert more funds into the machine</p>
             </div>
 
-            <div class="col-span-2 p-2 border-2 border-gray-700">
+            <div class="col-span-2 p-2 rounded bg-white bg-opacity-5 py-4">
               <div class="grid grid-cols-1 md:grid-cols-7 gap-4">
 
-                <div class="flex md:flex-col items-end justify-around md:justify-center">
-                  <span>[ Coins ]</span>
-                  <span>Available</span>
-                  <span class="text-left">Add</span>
+                <div class="flex md:flex-col items-end item-center justify-around md:justify-between">
+                  <strong class="bg-yellow-200 rounded text-gray-700 px-2">Coins</strong>
+                  <span class="md:py-6">Available</span>
+                  <span>Add</span>
                 </div>
 
-                <div class="flex md:flex-col items-center justify-around md:justify-center">
-                  <span class="w-full text-lg text-yellow-100">$.5</span>
+                <div class="flex md:flex-col items-center justify-between md:justify-between">
+                  <span class="w-full text-lg text-yellow-200">5c</span>
                   <span class="w-full">{{ hasCash.num5c }}</span>
                   <div class="w-full">
-                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num5c">
+                    <input type="number" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num5c">
                   </div>
                 </div>
 
-                <div class="flex md:flex-col items-center justify-around md:justify-center">
-                  <span class="w-full text-lg text-yellow-100">$.10</span>
+                <div class="flex md:flex-col items-center justify-around md:justify-between">
+                  <span class="w-full text-lg text-yellow-200">10c</span>
                   <span class="w-full">{{ hasCash.num10c }}</span>
                   <div class="w-full">
-                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num10c">
+                    <input type="number" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num10c">
                   </div>
                 </div>
 
-                <div class="flex md:flex-col items-center justify-around md:justify-center">
-                  <span class="w-full text-lg text-yellow-100">$.20</span>
+                <div class="flex md:flex-col items-center justify-around md:justify-between">
+                  <span class="w-full text-lg text-yellow-200">20c</span>
                   <span class="w-full">{{ hasCash.num20c }}</span>
                   <div class="w-full">
-                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num20c">
+                    <input type="number" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num20c">
                   </div>
                 </div>
 
-                <div class="flex md:flex-col items-center justify-around md:justify-center">
-                  <span class="w-full text-lg text-yellow-100">$.50</span>
+                <div class="flex md:flex-col items-center justify-around md:justify-between">
+                  <span class="w-full text-lg text-yellow-200">50c</span>
                   <span class="w-full">{{ hasCash.num50c }}</span>
                   <div class="w-full">
-                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num50c">
+                    <input type="number" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num50c">
                   </div>
                 </div>
 
-                <div class="flex md:flex-col items-center justify-around md:justify-center">
-                  <span class="w-full text-lg text-yellow-100">$1</span>
+                <div class="flex md:flex-col items-center justify-around md:justify-between">
+                  <span class="w-full text-lg text-yellow-200">$1</span>
                   <span class="w-full">{{ hasCash.num1 }}</span>
                   <div class="w-full">
-                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num1">
+                    <input type="number" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num1">
                   </div>
                 </div>
 
-                <div class="flex md:flex-col items-center justify-around md:justify-center">
-                  <span class="w-full text-lg text-yellow-100">$2</span>
+                <div class="flex md:flex-col items-center justify-around md:justify-between">
+                  <span class="w-full text-lg text-yellow-200">$2</span>
                   <span class="w-full">{{ hasCash.num2 }}</span>
                   <div class="w-full">
-                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num2">
+                    <input type="number" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num2">
                   </div>
                 </div>
 
               </div>  <!-- end of grid -->
             </div>  <!-- end of coin grid col -->
 
-            <div class="col-span-2 p-2 border-2 border-gray-700">
+            <div class="col-span-2 p-2 rounded bg-white bg-opacity-5 py-4">
               <div class="grid grid-cols-1 md:grid-cols-6 gap-4">
 
-                <div class="flex md:flex-col items-end justify-around md:justify-center">
-                  <span>[ Notes ]</span>
-                  <span>Available</span>
+                <div class="flex md:flex-col items-end justify-around md:justify-between">
+                  <strong class="bg-green-400 rounded text-gray-700 px-2">Notes</strong>
+                  <span class="md:py-6">Available</span>
                   <span class="text-left">Add</span>
                 </div>
 
-                <div class="flex md:flex-col items-center justify-around md:justify-center">
-                  <span class="w-full text-lg text-yellow-200">$5</span>
+                <div class="flex md:flex-col items-center justify-around md:justify-between">
+                  <span class="w-full text-lg text-green-300">$5</span>
                   <span class="w-full">{{ hasCash.num5 }}</span>
                   <div class="w-full">
-                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num5">
+                    <input type="number" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num5">
                   </div>
                 </div>
 
-                <div class="flex md:flex-col items-center justify-around md:justify-center">
-                  <span class="w-full text-lg text-yellow-200">$10</span>
+                <div class="flex md:flex-col items-center justify-around md:justify-between">
+                  <span class="w-full text-lg text-green-300">$10</span>
                   <span class="w-full">{{ hasCash.num10 }}</span>
                   <div class="w-full">
-                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num10">
+                    <input type="number" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num10">
                   </div>
                 </div>
 
-                <div class="flex md:flex-col items-center justify-around md:justify-center">
-                  <span class="w-full text-lg text-yellow-200">$20</span>
+                <div class="flex md:flex-col items-center justify-around md:justify-between">
+                  <span class="w-full text-lg text-green-300">$20</span>
                   <span class="w-full">{{ hasCash.num20 }}</span>
                   <div class="w-full">
-                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num20">
+                    <input type="number" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num20">
                   </div>
                 </div>
 
-                <div class="flex md:flex-col items-center justify-around md:justify-center">
-                  <span class="w-full text-lg text-yellow-200">$50</span>
+                <div class="flex md:flex-col items-center justify-around md:justify-between">
+                  <span class="w-full text-lg text-green-300">$50</span>
                   <span class="w-full">{{ hasCash.num50 }}</span>
                   <div class="w-full">
-                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num50">
+                    <input type="number" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num50">
                   </div>
                 </div>
 
-                <div class="flex md:flex-col items-center justify-around md:justify-center">
-                  <span class="w-full text-lg text-yellow-200">$100</span>
+                <div class="flex md:flex-col items-center justify-around md:justify-between">
+                  <span class="w-full text-lg text-green-300">$100</span>
                   <span class="w-full">{{ hasCash.num100 }}</span>
                   <div class="w-full">
-                    <input type="text" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num100">
+                    <input type="number" class="w-16 bg-transparent border-0 text-center bg-gray-700 rounded-lg" v-model="addCash.num100">
                   </div>
                 </div>
 
               </div>  <!-- end of grid -->
             </div>  <!-- end of notes grid col -->
 
-            <div class="col-span-2">
-              <button class="px-4 py-1 bg-blue-500 rounded-lg" @click="handleAddNotes">Confirm Deposit Cash</button>
+            <div class="col-span-2 flex justify-between">
+              <kings-button @click="handleLogout">Logout</kings-button>
+              <kings-button button-type="primary" @click="handleAddNotes" class="ml-2">Deposit ${{getAmountToBeDeposited}}</kings-button>
             </div>
 
           </div>
@@ -153,10 +153,6 @@
         <p> {{ formSubmitResult.message }} </p>
       </div>
 
-      <div>
-        <button class="px-4 py-2 bg-yellow-600 rounded-lg" @click="handleLogout">Logout</button>
-      </div>
-
     </div>
   </kings-atm-container>
 
@@ -166,9 +162,10 @@
 
 import AXIOS from "../axios.js";
 import KingsAtmContainer from '../components/Base/KingsAtmContainer.vue';
+import KingsButton from "../components/Base/KingsButton.vue";
 
 export default {
-  components: { KingsAtmContainer },
+  components: { KingsAtmContainer, KingsButton },
   name: "Admin",
   data() {
     return {
@@ -227,7 +224,7 @@ export default {
 
       if (res.status === 200 && res.data.success) {
         this.resetAddNote();
-        
+
         // Update global state and refresh view
         const cash = res.data.result;
         await this.$store.commit('updateCashStore', cash);
@@ -293,6 +290,20 @@ export default {
 
   },
   computed: {
+    getAmountToBeDeposited() {
+      return (
+          this.addCash.num5c * 0.05
+          + this.addCash.num10c * 0.1
+          + this.addCash.num20c * 0.2
+          + this.addCash.num50c * 0.5
+          + this.addCash.num1 * 1
+          + this.addCash.num2 * 2
+          + this.addCash.num5 * 5
+          + this.addCash.num10 * 10
+          + this.addCash.num20 * 20
+          + this.addCash.num50 * 50
+          + this.addCash.num100 * 100).toFixed(2)
+    }
 
   }
 }

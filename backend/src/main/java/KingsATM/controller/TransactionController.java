@@ -46,23 +46,16 @@ public class TransactionController {
         var account = accountService.getAccountByCardId(Integer.parseInt(auth.getName()));
         var card = cardService.getCardById(Integer.parseInt(auth.getName()));
 
-        try {
-            Long newBalance = account.decrBalance(amount);
-            accountService.saveAccount(account);
+        List<Cash> cashList = cashService.withdraw(amount);
+        Long withdrawnAmount = cashService.getTotal(cashList);
 
-            Transaction transaction = transactionService.createTransaction (
-                    TransactionType.WITHDRAW, amount, account, card);
+        Long newBalance = account.decrBalance(withdrawnAmount);
+        accountService.saveAccount(account);
 
-            if (transaction == null) {
-                return new JsonResponse<>(false, "There was an error creating the new transaction");
-            }
+        Transaction transaction = transactionService.createTransaction (
+                TransactionType.WITHDRAW, withdrawnAmount, account, card);
 
-            return new JsonResponse<>(transaction);
-
-        } catch (Exception e) {
-            return new JsonResponse<>(false, e.getMessage());
-        }
-
+        return new JsonResponse<>(transaction);
     }
 
     @PostMapping("/deposit")
