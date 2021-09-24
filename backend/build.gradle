@@ -75,6 +75,11 @@ testResultsDirName = "$buildDir/test-results"
 
 test {
     useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+
     maxHeapSize = '1G'
     // reports.html.required = false
 

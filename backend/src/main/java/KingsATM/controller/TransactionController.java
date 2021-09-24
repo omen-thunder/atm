@@ -22,7 +22,6 @@ import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.lang.String;
 
 @RestController
 @RequestMapping("api/transaction")
@@ -47,26 +46,17 @@ public class TransactionController {
         var account = accountService.getAccountByCardId(Integer.parseInt(auth.getName()));
         var card = cardService.getCardById(Integer.parseInt(auth.getName()));
 
-        try {
-            if (((amount) % 5) != 0) {
-                throw new IllegalArgumentException("The amount entered should be divisible by 0.05");
-            }
+        List<Cash> cashList = cashService.withdraw(amount);
+        Long withdrawnAmount = cashService.getTotal(cashList);
 
-            Long newBalance = account.decrBalance(amount);
-            accountService.saveAccount(account);
+        Long newBalance = account.decrBalance(withdrawnAmount);
+        accountService.saveAccount(account);
 
-            Transaction transaction = transactionService.createTransaction (
-                    TransactionType.WITHDRAW, amount, account, card);
+        Transaction transaction = transactionService.createTransaction (
+                TransactionType.WITHDRAW, withdrawnAmount, account, card);
 
-            if (transaction == null) {
-                return new JsonResponse<>(false, "There was an error creating the new transaction");
-            }
-
-            return new JsonResponse<>(transaction);
-
-        } catch (Exception e) {
-            return new JsonResponse<>(false, e.getMessage());
-        }
+        return new JsonResponse<>(transaction);
+            
 
     }
 
