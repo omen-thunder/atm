@@ -46,7 +46,13 @@ pipeline {
               sh 'gradle check -x npmBuild -D spring.datasource.url="jdbc:postgresql://db:5432/kingsatm"'
 
               echo '[ Publish Jacoco Test Report ]'
-              publishHTML([allowMissing: true, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'backend/build/reports/jacoco/test/html', reportFiles: 'index.html', reportName: 'Jacoco Code Coverage Report', reportTitles: ''])
+              jacoco(
+                execPattern: 'backend/build/jacoco/*.exec',
+                classPattern: 'backend/build/classes',
+                sourcePattern: 'backend/src/main/java',
+                exclusionPattern: 'backend/src/test/*'
+              )
+              // publishHTML([allowMissing: true, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'backend/build/reports/jacoco/test/html', reportFiles: 'index.html', reportName: 'Jacoco Code Coverage Report', reportTitles: ''])
             }
 
           }
