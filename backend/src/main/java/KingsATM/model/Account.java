@@ -113,12 +113,6 @@ public class Account {
             throw new IllegalArgumentException("Amount negative");
         }
 
-        // Overflow check
-        BigInteger sum = BigInteger.valueOf(balance).add(BigInteger.valueOf(amount));
-        if (sum.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0) {
-            throw new IllegalStateException("Account balance overflow");
-        }
-
         balance += amount;
         return balance;
     }
