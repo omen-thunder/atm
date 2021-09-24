@@ -48,7 +48,7 @@ pipeline {
               echo '[ Publish Jacoco Test Report ]'
               jacoco(
                 execPattern: 'backend/build/jacoco/*.exec',
-                classPattern: 'backend/build/classes',
+                classPattern: 'backend/build/classes/**/main',
                 sourcePattern: 'backend/src/main/java',
                 exclusionPattern: 'backend/src/test/*'
               )
