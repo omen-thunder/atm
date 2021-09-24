@@ -1,15 +1,15 @@
 package KingsATM.controller;
 
-import KingsATM.model.CardStatus;
 import KingsATM.dto.AccountDtoReq;
+import KingsATM.dto.AccountDtoRes;
 import KingsATM.dto.CardDtoReq;
 import KingsATM.dto.LoginDto;
 import KingsATM.model.Account;
 import KingsATM.model.Card;
+import KingsATM.model.CardStatus;
 import KingsATM.respository.AccountRepository;
 import KingsATM.respository.CardRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -22,15 +22,19 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.hamcrest.Matchers.*;
+import org.springframework.test.web.servlet.MvcResult;
+
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
 
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
@@ -62,7 +66,7 @@ public class ControllerTests {
             @Autowired PasswordEncoder passwordEncoder,
             @Autowired EntityManager entityManager)
     {
-        testAccount = accountRepository.save(new Account(1500L));
+        testAccount = accountRepository.save(new Account(150000L));
         testCard = cardRepository.save(
                 new Card(
                     passwordEncoder.encode(CARD_PIN),
@@ -77,7 +81,7 @@ public class ControllerTests {
 
     @AfterEach
     public void resetAccount() {
-        testAccount.setBalance(1500L);
+        testAccount.setBalance(150000L);
 
         // Reset issue
         testCard.setIssueDate(Date.from(
@@ -110,10 +114,10 @@ public class ControllerTests {
     }
 
     @Test
-    public void accountCreationWorks() throws Exception {
+    public void accountCreationSuccess() throws Exception {
 
         AccountDtoReq accountReq = new AccountDtoReq(
-                1500L,
+                150000L,
                 new ArrayList<>(Arrays.asList(new CardDtoReq("$2a$10$8K.aWLbhQ9fOcnmFLqF2UOSFkiUOLii/G0u0ty2uvAVLFyXojOdyi"))) // 1234
         );
 
@@ -125,6 +129,22 @@ public class ControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success", is(true)));
     }
+    @Test
+
+    public void accountNoLinkedCard() throws Exception {
+
+        AccountDtoReq accountReq = new AccountDtoReq(
+                150000L,
+                new ArrayList<CardDtoReq>() // No cards
+        );
+
+        mvc.perform(
+                post("/api/account/create")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(accountReq))
+                )
+                .andExpect(jsonPath("$.error", is("A card with a pin has not been provided")));
+    }
 
     @Test
     public void goodCredentialsResultsInSuccessfulLogin() throws Exception {
@@ -133,6 +153,16 @@ public class ControllerTests {
                         .content(objectMapper.writeValueAsString(testLogin)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success", is(true)));
+    }
+
+    @Test
+    public void accountNotFoundReturnsMessage() throws Exception {
+        LoginDto login = new LoginDto(1234, "4321");
+
+        mvc.perform(post("/api/account/login")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(login)))
+                .andExpect(jsonPath("$.error", is("No account found")));
     }
 
     @Test
@@ -203,22 +233,37 @@ public class ControllerTests {
                 .andExpect(jsonPath("$.error", is("Username or password incorrect attempts remaining 2")));
     }
 
-    @Test
-    public void accountNotFoundReturnsMessage() throws Exception {
-        LoginDto login = new LoginDto(1234, "4321");
 
-        mvc.perform(post("/api/account/login")
-                        .contentType("application/json")
-                        .content(objectMapper.writeValueAsString(login)))
-                .andExpect(jsonPath("$.error", is("No account found")));
+    @Test
+    public void canRetrieveAccountDetails() throws Exception {
+        MvcResult result = mvc.perform(post("/api/account/details")
+                    .contentType("application/json")
+                    .header("Authorization", testAuthHeader))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        //String content = result.getResponse().getContentAsString();
     }
 
+//    @Test
+//    public void adminDepositSuccess() {
+//
+//    }
+//
+//    @Test
+//    public void adminCheckBalanceSuccess() {
+//
+//    }
+
     @Test
-    public void withdrawReturnsReceipt() throws Exception {
-        mvc.perform(post("/api/transaction/withdraw/200")
+    public void withdrawSuccess() throws Exception {
+        MvcResult result = mvc.perform(post("/api/transaction/withdraw/2000")
                         .contentType("application/json")
                         .header("Authorization", testAuthHeader))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andReturn();
+
+        //String content = result.getResponse().getContentAsString();
     }
 
     @Test
@@ -238,16 +283,45 @@ public class ControllerTests {
     }
 
     @Test
-    public void depositReturnsReceipt() {
+    public void depositSuccess() throws Exception {
+        MvcResult result = mvc.perform(post("/api/transaction/deposit/2000")
+                        .contentType("application/json")
+                        .header("Authorization", testAuthHeader))
+                .andExpect(status().isOk())
+                .andReturn();
 
+        //String content = result.getResponse().getContentAsString();
     }
 
     @Test
-    public void depositOfCoinsNotAccepted() {
-
+    public void depositOfNegativeNumberNotAccepted() throws Exception {
+        mvc.perform(post("/api/transaction/deposit/-1000")
+                        .contentType("application/json")
+                        .header("Authorization", testAuthHeader))
+                .andExpect(jsonPath("$.error", is("Amount negative")));
     }
 
+    @Test
+    public void depositOfCoinsNotAccepted() throws Exception {
+        mvc.perform(post("/api/transaction/deposit/250")
+                        .contentType("application/json")
+                        .header("Authorization", testAuthHeader))
+                .andExpect(jsonPath("$.error", is("Regular user can not deposit coins")));
+    }
 
+    @Test
+    public void transactionBelongsToUser() throws Exception {
+        mvc.perform(post("/api/transaction/" + testAccount.getId())
+                        .contentType("application/json")
+                        .header("Authorization", testAuthHeader))
+                .andExpect(status().isOk());
+    }
 
-
+    @Test
+    public void transactionDoesNotBelongToUser() throws Exception {
+        mvc.perform(post("/api/transaction/200")
+                        .contentType("application/json")
+                        .header("Authorization", testAuthHeader))
+                .andExpect(jsonPath("$.error", is("Transaction by user with id 200 not found")));
+    }
 }
