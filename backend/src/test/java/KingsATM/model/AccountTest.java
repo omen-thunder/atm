@@ -14,7 +14,7 @@ public class AccountTest {
     @BeforeEach
     public void setUp() {
         account1 = new Account(1337, 0L);
-        account2 = new Account(420, 1000L);
+        account2 = new Account(420, 100000L);
     }
 
     @AfterEach
@@ -32,23 +32,23 @@ public class AccountTest {
     @Test
     public void testGetBalance() {
         assertEquals(account1.getBalance(), 0);
-        assertEquals(account2.getBalance(), 1000);
+        assertEquals(account2.getBalance(), 100000);
     }
 
     @Test
     public void testIncrBalance() {
         assertEquals(account1.getBalance(), 0);
-        assertEquals(account1.incrBalance(200L), 200L);
-        assertEquals(account2.incrBalance(50L), 1050L);
+        assertEquals(account1.incrBalance(20000L), 20000L);
+        assertEquals(account2.incrBalance(5000L), 105000L);
         assertThrows(IllegalArgumentException.class, () -> account1.incrBalance(-1L));
         assertThrows(IllegalStateException.class, () -> account1.incrBalance(Long.MAX_VALUE));
     }
 
     @Test
     public void testDecrBalance() {
-        assertEquals(account2.decrBalance(20L), 980L);
-        assertThrows(IllegalArgumentException.class, () -> account1.decrBalance(-1L));
-        assertThrows(IllegalStateException.class, () -> account2.decrBalance(2000L));
+        assertEquals(account2.decrBalance(2000L), 98000L);
+        assertThrows(IllegalArgumentException.class, () -> account1.decrBalance(-100L));
+        assertThrows(IllegalStateException.class, () -> account2.decrBalance(200000L));
     }
 
     @Test
