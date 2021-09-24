@@ -52,7 +52,6 @@ pipeline {
                 sourcePattern: 'backend/src/main/java',
                 exclusionPattern: 'backend/src/test/*'
               )
-              // publishHTML([allowMissing: true, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'backend/build/reports/jacoco/test/html', reportFiles: 'index.html', reportName: 'Jacoco Code Coverage Report', reportTitles: ''])
             }
 
           }
