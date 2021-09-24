@@ -1,62 +1,55 @@
 package KingsATM.model;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.checkerframework.checker.units.qual.C;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
-import java.util.NoSuchElementException;
-
 public class CashTest {
-    private Cash c;
+	private Cash cash1;
+	private Cash cash2;
 
-    @BeforeEach
-    public void setUp() {
-        c = new Cash(10, 200);
-    }
+	@BeforeEach
+	public static void setUp() {
+		cash1 = new Cash(500L);
+		cash2 = new Cash(1000L, 100);
+	}
 
-    @AfterEach
-    public void tearDown() {
-        c = null;
-    }
+	@AfterEach
+	public static void tearDown() {
+		cash1 = null;
+		cash2 = null;
+	}
 
-    @Test
-    public void testGetAmount() {
-        assertEquals(c.getAmount(), 200);
-    }
+	@Test
+	public void testGetValue() {
+		assertEquals(cash1.getValue(), 500L);
+	}
 
-    @Test
-    public void testGetValue() {
-        assertEquals(c.getValue(), 10L);
-    }
+	@Test
+	public void testGetAmount() {
+		assertEquals(cash2.getAmount(), 100);
+	}
 
-    @Test
-    public void testGetTotal() {
-        assertEquals(c.getTotal(), 2000L);
-    }
+	@Test
+	public void testGetTotal() {
+		assertEquals(cash2.getTotal(), 1000L * 100L);
+	}
 
-    @Test
-    public void testIncrAmount() {
-        c.incrAmount(100);
-        assertEquals(c.getAmount(), 300);
-        assertEquals(c.getValue(), 10L);
-        assertEquals(c.getTotal(), 3000L);
-    }
+	@Test
+	public void testIncrAmount() {
+		assertEquals(cash1.incrAmount(25), 25);
+		assertEquals(cash1.getAmount(), 25);
+		assertThrows(IllegalArgumentException.class, () -> cash1.incrAmount(-1));
+		assertThrows(IllegalStateException.class, () -> cash1.incrAmount(Integer.MAX_VALUE));
+	}
 
-    @Test
-    public void testDecrAmount() {
-        c.decrAmount(150);
-        assertEquals(c.getAmount(), 50);
-        assertEquals(c.getValue(), 10L);
-        assertEquals(c.getTotal(), 500L);
-    }
-
-    @Test
-    public void testExceptions() {
-        assertThrows(IllegalArgumentException.class, () -> c.incrAmount(-10));
-        assertThrows(IllegalStateException.class, () -> c.incrAmount(Integer.MAX_VALUE));
-
-    }
-
+	@Test
+	public void testDecrAmount() {
+		assertEquals(cash2.decrAmount(25, 75), 75);
+		assertEquals(cash2.getAmount(), 75);
+		assertThrows(IllegalArgumentException.class, () -> cash1.decrAmount(-1));
+		assertThrows(IllegalStateException.class, () -> cash1.decrAmount(Integer.MAX_VALUE));
+	}
 }
