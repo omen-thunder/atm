@@ -54,7 +54,7 @@ public class AccountController {
     @PostMapping("/create")
     public JsonResponse<AccountDtoRes> createAccount(@Valid @RequestBody AccountDtoReq accountDtoReq) {
         // Ensure a card has been linked
-        if (accountDtoReq.getCards() == null) {
+        if (accountDtoReq.getCards() == null || accountDtoReq.getCards().size() == 0) {
             return new JsonResponse<>(false, "A card with a pin has not been provided");
         }
 
