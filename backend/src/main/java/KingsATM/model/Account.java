@@ -113,6 +113,11 @@ public class Account {
             throw new IllegalArgumentException("Amount negative");
         }
 
+        // Overflow check
+        if (Long.MAX_VALUE - balance < amount) {
+            throw new IllegalStateException("Balance overflow");
+        }
+
         balance += amount;
         return balance;
     }
