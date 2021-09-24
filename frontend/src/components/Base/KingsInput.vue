@@ -27,7 +27,7 @@ export default {
     },
     type: {
       default: 'text'
-    }
+    },
   },
   emits: ['update:modelValue'],
   methods: {
