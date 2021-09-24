@@ -11,13 +11,13 @@ public class CashTest {
 	private Cash cash2;
 
 	@BeforeEach
-	public static void setUp() {
+	public void setUp() {
 		cash1 = new Cash(500L);
 		cash2 = new Cash(1000L, 100);
 	}
 
 	@AfterEach
-	public static void tearDown() {
+	public void tearDown() {
 		cash1 = null;
 		cash2 = null;
 	}
@@ -47,7 +47,7 @@ public class CashTest {
 
 	@Test
 	public void testDecrAmount() {
-		assertEquals(cash2.decrAmount(25, 75), 75);
+		assertEquals(cash2.decrAmount(25), 75);
 		assertEquals(cash2.getAmount(), 75);
 		assertThrows(IllegalArgumentException.class, () -> cash1.decrAmount(-1));
 		assertThrows(IllegalStateException.class, () -> cash1.decrAmount(Integer.MAX_VALUE));
