@@ -56,6 +56,8 @@ public class TransactionController {
                 TransactionType.WITHDRAW, withdrawnAmount, account, card);
 
         return new JsonResponse<>(transaction);
+            
+
     }
 
     @PostMapping("/deposit")
