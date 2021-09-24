@@ -1,6 +1,10 @@
 package KingsATM.dto;
 
+import KingsATM.model.Cash;
 import KingsATM.model.CashAmount;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CashStoreDto {
 
@@ -96,5 +100,25 @@ public class CashStoreDto {
             case FIFTYDOLLAR -> this.num50 = amount;
             case HUNDREDDOLLAR -> this.num100 = amount;
         };
+    }
+
+    public static List<Cash> getListOfCash(CashStoreDto cashStoreDto) {
+        List<Cash> cashList = new ArrayList<>();
+        cashList.add(new Cash(5, cashStoreDto.getNum5c()));
+        cashList.add(new Cash(10, cashStoreDto.getNum10c()));
+        cashList.add(new Cash(20, cashStoreDto.getNum20c()));
+        cashList.add(new Cash(50, cashStoreDto.getNum50c()));
+        cashList.add(new Cash(100, cashStoreDto.getNum1()));
+        cashList.add(new Cash(200, cashStoreDto.getNum2()));
+        cashList.add(new Cash(500, cashStoreDto.getNum5()));
+        cashList.add(new Cash(1000, cashStoreDto.getNum10()));
+        cashList.add(new Cash(2000, cashStoreDto.getNum20()));
+        cashList.add(new Cash(5000, cashStoreDto.getNum50()));
+        cashList.add(new Cash(10000, cashStoreDto.getNum100()));
+        return cashList;
+    }
+
+    public List<Cash> getListOfCash() {
+       return CashStoreDto.getListOfCash(this);
     }
 }
