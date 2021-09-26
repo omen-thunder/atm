@@ -18,7 +18,7 @@ public class CardTest {
 	private static Account acc;
 
 	@BeforeEach
-	public static void setUp() {
+	public void setUp() {
 		cal = Calendar.getInstance();
 		now = new Date();
 		acc = new Account(3000L);
@@ -32,7 +32,7 @@ public class CardTest {
 	}
 
 	@AfterEach
-	public static void tearDown() {
+	public void tearDown() {
 		cal = null;
 		now = null;
 		card1 = null;

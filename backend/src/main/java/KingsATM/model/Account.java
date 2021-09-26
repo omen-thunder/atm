@@ -112,6 +112,17 @@ public class Account {
         if (amount < 0) {
             throw new IllegalArgumentException("Amount negative");
         }
+        
+        // Overflow check
+        if (Long.MAX_VALUE - balance < amount) {
+            throw new IllegalStateException("Balance overflow");
+        }
+
+
+        // Coins deposited check
+        if (amount % 500 != 0) {
+            throw new IllegalArgumentException("Can not deposit coins");
+        }
 
         balance += amount;
         return balance;

@@ -18,19 +18,23 @@ public class TransactionTest {
     public static void setUp() {
         now = Calendar.getInstance().getTime();
         transaction1 = new Transaction(
-                111,
-                TransactionType.WITHDRAW,
-                now,
-                150L,
-                1500L,
-                1000,
-                20000);
+            111,
+            TransactionType.WITHDRAW,
+            now,
+            150L,
+            1500L,
+            1000,
+            20000);
     }
 
     @AfterAll
     public static void tearDown() {
         now = null;
         transaction1 = null;
+    }
+
+    @Test void testGetId() {
+        assertEquals(transaction1.getId(), 111);
     }
 
     @Test
@@ -57,4 +61,17 @@ public class TransactionTest {
     public void testTransactionType() {
         assertEquals(transaction1.getType(), TransactionType.WITHDRAW);
     }
+
+    @Test
+    public void testTransactionBalance() {
+        assertEquals(transaction1.getBalance(), 1500L);
+    }
+
+    @Test
+    public void testTransactionConstructor2() {
+        Transaction tx2 = new Transaction(TransactionType.WITHDRAW, 200L, 1500L, 1000, 20000);
+
+        assertEquals(tx2.getAmount(), 200L);
+    }
+
 }

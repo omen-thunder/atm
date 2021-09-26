@@ -45,14 +45,23 @@ pipeline {
               echo '[ Attempting to run checks ]'
               sh 'gradle check -x npmBuild -D spring.datasource.url="jdbc:postgresql://db:5432/kingsatm"'
 
-              echo '[ Saving JUnit Test Results ]'
-              junit '**/build/test-results/**/*.xml'
-
               echo '[ Publish Jacoco Test Report ]'
-              publishHTML([allowMissing: true, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'backend/build/reports/jacoco/test/html', reportFiles: 'index.html', reportName: 'Jacoco Code Coverage Report', reportTitles: ''])
+              jacoco(
+                execPattern: 'backend/build/jacoco/*.exec',
+                classPattern: 'backend/build/classes/**/main',
+                sourcePattern: 'backend/src/main/java',
+                exclusionPattern: 'backend/src/test/*'
+              )
             }
 
           }
+        }
+      }
+
+      post {
+        always {
+          echo '[ Saving JUnit Test Results ]'
+          junit '**/build/test-results/**/*.xml'
         }
       }
     }
@@ -63,10 +72,10 @@ pipeline {
           
           if (env.BRANCH_NAME.startsWith('master')) {
             echo '[ Trigger Production Deployment ]'
-            sh 'curl "$BUILD_WEBHOOK_MASTER" | grep -o OK'
+            sh 'curl -Ss "$BUILD_WEBHOOK_MASTER" | grep -o OK'
           } else if (env.BRANCH_NAME.startsWith('staging')) {
             echo '[ Trigger Staging Deployment ]'
-            sh 'curl "$BUILD_WEBHOOK_STAGING" | grep -o OK'
+            sh 'curl -Ss "$BUILD_WEBHOOK_STAGING" | grep -o OK'
           } else {
             echo '[ Skipped Deployment ]'
           }

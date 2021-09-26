@@ -10,7 +10,7 @@ public class CardStatusTest {
 
 	@Test
 	public void testGetStatusString() {
-		assertEquals(CardStatus.INACTIVE.getStatusString(), "set to inactive);
+		assertEquals(CardStatus.INACTIVE.getStatusString(), "set to inactive");
 		assertEquals(CardStatus.ACTIVE.getStatusString(), "active");
 		assertEquals(CardStatus.BANNED.getStatusString(), "exceeded login attempts");
 		assertEquals(CardStatus.LOST.getStatusString(), "lost");
